@@ -1,0 +1,29 @@
+<mat-toolbar>
+  <span>My Google Service</span>
+</mat-toolbar>
+
+<div class="centered-content">
+  <div class="columns m-5 is-variable is-8">
+    <div class="column" (click)="redirectContacts()">
+      <div
+        matRipple
+        class="is-flex is-flex-direction-column is-align-items-center clickable p-5"
+      >
+        <img src="../assets/Google_Contacts.png" width="200px" />
+        <h1 class="mt-5">Google Contacts</h1>
+      </div>
+    </div>
+
+    <div class="column is-1"></div>
+
+    <div class="column" (click)="redirectPhotos()">
+      <div
+        matRipple
+        class="is-flex is-flex-direction-column is-align-items-center clickable p-5"
+      >
+        <img src="../assets/Google_Photos.png" width="200px" />
+        <h1 class="mt-5">Google Photos</h1>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bulma/css/bulma.css";
+@import "~font-awesome/css/font-awesome.css";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Layout */
+.centered-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+/* Max width */
+.max-width-500 {
+  max-width: 500px;
+}
+
+.max-width-600 {
+  max-width: 600px;
+}
+
+.max-width-700 {
+  max-width: 700px;
+}
+
+.max-width-800 {
+  max-width: 800px;
+}
+
+/* Gaps */
+.clickable {
+  cursor: pointer;
+}
