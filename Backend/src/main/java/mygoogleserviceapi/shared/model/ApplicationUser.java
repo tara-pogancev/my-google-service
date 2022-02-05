@@ -2,11 +2,13 @@ package mygoogleserviceapi.shared.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import mygoogleserviceapi.contacts.model.UserPhoneNumber;
 import mygoogleserviceapi.shared.enumeration.DefaultApplicationEnum;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.persistence.OneToMany;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -22,14 +24,18 @@ public class ApplicationUser extends DatabaseEntity {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "defaultApplication")
     private DefaultApplicationEnum defaultApplication = DefaultApplicationEnum.NONE;
 
+    @OneToMany(mappedBy = "applicationUser")
+    private Set<UserPhoneNumber> phoneNumbers;
+
     //Todo: Profile picture
 
-    //Todo: list of phone numbers
-
+    public String getFullName() {
+        return name + " " + lastName;
+    }
 }
