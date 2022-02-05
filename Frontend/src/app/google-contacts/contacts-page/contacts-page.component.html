@@ -1,1 +1,76 @@
-<p>contacts-page works!</p>
+<div>
+  <mat-toolbar>
+    <button
+      mat-icon-button
+      class="example-icon mr-2"
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span
+      ><img
+        src="../../../assets/Google_Contacts.png"
+        width="40px"
+        class="mb-1 pr-1"
+    /></span>
+    <span class="mr-5 title-font"><h2>Contacts</h2></span>
+
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Number</mat-label>
+        <input
+          type="text"
+          placeholder="Pick one"
+          aria-label="Number"
+          matInput
+          [formControl]="myControl"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let option of filteredOptions | async"
+            [value]="option"
+          >
+            {{ option }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+
+    <span class="example-spacer"></span>
+
+    <button
+      mat-icon-button
+      class="example-icon favorite-icon"
+      aria-label="Example icon-button with heart icon"
+    >
+      <mat-icon>help_outline</mat-icon>
+    </button>
+
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+    >
+      <mat-icon>settings</mat-icon>
+    </button>
+
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+    >
+      <mat-icon>apps</mat-icon>
+    </button>
+
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+    >
+      <img src="../../../assets/Google_Contacts.png" />
+    </button>
+  </mat-toolbar>
+</div>
+
+<contacts-page-body></contacts-page-body>
