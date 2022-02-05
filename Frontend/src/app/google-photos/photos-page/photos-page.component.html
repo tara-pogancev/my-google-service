@@ -1,1 +1,8 @@
-<p>photos-page works!</p>
+<div class="single-upload">
+  <h3>Upload Single File</h3>
+  <form id="singleUploadForm" name="singleUploadForm">
+      <input  type="file" name="file" class="file-input" (change)="onSelectFile($event)" required />
+  </form>
+<br>
+<img [src]="url">
+</div>
