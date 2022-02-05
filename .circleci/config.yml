@@ -23,10 +23,39 @@ jobs:
           name: Build
           command: mvn -B -DskipTests clean package
 
+  build-frontend:
+    working_directory: ~/my-google-service/Frontend
+    docker:
+      - image: circleci/node:14-browsers
+    steps:
+      - checkout:
+          path: ~/my-google-service
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package-lock.json" }}
+          - v1-dependencies-
+      - run:
+          name: install dependencies
+          command: npm install
+      - save_cache:
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: build
+          command: |
+              npm run build
+            
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
 workflows:
   build:
     jobs:
       - build-backend
+      - build-frontend
       
       - heroku/deploy-via-git:
           name: deploy-back
@@ -46,4 +75,5 @@ workflows:
               only:
                 - main
           requires:
+            - build-frontend
             - deploy-back 
