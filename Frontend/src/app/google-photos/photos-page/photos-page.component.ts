@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-photos-page',
+  selector: 'photos-page',
   templateUrl: './photos-page.component.html',
   styleUrls: ['./photos-page.component.scss']
 })

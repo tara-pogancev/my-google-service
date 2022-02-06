@@ -1,0 +1,86 @@
+<div class="centered-content container">
+  <div class="columns stretch-height">
+    <div
+      class="column is-flex is-flex-direction-column is-align-items-center is-justify-content-space-between"
+    >
+      <div class="is-flex is-flex-direction-column is-align-items-flex-start">
+        <img
+          src="../../../../assets/google.svg"
+          width="75px"
+          class="image mb-2"
+        />
+        <h1>Create your Google Account</h1>
+
+        <div class="columns mt-5">
+          <div class="column">
+            <mat-form-field class="null-margin" appearance="outline">
+              <mat-label>First name</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field class="null-margin" appearance="outline">
+              <mat-label>Last name</mat-label>
+              <input matInput />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-form-field appearance="outline" class="stretch-width null-margin">
+          <mat-label>Email Address</mat-label>
+          <input
+            matInput
+            placeholder="email@example.com"
+            [(ngModel)]="createUser.email"
+          />
+          <mat-error *ngIf="invalidEmail">Not a valid email address</mat-error>
+          <mat-hint align="start"
+            >You can use letters, numbers & periods
+          </mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <div class="columns mt-5">
+          <div class="column">
+            <mat-form-field class="null-margin" appearance="outline">
+              <mat-label>Password</mat-label>
+              <input matInput type="password" />
+            </mat-form-field>
+          </div>
+          <div class="column">
+            <mat-form-field class="null-margin" appearance="outline">
+              <mat-label>Confirm</mat-label>
+              <input matInput type="password" />
+            </mat-form-field>
+          </div>
+        </div>
+
+        <mat-hint align="start"
+          >Use 8 or more characters with a mix of letters, numbers & symbols
+        </mat-hint>
+      </div>
+
+      <div
+        class="is-flex is-flex-direction-row is-justify-content-space-between stretch-width pt-5 mt-5"
+      >
+        <button mat-flat-button (click)="redirectLogin()">
+          Sign in instead
+        </button>
+
+        <button mat-flat-button color="primary">Next</button>
+      </div>
+    </div>
+
+    <div
+      class="column is-flex is-flex-direction-column is-align-items-center is-justify-content-space-around pl-5 ml-5"
+    >
+      <div
+        class="is-flex is-flex-direction-column is-align-items-center align-text-center"
+      >
+        <img src="../../../../assets/accounts.svg" width="244px" />
+        <h3 class="px-5">One account. All of Google working for you.</h3>
+      </div>
+    </div>
+  </div>
+</div>
