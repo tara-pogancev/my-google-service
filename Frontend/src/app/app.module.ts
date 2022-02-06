@@ -1,24 +1,24 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { NgModule } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BrowserModule } from "@angular/platform-browser";
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { ContactsHeaderComponent } from "./google-contacts/components/contacts-header/contacts-header.component";
+import { ContactsPageBodyComponent } from "./google-contacts/components/contacts-page-body/contacts-page-body.component";
+import { ContactsPageComponent } from "./google-contacts/components/contacts-page/contacts-page.component";
+import { ContactsSidebarItemComponent } from "./google-contacts/components/contacts-sidebar-item/contacts-sidebar-item.component";
+import { ContactsSidebarComponent } from "./google-contacts/components/contacts-sidebar/contacts-sidebar.component";
+import { ContactsTableItemComponent } from "./google-contacts/components/contacts-table-item/contacts-table-item.component";
+import { ContactsTableComponent } from "./google-contacts/components/contacts-table/contacts-table.component";
+import { CreateContactButtonComponent } from "./google-contacts/components/create-contact-button/create-contact-button.component";
+import { PhotosPageComponent } from "./google-photos/photos-page/photos-page.component";
+import { MaterialModule } from "./material-module";
+import { ErrorPageComponent } from "./shared/components/error-page/error-page.component";
+import { LoginComponent } from "./shared/components/login/login.component";
+import { RegisterComponent } from "./shared/components/register/register.component";
+import { ServiceSelectionComponent } from "./shared/components/service-selection/service-selection.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MaterialModule } from './material-module';
-import { ContactsPageComponent } from './google-contacts/contacts-page/contacts-page.component';
-import { PhotosPageComponent } from './google-photos/photos-page/photos-page.component';
-import { LoginComponent } from './shared/login/login.component';
-import { RegisterComponent } from './shared/register/register.component';
-import { ErrorPageComponent } from './shared/error-page/error-page.component';
-import { ServiceSelectionComponent } from './shared/service-selection/service-selection.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ContactsHeaderComponent } from './google-contacts/contacts-header/contacts-header.component';
-import { ContactsSidebarComponent } from './google-contacts/contacts-sidebar/contacts-sidebar.component';
-import { ContactsSidebarItemComponent } from './google-contacts/contacts-sidebar-item/contacts-sidebar-item.component';
-import { CreateContactButtonComponent } from './google-contacts/create-contact-button/create-contact-button.component';
-import { ContactsPageBodyComponent } from './google-contacts/contacts-page-body/contacts-page-body.component';
-import { ContactsTableItemComponent } from './google-contacts/contacts-table-item/contacts-table-item.component';
-import { ContactsTableComponent } from './google-contacts/contacts-table/contacts-table.component';
+
 
 @NgModule({
   declarations: [
