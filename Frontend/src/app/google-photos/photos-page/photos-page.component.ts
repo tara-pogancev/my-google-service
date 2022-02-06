@@ -15,7 +15,6 @@ export class PhotosPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.http.get(`http://localhost:8080/users/1/profile-picture`, { responseType: "blob" }).subscribe((data:any) => {
-      //this.url = this._sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + data.base64string);
       this.url = this._sanitizer.bypassSecurityTrustResourceUrl(window.URL.createObjectURL(data))
     })
   }
@@ -30,18 +29,6 @@ export class PhotosPageComponent implements OnInit {
         console.log(data);
 
       })
-      /*
-      var reader = new FileReader();
-
-      reader.readAsDataURL(event.target.files[0]); // read file as data url
-
-      reader.onload = (event) => { // called once readAsDataURL is completed
-        if (event.target) {
-          this.url = event.target.result;
-        }
-
-      }
-      */
     }
 }
 

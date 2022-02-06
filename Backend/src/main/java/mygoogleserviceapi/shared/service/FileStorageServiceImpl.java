@@ -43,11 +43,10 @@ public class FileStorageServiceImpl implements FileStorageService {
         try {
             // Check if the file's name contains invalid characters
             if (fileName.contains("..")) {
-                throw new RuntimeException("Sorry! Filename contains invalid path sequence " + fileName);
+                throw new RuntimeException("Filename contains invalid path sequence " + fileName);
             }
 
-            String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
-            // Copy file to the target location (Replacing existing file with the same name)
+
             Path targetLocation = this.fileStorageLocation.resolve(PROFILES_DIRECTORY + File.separator + userId);
 
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
@@ -60,7 +59,7 @@ public class FileStorageServiceImpl implements FileStorageService {
 
     public Resource loadProfilePicture(Long userId) {
         try {
-            Path filePath = this.fileStorageLocation.resolve("profiles" + File.separator + userId).normalize();
+            Path filePath = this.fileStorageLocation.resolve(PROFILES_DIRECTORY + File.separator + userId).normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists()) {
                 return resource;
