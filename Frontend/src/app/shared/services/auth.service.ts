@@ -37,7 +37,6 @@ export class AuthService {
 
   isUserLoggedIn() {
     return (
-      this.getCurrentUser().status == 'LOGGED_IN' &&
       this.getCurrentUser().jwt != ''
     );
   }
