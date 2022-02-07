@@ -2,6 +2,7 @@ package mygoogleserviceapi.shared.service;
 
 
 import mygoogleserviceapi.shared.config.FileStorageProperties;
+import mygoogleserviceapi.shared.exception.ProfilePictureNotFoundException;
 import mygoogleserviceapi.shared.service.interfaces.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -30,7 +31,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                 .toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
-            Files.createDirectories(Path.of(this.fileStorageLocation + File.separator + PROFILES_DIRECTORY));
+            Files.createDirectories(Paths.get(this.fileStorageLocation + File.separator + PROFILES_DIRECTORY));
         } catch (Exception ex) {
             throw new RuntimeException("Could not create the directory where the uploaded files will be stored.", ex);
         }
@@ -64,10 +65,10 @@ public class FileStorageServiceImpl implements FileStorageService {
             if (resource.exists()) {
                 return resource;
             } else {
-                throw new RuntimeException("Profile picture not Found");
+                throw new ProfilePictureNotFoundException();
             }
         } catch (MalformedURLException ex) {
-            throw new RuntimeException("Profile picture not Found", ex);
+            throw new ProfilePictureNotFoundException();
         }
     }
 }
