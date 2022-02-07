@@ -19,6 +19,7 @@ import { LoginComponent } from "./shared/components/login/login.component";
 import { RegisterComponent } from "./shared/components/register/register.component";
 import { ServiceSelectionComponent } from "./shared/components/service-selection/service-selection.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MadeByLabelComponent } from './shared/components/made-by-label/made-by-label.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ContactsPageBodyComponent,
     ContactsTableItemComponent,
     ContactsTableComponent,
+    MadeByLabelComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CreateUser } from '../../model/createUser';
+import { CreateUser } from '../../model/create-user';
 
 @Component({
   selector: 'register',

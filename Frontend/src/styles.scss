@@ -2,6 +2,7 @@
 @use "~@angular/material" as mat;
 
 @import "bulma/css/bulma.css";
+@import "animate.css";
 @import "~font-awesome/css/font-awesome.css";
 
 html,
@@ -13,7 +14,12 @@ body {
   margin: 0;
 }
 
-/* Fonts */
+/* Colors */
+
+$google-gray: rgb(117, 117, 117);
+$google-blue: rgb(66, 133, 244);
+
+/* Fonts, Text */
 $custom-typography: mat.define-typography-config(
   $font-family: "Roboto, Arial, sans-serif",
 );
@@ -25,6 +31,11 @@ $custom-typography: mat.define-typography-config(
 
 .title-font {
   font-family: "Quicksand, Arial, sans-serif" !important;
+}
+
+.alert {
+  color: rgb(173, 0, 0);
+  font-weight: 500;
 }
 
 /* Layout */

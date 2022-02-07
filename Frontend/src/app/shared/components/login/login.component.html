@@ -3,52 +3,60 @@
     <div
       class="container is-flex is-flex-direction-column is-align-items-center is-justify-content-space-between"
     >
-      <div class="is-flex is-flex-direction-column is-align-items-center">
-        <img
-          src="../../../../assets/google.svg"
-          width="75px"
-          class="image mb-2"
-        />
-        <h1>Sign in</h1>
-        <h3 class="negative-margin">Use your Google Account</h3>
+      <div id="step1" @fade1>
+        <div class="is-flex is-flex-direction-column is-align-items-center">
+          <img
+            src="../../../../assets/google.svg"
+            width="75px"
+            class="image mb-2"
+          />
+          <h1>Sign in</h1>
+          <h3 class="negative-margin">Use your Google Account</h3>
 
-        <mat-form-field appearance="outline" class="mx-1">
-          <mat-label>Email address</mat-label>
-          <input matInput placeholder="email@example.com" [(ngModel)]="email" />
-          <mat-error *ngIf="invalidEmail">Not a valid email</mat-error>
-        </mat-form-field>
+          <mat-form-field appearance="outline" class="mx-1">
+            <mat-label>Email address</mat-label>
+            <input
+              matInput
+              placeholder="email@example.com"
+              [(ngModel)]="authRequest.email"
+              class="is-alert"
+            />
+          </mat-form-field>
+
+          <div
+            class="is-flex is-align-items-flex-start is-flex-direction-column stretch-width"
+          >
+            <a class="mb-5 negative-margin">Forgot your email?</a>
+          </div>
+        </div>
 
         <div
           class="is-flex is-align-items-flex-start is-flex-direction-column stretch-width"
         >
-          <a class="mb-5 negative-margin">Forgot your email?</a>
+          <p>
+            Not your computer? Use Guest mode to sign in privately. <br />
+            <a
+              href="https://support.google.com/chrome/answer/6130773?hl=en-GB"
+              target="_blank"
+              >Learn more</a
+            >
+          </p>
+        </div>
+
+        <div
+          class="is-flex is-flex-direction-row is-justify-content-space-between stretch-width"
+        >
+          <button mat-flat-button (click)="redirectCreateAccount()">
+            Create account
+          </button>
+
+          <button mat-flat-button color="primary" (click)="checkEmail()">
+            Next
+          </button>
         </div>
       </div>
 
-      <div
-        class="is-flex is-align-items-flex-start is-flex-direction-column stretch-width"
-      >
-        <p>
-          Not your computer? Use Guest mode to sign in privately. <br />
-          <a
-            href="https://support.google.com/chrome/answer/6130773?hl=en-GB"
-            target="_blank"
-            >Learn more</a
-          >
-        </p>
-      </div>
-
-      <div
-        class="is-flex is-flex-direction-row is-justify-content-space-between stretch-width"
-      >
-        <button mat-flat-button (click)="redirectCreateAccount()">
-          Create account
-        </button>
-
-        <button mat-flat-button color="primary" (click)="checkEmail()">
-          Next
-        </button>
-      </div>
+      <p class="alert" *ngIf="invalidEmail">Not a valid email</p>
     </div>
   </div>
 
@@ -56,42 +64,53 @@
     <div
       class="container is-flex is-flex-direction-column is-align-items-center"
     >
-      <div class="is-flex is-flex-direction-column is-align-items-center">
-        <img
-          src="../../../../assets/google.svg"
-          width="75px"
-          class="image mb-2"
-        />
-        <h1>Welcome</h1>
-        <button
-          mat-stroked-button
-          class="negative-margin mb-5"
-          (click)="setStep(1)"
-        >
-          <mat-icon>person_outline</mat-icon>
-          {{ email }}
-        </button>
+      <div id="step1" @fade2>
+        <div class="is-flex is-flex-direction-column is-align-items-center">
+          <img
+            src="../../../../assets/google.svg"
+            width="75px"
+            class="image mb-2"
+          />
+          <h1>Welcome</h1>
+          <button
+            mat-stroked-button
+            class="negative-margin mb-5"
+            (click)="goBack()"
+          >
+            <mat-icon>person_outline</mat-icon>
+            {{ authRequest.email }}
+          </button>
 
-        <mat-form-field appearance="outline" class="mx-1 mt-5">
-          <mat-label>Enter your password</mat-label>
-          <input type="password" matInput [(ngModel)]="password" />
-          <mat-error *ngIf="invalidEmail">Incorrect password</mat-error>
-        </mat-form-field>
+          <mat-form-field appearance="outline" class="mx-1 mt-5">
+            <mat-label>Enter your password</mat-label>
+            <input
+              type="password"
+              matInput
+              [(ngModel)]="authRequest.password"
+            />
+          </mat-form-field>
+
+          <div
+            class="is-flex is-align-items-flex-start is-flex-direction-column stretch-width"
+          >
+            <mat-checkbox class="example-margin">Show password</mat-checkbox>
+          </div>
+        </div>
 
         <div
-          class="is-flex is-align-items-flex-start is-flex-direction-column stretch-width"
+          class="is-flex is-flex-direction-row is-justify-content-space-between stretch-width mt-5 pt-5"
         >
-          <mat-checkbox class="example-margin">Show password</mat-checkbox>
+          <button mat-flat-button disabled>Forgot password?</button>
+
+          <button mat-flat-button color="primary" (click)="login()">
+            Next
+          </button>
         </div>
       </div>
 
-      <div
-        class="is-flex is-flex-direction-row is-justify-content-space-between stretch-width mt-5 pt-5"
-      >
-        <button mat-flat-button disabled>Forgot password?</button>
-
-        <button mat-flat-button color="primary">Next</button>
-      </div>
+      <p class="alert mt-5 pt-5" *ngIf="invalidPassword">Invalid password</p>
     </div>
   </div>
+
+  <made-by-label></made-by-label>
 </div>
