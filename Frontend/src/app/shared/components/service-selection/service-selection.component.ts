@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'service-selection',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./service-selection.component.scss'],
 })
 export class ServiceSelectionComponent implements OnInit {
-  constructor() {}
+  constructor(private authService : AuthService) {}
 
   ngOnInit(): void {
     //todo: check login status
@@ -18,5 +19,9 @@ export class ServiceSelectionComponent implements OnInit {
 
   redirectContacts() {
     window.location.href = '/contacts';
+  }
+
+  logout() {
+    this.authService.logout();
   }
 }
