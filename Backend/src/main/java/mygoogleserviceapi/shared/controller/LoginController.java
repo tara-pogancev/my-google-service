@@ -12,10 +12,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -43,5 +40,12 @@ public class LoginController {
         final String jwt = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(jwt, user.getFullName(), user.getEmail(), user.getId()));
     }
+
+    @PostMapping("/email-exists")
+    public ResponseEntity<?> emailExists(@RequestBody AuthenticationRequest authenticationRequest) {
+        ApplicationUser emailExists = userService.findByEmail(authenticationRequest.getEmail());
+        return ResponseEntity.ok(emailExists != null);
+    }
+
 
 }
