@@ -19,7 +19,7 @@
               matInput
               placeholder="email@example.com"
               [(ngModel)]="authRequest.email"
-              class="is-alert"
+              (keyup.enter)="checkEmail()"
             />
           </mat-form-field>
 
@@ -87,6 +87,7 @@
               type="password"
               matInput
               [(ngModel)]="authRequest.password"
+              (keyup.enter)="login()"
             />
           </mat-form-field>
 
