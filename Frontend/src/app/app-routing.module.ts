@@ -6,14 +6,30 @@ import { ErrorPageComponent } from './shared/components/error-page/error-page.co
 import { LoginComponent } from './shared/components/login/login.component';
 import { RegisterComponent } from './shared/components/register/register.component';
 import { ServiceSelectionComponent } from './shared/components/service-selection/service-selection.component';
-
+import { AuthGuard, UnAuthGuard } from './shared/services/auth-guard.service';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'contacts', component: ContactsPageComponent },
-  { path: 'photos', component: PhotosPageComponent },
-  { path: '', component: ServiceSelectionComponent },
+  { path: 'login', component: LoginComponent, canActivate: [UnAuthGuard] },
+
+  {
+    path: 'register',
+    component: RegisterComponent,
+    canActivate: [UnAuthGuard],
+  },
+
+  {
+    path: 'contacts',
+    component: ContactsPageComponent,
+    canActivate: [AuthGuard],
+  },
+
+  {
+    path: 'photos',
+    component: PhotosPageComponent,
+    canActivate: [AuthGuard],
+  },
+
+  { path: '', component: ServiceSelectionComponent, canActivate: [AuthGuard] },
   { path: '**', component: ErrorPageComponent },
 ];
 
