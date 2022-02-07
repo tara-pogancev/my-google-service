@@ -1,4 +1,7 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ProfilePictureService } from 'src/app/shared/services/profile-picture.service';
 
 @Component({
   selector: 'photos-page',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PhotosPageComponent implements OnInit {
 
-  constructor() { }
 
+  url: any
+  constructor() { }
   ngOnInit(): void {
+
   }
+
 
 }

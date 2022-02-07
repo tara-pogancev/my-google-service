@@ -7,13 +7,13 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-	"postinstall": "ng build --prod"
+    "postinstall": "ng build --prod"
   },
   "private": true,
-  "dependencies": {	  
-	"@angular/cli": "~12.2.12",	
+  "dependencies": {
+    "@angular/cli": "~12.2.12",
     "@angular/compiler-cli": "~12.2.0",
-	"@angular-devkit/build-angular": "~12.2.12",    
+    "@angular-devkit/build-angular": "~12.2.12",
     "@angular/animations": "~12.2.0",
     "@angular/cdk": "^12.2.13",
     "@angular/common": "~12.2.0",

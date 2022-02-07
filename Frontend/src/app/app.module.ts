@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
@@ -19,7 +20,6 @@ import { RegisterComponent } from "./shared/components/register/register.compone
 import { ServiceSelectionComponent } from "./shared/components/service-selection/service-selection.component";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +40,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+    FormsModule,
     BrowserAnimationsModule,
     MaterialModule,
     ReactiveFormsModule,
