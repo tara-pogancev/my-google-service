@@ -1,5 +1,6 @@
 package mygoogleserviceapi.shared.service.interfaces;
 
+import mygoogleserviceapi.shared.dto.response.UserDTO;
 import mygoogleserviceapi.shared.model.ApplicationUser;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,4 +13,5 @@ public interface ApplicationUserService {
 
     Resource getProfilePicture(Long userId);
 
+    ApplicationUser registerNewUser(UserDTO newUser);
 }
