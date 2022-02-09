@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ValidationErrors } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { server } from 'src/app/app-global';
 import { ActiveUser } from '../model/active-user';
 import { AuthenticationRequest } from '../model/authentication-request';
@@ -36,9 +38,7 @@ export class AuthService {
   }
 
   isUserLoggedIn() {
-    return (
-      this.getCurrentUser().jwt != ''
-    );
+    return this.getCurrentUser().jwt != '';
   }
 
   getHeaders() {
@@ -50,7 +50,7 @@ export class AuthService {
     return headers;
   }
 
-  checkIfEmailExists(request: AuthenticationRequest) {
-    return this._http.post<any>(this.url + '/email-exists', request);
+  checkIfEmailExists(request: AuthenticationRequest): Observable<boolean> {
+    return this._http.post<boolean>(this.url + '/email-exists', request);
   }
 }
