@@ -1,8 +1,10 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateContactButtonComponent } from 'src/app/google-contacts/components/create-contact-button/create-contact-button.component';
 import { CreateUser } from '../../model/create-user';
 import { AuthService } from '../../services/auth.service';
+import { RegistrationService } from '../../services/registration.service';
 import {
   ConfirmedValidator,
   EmailTakenValidator,
@@ -12,11 +14,30 @@ import {
   selector: 'register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
+  animations: [
+    trigger('fade1', [
+      state('void', style({ opacity: 0 })),
+
+      transition('void => *', [animate(300)]),
+      transition('* => void', [animate(200)]),
+    ]),
+
+    trigger('fade2', [
+      state('void', style({ opacity: 0 })),
+
+      transition('void => *', [animate(300)]),
+      transition('* => void', [animate(200)]),
+    ]),
+  ],
 })
 export class RegisterComponent implements OnInit {
   profileForm: FormGroup = new FormGroup({});
+  registrationSuccess = true;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private registrationService: RegistrationService
+  ) {}
 
   ngOnInit(): void {
     this.profileForm = new FormGroup({
@@ -63,7 +84,14 @@ export class RegisterComponent implements OnInit {
         this.profileForm.controls.password.value
       );
 
-      console.log(user);
+      this.registrationService.register(user).subscribe(
+        (data) => {
+          this.registrationSuccess = true;
+        },
+        (err) => {
+          window.location.href = '/error';
+        }
+      );
     }
   }
 }
