@@ -9,6 +9,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+
 @Service
 @RequiredArgsConstructor
 public class ApplicationUserServiceImpl implements ApplicationUserService {
@@ -18,7 +19,10 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
 
     @Override
     public ApplicationUser findByEmail(String email) {
-        return userRepository.findUserByEmail(email);
+        if (email.isEmpty())
+            return null;
+
+        return userRepository.findUserByEmail(email.toLowerCase().replaceAll("\\s+",""));
     }
 
     @Override
