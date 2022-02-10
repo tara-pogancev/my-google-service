@@ -1,7 +1,12 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CreateContactButtonComponent } from 'src/app/google-contacts/components/create-contact-button/create-contact-button.component';
 import { CreateUser } from '../../model/create-user';
 import { AuthService } from '../../services/auth.service';
 import { RegistrationService } from '../../services/registration.service';
@@ -32,7 +37,7 @@ import {
 })
 export class RegisterComponent implements OnInit {
   profileForm: FormGroup = new FormGroup({});
-  registrationSuccess = true;
+  registrationSuccess = false;
 
   constructor(
     private authService: AuthService,
@@ -66,7 +71,7 @@ export class RegisterComponent implements OnInit {
   }
 
   redirectLogin() {
-    if (this.profileForm.touched) {
+    if (this.profileForm.touched && !this.registrationSuccess) {
       if (confirm('Are you sure you want to leave this page?')) {
         window.location.href = '/login';
       }
@@ -85,11 +90,12 @@ export class RegisterComponent implements OnInit {
       );
 
       this.registrationService.register(user).subscribe(
-        (data) => {
+        (res) => {
           this.registrationSuccess = true;
         },
         (err) => {
-          window.location.href = '/error';
+          window.location.href = 'error';
+          console.log(err);
         }
       );
     }

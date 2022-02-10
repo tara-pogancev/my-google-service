@@ -14,6 +14,9 @@ export class RegistrationService {
 
   register(newUser: CreateUser) {
     const headers = this.authService.getHeaders();
-    return this._http.post<any>(this.url, newUser, { headers: headers });
+    return this._http.post(this.url, newUser, {
+      headers: headers,
+      responseType: 'text',
+    });
   }
 }
