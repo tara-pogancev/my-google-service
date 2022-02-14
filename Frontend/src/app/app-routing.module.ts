@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactsPageComponent } from './google-contacts/components/contacts-page/contacts-page.component';
 import { PhotosPageComponent } from './google-photos/photos-page/photos-page.component';
+import { EditProfilePageComponent } from './shared/components/edit-profile-page/edit-profile-page.component';
 import { ErrorPageComponent } from './shared/components/error-page/error-page.component';
 import { LoginComponent } from './shared/components/login/login.component';
 import { RegisterComponent } from './shared/components/register/register.component';
@@ -15,6 +16,12 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent,
     canActivate: [UnAuthGuard],
+  },
+
+  {
+    path: 'edit-profile',
+    component: EditProfilePageComponent,
+    canActivate: [AuthGuard],
   },
 
   {

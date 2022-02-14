@@ -47,6 +47,14 @@ $custom-typography: mat.define-typography-config(
   transform: translate(-50%, -50%);
 }
 
+.stretch-width {
+  width: 100%;
+}
+
+.stretch-height {
+  height: 100%;
+}
+
 /* Max width */
 .max-width-500 {
   max-width: 500px;

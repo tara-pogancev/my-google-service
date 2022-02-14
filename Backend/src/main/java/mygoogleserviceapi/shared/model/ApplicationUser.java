@@ -16,7 +16,7 @@ import java.util.Set;
 public class ApplicationUser extends DatabaseEntity {
 
     @Column(name = "firstName", nullable = false)
-    private String name;
+    private String firstName;
 
     @Column(name = "lastName", nullable = false)
     private String lastName;
@@ -36,6 +36,6 @@ public class ApplicationUser extends DatabaseEntity {
     //Todo: Profile picture
 
     public String getFullName() {
-        return name + " " + lastName;
+        return firstName + " " + lastName;
     }
 }

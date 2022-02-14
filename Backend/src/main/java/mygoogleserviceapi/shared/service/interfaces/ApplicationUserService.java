@@ -14,4 +14,6 @@ public interface ApplicationUserService {
     Resource getProfilePicture(Long userId);
 
     ApplicationUser registerNewUser(UserDTO newUser);
+
+    ApplicationUser getById(Long id);
 }

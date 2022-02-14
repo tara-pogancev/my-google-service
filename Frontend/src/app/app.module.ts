@@ -21,6 +21,8 @@ import { ServiceSelectionComponent } from './shared/components/service-selection
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MadeByLabelComponent } from './shared/components/made-by-label/made-by-label.component';
 import { AuthGuard, UnAuthGuard } from './shared/services/auth-guard.service';
+import { EditProfilePageComponent } from './shared/components/edit-profile-page/edit-profile-page.component';
+import { HeaderComponent } from './shared/components/header/header.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { AuthGuard, UnAuthGuard } from './shared/services/auth-guard.service';
     ContactsTableItemComponent,
     ContactsTableComponent,
     MadeByLabelComponent,
+    EditProfilePageComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -41,13 +41,18 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     public ApplicationUser registerNewUser(UserDTO newUser) {
         if ((this.findByEmail(newUser.email) == null)) {
             ApplicationUser user = new ApplicationUser();
-            user.setName(newUser.firstName);
+            user.setFirstName(newUser.firstName);
             user.setLastName(newUser.lastName);
             user.setEmail(newUser.email);
             user.setPassword(new BCryptPasswordEncoder().encode(newUser.password));
             return userRepository.save(user);
 
         } else return null;
+    }
+
+    @Override
+    public ApplicationUser getById(Long id) {
+        return userRepository.getById(id);
     }
 
 
