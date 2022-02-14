@@ -6,10 +6,11 @@ import {
   trigger,
 } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActiveUser } from '../../model/active-user';
 import { AuthenticationRequest } from '../../model/authentication-request';
 import { AuthService } from '../../services/auth.service';
+import { EmailDoesntExistValidator } from '../../services/validator.service';
 
 @Component({
   selector: 'login',
@@ -40,33 +41,46 @@ export class LoginComponent implements OnInit {
   invalidEmail: boolean = false;
   invalidPassword: boolean = false;
   step: number = 1;
+  emailForm: FormGroup = new FormGroup({});
+  passwordForm: FormGroup = new FormGroup({});
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.emailForm = new FormGroup({
+      email: new FormControl(null, {
+        validators: [Validators.required],
+        asyncValidators: [EmailDoesntExistValidator(this.authService)],
+        updateOn: 'submit',
+      }),
+    });
+
+    this.passwordForm = new FormGroup({
+      password: new FormControl(null, {
+        validators: [Validators.required],
+        updateOn: 'submit',
+      }),
+      showPassword: new FormControl(false),
+    });
+  }
 
   setStep(step: number) {
     this.step = step;
   }
 
   checkEmail() {
-    if (this.authRequest.email != '') {
-      this.authService
-        .checkIfEmailExists(this.authRequest)
-        .subscribe((data) => {
-          if (data) {
-            this.invalidEmail = false;
-            this.setStep(2);
-          }
-        });
-    } else {
-      this.invalidEmail = true;
+    if (this.emailForm.valid) {
+      this.invalidEmail = false;
+      this.authRequest.email = this.emailForm.controls.email.value;
+      this.setStep(2);
     }
   }
 
   login() {
+    this.authRequest.password = this.passwordForm.controls.password.value;
     this.authService.login(this.authRequest).subscribe(
       (data) => {
+        this.invalidPassword = false;
         this.successfulLogin(data);
       },
       (err) => {

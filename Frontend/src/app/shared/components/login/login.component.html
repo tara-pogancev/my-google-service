@@ -1,115 +1,134 @@
 <div class="centered-content">
   <div *ngIf="step == 1">
-    <div
-      class="container is-flex is-flex-direction-column is-align-items-center is-justify-content-space-between"
-    >
-      <div @fade1>
-        <div class="is-flex is-flex-direction-column is-align-items-center">
-          <img
-            src="../../../../assets/google.svg"
-            width="75px"
-            class="image mb-2"
-          />
-          <h1>Sign in</h1>
-          <h3 class="negative-margin">Use your Google Account</h3>
-
-          <mat-form-field appearance="outline" class="mx-1">
-            <mat-label>Email address</mat-label>
-            <input
-              matInput
-              placeholder="email@example.com"
-              [(ngModel)]="authRequest.email"
-              (keyup.enter)="checkEmail()"
+    <form [formGroup]="emailForm" (ngSubmit)="checkEmail()">
+      <input type="submit" style="display: none" />
+      <div class="container">
+        <div
+          id="step1"
+          class="is-flex is-flex-direction-column is-align-items-center is-justify-content-space-between stretch-height"
+          @fade1
+        >
+          <div class="is-flex is-flex-direction-column is-align-items-center">
+            <img
+              src="../../../../assets/google.svg"
+              width="75px"
+              class="image mb-2"
             />
-          </mat-form-field>
+            <h1>Sign in</h1>
+            <h3 class="negative-margin">Use your Google Account</h3>
+
+            <mat-form-field appearance="outline" class="mx-1">
+              <mat-label>Email address</mat-label>
+              <input
+                matInput
+                formControlName="email"
+                placeholder="email@example.com"
+                (keyup.enter)="checkEmail()"
+              />
+              <mat-error
+                *ngIf="emailForm.get('email')!.hasError('emailDoesntExist')"
+                >Email address does not exist</mat-error
+              >
+            </mat-form-field>
+
+            <div
+              class="is-flex is-align-items-flex-start is-flex-direction-column stretch-width"
+            >
+              <a class="mb-5" [matMenuTriggerFor]="menu">Forgot your email?</a>
+              <mat-menu #menu="matMenu">
+                <div class="p-3">
+                  <p><strong>Test account:</strong></p>
+                  <p>zack@gmail.com<br />123</p>
+                </div>
+              </mat-menu>
+            </div>
+          </div>
 
           <div
             class="is-flex is-align-items-flex-start is-flex-direction-column stretch-width"
           >
-            <a class="mb-5 negative-margin">Forgot your email?</a>
+            <p>
+              Not your computer? Use Guest mode to sign in privately. <br />
+              <a
+                href="https://support.google.com/chrome/answer/6130773?hl=en-GB"
+                target="_blank"
+                >Learn more</a
+              >
+            </p>
+          </div>
+
+          <div
+            class="is-flex is-flex-direction-row is-justify-content-space-between stretch-width"
+          >
+            <button mat-flat-button (click)="redirectCreateAccount()">
+              Create account
+            </button>
+
+            <button mat-flat-button color="primary" type="submit">Next</button>
           </div>
         </div>
-
-        <div
-          class="is-flex is-align-items-flex-start is-flex-direction-column stretch-width"
-        >
-          <p>
-            Not your computer? Use Guest mode to sign in privately. <br />
-            <a
-              href="https://support.google.com/chrome/answer/6130773?hl=en-GB"
-              target="_blank"
-              >Learn more</a
-            >
-          </p>
-        </div>
-
-        <div
-          class="is-flex is-flex-direction-row is-justify-content-space-between stretch-width"
-        >
-          <button mat-flat-button (click)="redirectCreateAccount()">
-            Create account
-          </button>
-
-          <button mat-flat-button color="primary" (click)="checkEmail()">
-            Next
-          </button>
-        </div>
       </div>
-
-      <p class="alert" *ngIf="invalidEmail">Not a valid email</p>
-    </div>
+    </form>
   </div>
 
   <div *ngIf="step == 2">
-    <div
-      class="container is-flex is-flex-direction-column is-align-items-center"
-    >
-      <div @fade2>
-        <div class="is-flex is-flex-direction-column is-align-items-center">
-          <img
-            src="../../../../assets/google.svg"
-            width="75px"
-            class="image mb-2"
-          />
-          <h1>Welcome</h1>
-          <button
-            mat-stroked-button
-            class="negative-margin mb-5"
-            (click)="goBack()"
-          >
-            <mat-icon>person_outline</mat-icon>
-            {{ authRequest.email }}
-          </button>
-
-          <mat-form-field appearance="outline" class="mx-1 mt-5">
-            <mat-label>Enter your password</mat-label>
-            <input
-              type="password"
-              matInput
-              [(ngModel)]="authRequest.password"
-              (keyup.enter)="login()"
+    <div class="container">
+      <div
+        id="step1"
+        class="is-flex is-flex-direction-column is-align-items-center stretch-height is-justify-content-space-between"
+        @fade2
+      >
+        <form [formGroup]="passwordForm" (ngSubmit)="login()">
+          <input type="submit" style="display: none" />
+          <div class="is-flex is-flex-direction-column is-align-items-center">
+            <img
+              src="../../../../assets/google.svg"
+              width="75px"
+              class="image mb-2"
             />
-          </mat-form-field>
+            <h1>Welcome</h1>
+            <button
+              mat-stroked-button
+              class="negative-margin mb-5"
+              (click)="goBack()"
+            >
+              <mat-icon>person_outline</mat-icon>
+              {{ authRequest.email }}
+            </button>
+
+            <mat-form-field appearance="outline" class="mx-1 mt-5">
+              <mat-label>Enter your password</mat-label>
+              <input
+                [type]="
+                  passwordForm.controls.showPassword.value ? 'text' : 'password'
+                "
+                matInput
+                formControlName="password"
+              />
+            </mat-form-field>
+
+            <div
+              class="is-flex is-align-items-flex-start is-flex-direction-column stretch-width"
+            >
+              <mat-checkbox formControlName="showPassword"
+                >Show password</mat-checkbox
+              >
+            </div>
+          </div>
 
           <div
-            class="is-flex is-align-items-flex-start is-flex-direction-column stretch-width"
+            class="is-flex is-flex-direction-row is-justify-content-space-between stretch-width mt-5 pt-5"
           >
-            <mat-checkbox class="example-margin">Show password</mat-checkbox>
+            <div matTooltip="This option is not available.">
+              <button mat-flat-button disabled>Forgot password?</button>
+            </div>
+
+            <button mat-flat-button color="primary" type="submit">Next</button>
           </div>
-        </div>
+        </form>
 
-        <div
-          class="is-flex is-flex-direction-row is-justify-content-space-between stretch-width mt-5 pt-5"
-        >
-          <button mat-flat-button disabled>Forgot password?</button>
-
-          <button mat-flat-button color="primary" (click)="login()">
-            Next
-          </button>
-        </div>
+        <p class="alert" *ngIf="invalidPassword">Incorrect password</p>
       </div>
-
-      <p class="alert mt-5 pt-5" *ngIf="invalidPassword">Invalid password</p>
     </div>
   </div>
 

@@ -32,3 +32,40 @@ export function EmailTakenValidator(
       .pipe(map((result) => (result ? { emailIsTaken: true } : null)));
   };
 }
+
+export function EmailDoesntExistValidator(
+  authService: AuthService
+): AsyncValidatorFn {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+    let email = '';
+    if (control.value != null) email = control.value;
+    let request = new AuthenticationRequest(email, 'password');
+
+    return authService
+      .checkIfEmailExists(request)
+      .pipe(map((result) => (result ? null : { emailDoesntExist: true })));
+  };
+}
+
+/*
+export function IncorrectPasswordValidator(
+  authService: AuthService,
+  email: string
+): AsyncValidatorFn {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+    let password = '';
+    if (control.value != null) password = control.value;
+    let request = new AuthenticationRequest(email, password);
+
+    console.log(request);
+
+    return authService
+      .login(request)
+      .pipe(
+        map((response) =>
+          response.headers['status'] == 401 ? { incorrectPassword: true } : null
+        )
+      );
+  };
+}
+*/
