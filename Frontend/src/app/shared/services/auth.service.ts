@@ -37,7 +37,9 @@ export class AuthService {
   }
 
   isUserLoggedIn() {
-    return this.getCurrentUser().jwt != '';
+    if (this.getCurrentUser() != null) {
+      return this.getCurrentUser().jwt != '';
+    } else return false;
   }
 
   getHeaders() {
