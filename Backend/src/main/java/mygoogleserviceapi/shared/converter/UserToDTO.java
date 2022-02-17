@@ -1,6 +1,6 @@
 package mygoogleserviceapi.shared.converter;
 
-import mygoogleserviceapi.shared.dto.response.UserDTO;
+import mygoogleserviceapi.shared.dto.UserDTO;
 import mygoogleserviceapi.shared.model.ApplicationUser;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;

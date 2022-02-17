@@ -1,12 +1,17 @@
 package mygoogleserviceapi.shared.service;
 
 import lombok.RequiredArgsConstructor;
-import mygoogleserviceapi.shared.dto.response.UserDTO;
+import mygoogleserviceapi.security.JwtUtil;
+import mygoogleserviceapi.shared.dto.ChangePasswordDTO;
+import mygoogleserviceapi.shared.dto.UserDTO;
 import mygoogleserviceapi.shared.model.ApplicationUser;
 import mygoogleserviceapi.shared.repository.ApplicationUserRepository;
 import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
 import mygoogleserviceapi.shared.service.interfaces.FileStorageService;
 import org.springframework.core.io.Resource;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -16,8 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class ApplicationUserServiceImpl implements ApplicationUserService {
 
-    private final ApplicationUserRepository userRepository;
+    private final JwtUtil jwtUtil;
     private final FileStorageService fileStorageService;
+    private final ApplicationUserRepository userRepository;
 
     @Override
     public ApplicationUser findByEmail(String email) {
@@ -53,6 +59,35 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     @Override
     public ApplicationUser getById(Long id) {
         return userRepository.getById(id);
+    }
+
+    @Override
+    public ApplicationUser changeName(UserDTO dto, String jwt) {
+        ApplicationUser user = getUserByJwt(jwt);
+        if (user != null) {
+            user.setFirstName(dto.firstName);
+            user.setLastName(dto.lastName);
+            userRepository.save(user);
+        }
+        return user;
+    }
+
+    @Override
+    public ApplicationUser getUserByJwt(String jwt) {
+        jwt = jwt.substring(7);
+        String email = jwtUtil.extractUsername(jwt);
+        return findByEmail(email);
+    }
+
+    @Override
+    public ApplicationUser changePassword(ChangePasswordDTO dto, String jwt) throws Exception {
+        ApplicationUser user = getUserByJwt(jwt);
+        if (user != null) {
+            dto.password = new BCryptPasswordEncoder().encode(dto.password);
+            user.setPassword(dto.password);
+            userRepository.save(user);
+        }
+        return user;
     }
 
 

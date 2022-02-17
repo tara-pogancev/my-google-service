@@ -107,21 +107,28 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title> Name </mat-panel-title>
-            <mat-panel-description> Tara Pogancev </mat-panel-description>
+            <mat-panel-description>
+              {{ user.firstName }} {{ user.lastName }}
+            </mat-panel-description>
           </mat-expansion-panel-header>
 
-          <form>
+          <form [formGroup]="nameChangeForm" (ngSubmit)="changeName()">
             <mat-form-field appearance="fill">
               <mat-label>First name</mat-label>
-              <input matInput />
+              <input matInput formControlName="firstName" />
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="ml-5">
               <mat-label>Last name</mat-label>
-              <input matInput />
+              <input matInput formControlName="lastName" />
             </mat-form-field>
             <mat-action-row>
-              <button mat-flat-button color="primary" type="submit">
+              <button
+                mat-flat-button
+                color="primary"
+                type="submit"
+                [disabled]="!nameChangeForm.touched || !nameChangeForm.valid"
+              >
                 Save
               </button>
             </mat-action-row>
@@ -223,23 +230,64 @@
               Your personal key used to gain admission
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <form>
+          <form [formGroup]="passwordChangeForm" (ngSubmit)="changePassword()">
             <mat-form-field appearance="fill">
               <mat-label>Old password</mat-label>
-              <input matInput type="password" autocomplete="false" />
+              <input
+                matInput
+                type="password"
+                autocomplete="false"
+                formControlName="oldPassword"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="ml-5">
               <mat-label>New password</mat-label>
-              <input matInput type="password" autocomplete="false" />
+              <input
+                matInput
+                type="password"
+                autocomplete="false"
+                formControlName="password"
+              />
             </mat-form-field>
 
             <mat-form-field appearance="fill" class="ml-5">
               <mat-label>Confirm password</mat-label>
-              <input matInput type="password" autocomplete="false" />
+              <input
+                matInput
+                type="password"
+                autocomplete="false"
+                formControlName="confirmPassword"
+              />
+              <mat-error
+                *ngIf="
+                  passwordChangeForm.get('confirmPassword')!.errors
+                    ?.confirmFailed
+                "
+              >
+                Passwords do not match
+              </mat-error>
             </mat-form-field>
+
+            <div class="mt-5"></div>
+            <mat-hint align="start"
+              >Use 8 or more characters with a mix of letters, numbers & symbols
+            </mat-hint>
+            <span
+              class="is-flex is-align-items-center alert"
+              *ngIf="invalidPassword"
+              >Invalid password.</span
+            >
+
             <mat-action-row>
-              <button mat-flat-button color="primary" type="submit">
+              <button
+                mat-flat-button
+                color="primary"
+                type="submit"
+                [disabled]="
+                  !passwordChangeForm.touched || !passwordChangeForm.valid
+                "
+              >
                 Save
               </button>
             </mat-action-row>

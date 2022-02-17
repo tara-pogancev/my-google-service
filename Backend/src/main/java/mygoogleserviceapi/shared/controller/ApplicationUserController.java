@@ -3,8 +3,9 @@ package mygoogleserviceapi.shared.controller;
 
 import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.shared.converter.DataConverter;
+import mygoogleserviceapi.shared.dto.ChangePasswordDTO;
 import mygoogleserviceapi.shared.dto.response.ProfilePictureResponseDTO;
-import mygoogleserviceapi.shared.dto.response.UserDTO;
+import mygoogleserviceapi.shared.dto.UserDTO;
 import mygoogleserviceapi.shared.model.ApplicationUser;
 import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
 import mygoogleserviceapi.shared.validator.annotation.ValidProfilePicture;
@@ -12,14 +13,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -56,5 +51,22 @@ public class ApplicationUserController {
             return new ResponseEntity<>(converter.convert(user, UserDTO.class), HttpStatus.OK);
         } else return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
+
+    @PutMapping("/change-name")
+    public ResponseEntity<?> changeName(@RequestBody UserDTO dto, @RequestHeader (name="Authorization") String jwt) {
+        ApplicationUser changedUser = applicationUserService.changeName(dto, jwt);
+        if (changedUser != null) {
+            return new ResponseEntity<>(converter.convert(changedUser, UserDTO.class), HttpStatus.OK);
+        } else return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<?> changePassword(@RequestBody ChangePasswordDTO dto, @RequestHeader (name="Authorization") String jwt) throws Exception {
+        ApplicationUser changedUser = applicationUserService.changePassword(dto, jwt);
+        if (changedUser != null) {
+            return new ResponseEntity<>(converter.convert(changedUser, UserDTO.class), HttpStatus.OK);
+        } else return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
 }
 

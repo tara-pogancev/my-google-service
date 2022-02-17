@@ -67,7 +67,7 @@ export class RegisterComponent implements OnInit {
 
     this.profileForm
       .get('confirmPassword')!
-      .setValidators(ConfirmedValidator('password'));
+      .addValidators(ConfirmedValidator('password'));
   }
 
   redirectLogin() {

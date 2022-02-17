@@ -1,4 +1,4 @@
-package mygoogleserviceapi.shared.dto.response;
+package mygoogleserviceapi.shared.dto;
 
 import lombok.Data;
 

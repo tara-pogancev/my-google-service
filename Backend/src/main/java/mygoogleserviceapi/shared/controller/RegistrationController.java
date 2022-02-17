@@ -1,7 +1,7 @@
 package mygoogleserviceapi.shared.controller;
 
 import lombok.RequiredArgsConstructor;
-import mygoogleserviceapi.shared.dto.response.UserDTO;
+import mygoogleserviceapi.shared.dto.UserDTO;
 import mygoogleserviceapi.shared.model.ApplicationUser;
 import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
 import org.springframework.http.HttpStatus;
