@@ -52,21 +52,45 @@
             ></profile-picture>
           </mat-expansion-panel-header>
 
-          <form>
+          <form (ngSubmit)="setPicture()">
             <div class="file has-name mb-5">
               <label class="file-label">
-                <input class="file-input" type="file" name="resume" />
+                <input
+                  class="file-input"
+                  type="file"
+                  id="file-input"
+                  (change)="handleFileInput($any($event).target.files)"
+                  required
+                />
                 <span class="file-cta">
                   <span class="file-icon">
                     <mat-icon>upload</mat-icon>
                   </span>
                   <span class="file-label"> Choose a file… </span>
                 </span>
-                <span class="file-name is-flex is-align-items-center pr-5">
+                <span
+                  *ngIf="fileToUpload == null"
+                  class="file-name is-flex is-align-items-center pr-5"
+                >
                   No file selected.
                 </span>
+                <span
+                  *ngIf="fileToUpload != null"
+                  class="file-name is-flex is-align-items-center pr-5"
+                >
+                  {{ fileToUpload.name }}
+                </span>
               </label>
+              <span
+                class="is-flex is-align-items-center ml-5 alert"
+                *ngIf="invalidPicture"
+                >Invalid picture.</span
+              >
             </div>
+            <p>
+              Picture must have square dimensions, and be either JPG, JPEG or
+              PNG.
+            </p>
 
             <mat-action-row>
               <button mat-flat-button color="primary" type="submit">
@@ -178,9 +202,9 @@
 
     <div class="container">
       <div>
-        <h2>Basic info</h2>
+        <h2>Security</h2>
         <p>
-          Some info may be visible to other people using Google services.
+          A secure password helps protect your Google Account
           <a
             href="https://support.google.com/accounts/answer/6304920?hl=en-GB"
             target="_blank"

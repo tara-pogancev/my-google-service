@@ -51,6 +51,14 @@ export class AuthService {
     return headers;
   }
 
+  getHeadersMultipart() {
+    const jwt = this.getCurrentUser().jwt;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ` + jwt,
+    });
+    return headers;
+  }
+
   checkIfEmailExists(request: AuthenticationRequest): Observable<boolean> {
     return this._http.post<boolean>(this.url + '/email-exists', request);
   }

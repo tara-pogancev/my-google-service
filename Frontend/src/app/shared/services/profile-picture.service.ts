@@ -21,7 +21,7 @@ export class ProfilePictureService {
   }
 
   postProfilePicture(userId: number, formData: FormData) {
-    const headers = this.authService.getHeaders();
+    const headers = this.authService.getHeadersMultipart();
     return this.http.post(
       `${this.baseUrl}users/${userId}/profile-picture`,
       formData,
