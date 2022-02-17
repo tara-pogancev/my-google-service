@@ -45,12 +45,11 @@
             <mat-panel-description>
               A photo helps personalise your account
             </mat-panel-description>
-
-            <img
-              src="../../../../assets/Google_Contacts.png"
-              width="48px"
+            <profile-picture
+              [id]="user.id"
+              size="48"
               class="mr-5"
-            />
+            ></profile-picture>
           </mat-expansion-panel-header>
 
           <form>

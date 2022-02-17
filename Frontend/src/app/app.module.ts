@@ -24,6 +24,7 @@ import { AuthGuard, UnAuthGuard } from './shared/services/auth-guard.service';
 import { EditProfilePageComponent } from './shared/components/edit-profile-page/edit-profile-page.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { GapComponent } from './shared/components/gap/gap.component';
+import { ProfilePictureComponent } from './shared/components/profile-picture/profile-picture.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { GapComponent } from './shared/components/gap/gap.component';
     EditProfilePageComponent,
     HeaderComponent,
     GapComponent,
+    ProfilePictureComponent,
   ],
   imports: [
     BrowserModule,
