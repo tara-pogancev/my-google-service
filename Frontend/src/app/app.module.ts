@@ -23,6 +23,7 @@ import { MadeByLabelComponent } from './shared/components/made-by-label/made-by-
 import { AuthGuard, UnAuthGuard } from './shared/services/auth-guard.service';
 import { EditProfilePageComponent } from './shared/components/edit-profile-page/edit-profile-page.component';
 import { HeaderComponent } from './shared/components/header/header.component';
+import { GapComponent } from './shared/components/gap/gap.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { HeaderComponent } from './shared/components/header/header.component';
     MadeByLabelComponent,
     EditProfilePageComponent,
     HeaderComponent,
+    GapComponent,
   ],
   imports: [
     BrowserModule,

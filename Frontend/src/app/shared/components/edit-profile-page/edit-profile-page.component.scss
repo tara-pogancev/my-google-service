@@ -1,0 +1,25 @@
+.title {
+  font-size: 1.75rem;
+  font-weight: 400;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+}
+
+.photo-panel {
+  min-height: 90px !important;
+}
+
+mat-panel-title {
+  align-self: center;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 0.8rem;
+  color: rgb(77, 77, 77);
+}

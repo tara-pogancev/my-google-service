@@ -1,2 +1,231 @@
 <header></header>
-<div class="centered-content">ahja</div>
+<div class="is-flex is-flex-direction-column is-align-items-center my-5">
+  <div class="max-width-900">
+    <div class="is-flex is-flex-direction-column is-align-items-center mt-5">
+      <h1 class="title">Personal info</h1>
+      <p>Info about you and your preferences across Google services</p>
+    </div>
+    <gap></gap>
+
+    <div class="columns">
+      <div class="column">
+        <h1 class="title">Your profile info in Google services</h1>
+        <p>
+          Personal info and options to manage it. You can make some of this
+          info, like your contact details, visible to others so that they can
+          reach you easily.
+        </p>
+      </div>
+      <div
+        class="column is-flex is-flex-direction-column is-align-items-center"
+      >
+        <img src="../../../../assets/Google_Personal_info.png" />
+      </div>
+    </div>
+
+    <div class="container">
+      <div>
+        <h2>Basic info</h2>
+        <p>
+          Some info may be visible to other people using Google services.
+          <a
+            href="https://support.google.com/accounts/answer/6304920?hl=en-GB"
+            target="_blank"
+            >Find out more</a
+          >
+        </p>
+      </div>
+
+      <gap></gap>
+
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header class="photo-panel">
+            <mat-panel-title> Photo </mat-panel-title>
+            <mat-panel-description>
+              A photo helps personalise your account
+            </mat-panel-description>
+
+            <img
+              src="../../../../assets/Google_Contacts.png"
+              width="48px"
+              class="mr-5"
+            />
+          </mat-expansion-panel-header>
+
+          <form>
+            <div class="file has-name mb-5">
+              <label class="file-label">
+                <input class="file-input" type="file" name="resume" />
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <mat-icon>upload</mat-icon>
+                  </span>
+                  <span class="file-label"> Choose a file… </span>
+                </span>
+                <span class="file-name is-flex is-align-items-center pr-5">
+                  No file selected.
+                </span>
+              </label>
+            </div>
+
+            <mat-action-row>
+              <button mat-flat-button color="primary" type="submit">
+                Save
+              </button>
+            </mat-action-row>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <gap height="10"></gap>
+
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Name </mat-panel-title>
+            <mat-panel-description> Tara Pogancev </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          <form>
+            <mat-form-field appearance="fill">
+              <mat-label>First name</mat-label>
+              <input matInput />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="ml-5">
+              <mat-label>Last name</mat-label>
+              <input matInput />
+            </mat-form-field>
+            <mat-action-row>
+              <button mat-flat-button color="primary" type="submit">
+                Save
+              </button>
+            </mat-action-row>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <gap></gap>
+
+      <div>
+        <h2>Contact info</h2>
+        <mat-accordion class="example-headers-align">
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title> Email </mat-panel-title>
+              <mat-panel-description> tp@gmail.com </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <p>
+              This is you <strong>primary email</strong>. You cannot change it.
+            </p>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <gap height="10"> </gap>
+
+        <mat-accordion class="example-headers-align">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title> Phone </mat-panel-title>
+              <mat-panel-description> 0 phone numbers </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <form>
+              <div *ngFor="let phone of phoneContacts">
+                <mat-form-field appearance="standard" class="mr-5">
+                  <mat-label>Phone number</mat-label>
+                  <input matInput value="123" />
+                </mat-form-field>
+                <mat-form-field appearance="standard">
+                  <mat-select value="home">
+                    <mat-option value="home">Home</mat-option>
+                    <mat-option value="work">Work</mat-option>
+                    <mat-option value="other">Other</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <mat-action-row>
+                <button
+                  mat-flat-button
+                  color="primary"
+                  (click)="addContact()"
+                  [disabled]="!canAddNewContact"
+                >
+                  Add new
+                </button>
+                <button mat-flat-button color="primary">Save</button>
+              </mat-action-row>
+            </form>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+
+    <gap></gap>
+
+    <div class="columns">
+      <div class="column">
+        <h1 class="title">Other info and preferences for Google services</h1>
+        <p>Ways to verify that it's you and settings for the web</p>
+      </div>
+      <div
+        class="column is-flex is-flex-direction-column is-align-items-center"
+      >
+        <img src="../../../../assets/Google_Items.png" />
+      </div>
+    </div>
+
+    <div class="container">
+      <div>
+        <h2>Basic info</h2>
+        <p>
+          Some info may be visible to other people using Google services.
+          <a
+            href="https://support.google.com/accounts/answer/6304920?hl=en-GB"
+            target="_blank"
+            >Find out more</a
+          >
+        </p>
+      </div>
+
+      <gap></gap>
+
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Password </mat-panel-title>
+            <mat-panel-description>
+              Your personal key used to gain admission
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <form>
+            <mat-form-field appearance="fill">
+              <mat-label>Old password</mat-label>
+              <input matInput type="password" autocomplete="false" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="ml-5">
+              <mat-label>New password</mat-label>
+              <input matInput type="password" autocomplete="false" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="ml-5">
+              <mat-label>Confirm password</mat-label>
+              <input matInput type="password" autocomplete="false" />
+            </mat-form-field>
+            <mat-action-row>
+              <button mat-flat-button color="primary" type="submit">
+                Save
+              </button>
+            </mat-action-row>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <gap height="150" class="my-5"></gap>
+    <gap></gap>
+  </div>
+</div>
