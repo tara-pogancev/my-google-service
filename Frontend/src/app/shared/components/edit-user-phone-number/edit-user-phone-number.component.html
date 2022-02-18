@@ -20,6 +20,7 @@
       mat-menu-item
       type="button"
       [disabled]="!mobileNumberForm.valid || !mobileNumberForm.touched"
+      (click)="changeContact()"
     >
       <mat-icon>check</mat-icon>
       <span>Save changes</span>
