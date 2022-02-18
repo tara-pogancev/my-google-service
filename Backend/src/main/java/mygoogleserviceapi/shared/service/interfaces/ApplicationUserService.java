@@ -23,4 +23,6 @@ public interface ApplicationUserService {
     ApplicationUser getUserByJwt(String jwt);
 
     ApplicationUser changePassword(ChangePasswordDTO dto, String jwt) throws Exception;
+
+    ApplicationUser setDefaultApplication(String app, String jwt);
 }

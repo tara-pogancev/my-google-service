@@ -45,4 +45,12 @@ export class UserService {
       headers: headers,
     });
   }
+
+  changeDefaultApplication(app: String) {
+    const url = this.url + '/set-default-application/' + app;
+    const headers = this.authService.getHeaders();
+    return this._http.put<any>(url, null, {
+      headers: headers,
+    });
+  }
 }

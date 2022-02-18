@@ -3,6 +3,7 @@ export class ActiveUser {
     public id: number = -1,
     public name: string = '',
     public jwt: string = '',
-    public email: string = ''
+    public email: string = '',
+    public defaultApplication: string = ''
   ) {}
 }

@@ -10,6 +10,7 @@ public class AuthenticationResponse {
     private String jwt;
     private String name;
     private String email;
+    private String defaultApplication;
     private Long id;
 
 }
