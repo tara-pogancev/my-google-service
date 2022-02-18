@@ -144,7 +144,7 @@
           <mat-expansion-panel hideToggle>
             <mat-expansion-panel-header>
               <mat-panel-title> Email </mat-panel-title>
-              <mat-panel-description> tp@gmail.com </mat-panel-description>
+              <mat-panel-description> {{ user.email }} </mat-panel-description>
             </mat-expansion-panel-header>
 
             <p>
@@ -159,35 +159,25 @@
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title> Phone </mat-panel-title>
-              <mat-panel-description> 0 phone numbers </mat-panel-description>
+              <mat-panel-description>
+                {{ phoneNumberMessage }}
+              </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <form>
-              <div *ngFor="let phone of phoneContacts">
-                <mat-form-field appearance="standard" class="mr-5">
-                  <mat-label>Phone number</mat-label>
-                  <input matInput value="123" />
-                </mat-form-field>
-                <mat-form-field appearance="standard">
-                  <mat-select value="home">
-                    <mat-option value="home">Home</mat-option>
-                    <mat-option value="work">Work</mat-option>
-                    <mat-option value="other">Other</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-              <mat-action-row>
-                <button
-                  mat-flat-button
-                  color="primary"
-                  (click)="addContact()"
-                  [disabled]="!canAddNewContact"
-                >
-                  Add new
-                </button>
-                <button mat-flat-button color="primary">Save</button>
-              </mat-action-row>
-            </form>
+            <p *ngIf="user.phoneNumbers.length == 0">No phone numbers added.</p>
+
+            <div *ngFor="let phone of user.phoneNumbers">
+              <edit-user-phone-number
+                [phone]="phone"
+                (doRefreshUser)="refreshUser()"
+              ></edit-user-phone-number>
+            </div>
+
+            <mat-action-row>
+              <button mat-flat-button color="primary" (click)="addContact()">
+                Add new
+              </button>
+            </mat-action-row>
           </mat-expansion-panel>
         </mat-accordion>
       </div>

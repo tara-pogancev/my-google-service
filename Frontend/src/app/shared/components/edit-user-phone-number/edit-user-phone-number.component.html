@@ -1,0 +1,36 @@
+<form [formGroup]="mobileNumberForm">
+  <mat-form-field appearance="standard" class="mr-5">
+    <mat-label>Phone number</mat-label>
+    <input matInput formControlName="phoneNumber" />
+  </mat-form-field>
+
+  <mat-form-field appearance="standard">
+    <mat-select formControlName="type">
+      <mat-option value="HOME">Home</mat-option>
+      <mat-option value="WORK">Work</mat-option>
+      <mat-option value="OTHER">Other</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="ml-5">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button
+      mat-menu-item
+      type="button"
+      [disabled]="!mobileNumberForm.valid || !mobileNumberForm.touched"
+    >
+      <mat-icon>check</mat-icon>
+      <span>Save changes</span>
+    </button>
+    <button mat-menu-item type="button" (click)="deleteContact()">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </mat-menu>
+
+  <span class="gray-text" *ngIf="mobileNumberForm.touched"
+    >Save changes before exiting.</span
+  >
+</form>

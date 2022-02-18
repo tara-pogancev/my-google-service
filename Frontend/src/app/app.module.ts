@@ -21,10 +21,14 @@ import { ServiceSelectionComponent } from './shared/components/service-selection
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MadeByLabelComponent } from './shared/components/made-by-label/made-by-label.component';
 import { AuthGuard, UnAuthGuard } from './shared/services/auth-guard.service';
-import { EditProfilePageComponent } from './shared/components/edit-profile-page/edit-profile-page.component';
+import {
+  CreateNewUserPhoneDialog,
+  EditProfilePageComponent,
+} from './shared/components/edit-profile-page/edit-profile-page.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { GapComponent } from './shared/components/gap/gap.component';
 import { ProfilePictureComponent } from './shared/components/profile-picture/profile-picture.component';
+import { EditUserPhoneNumberComponent } from './shared/components/edit-user-phone-number/edit-user-phone-number.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +51,8 @@ import { ProfilePictureComponent } from './shared/components/profile-picture/pro
     HeaderComponent,
     GapComponent,
     ProfilePictureComponent,
+    EditUserPhoneNumberComponent,
+    CreateNewUserPhoneDialog,
   ],
   imports: [
     BrowserModule,
@@ -57,7 +63,6 @@ import { ProfilePictureComponent } from './shared/components/profile-picture/pro
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    
   ],
   providers: [AuthGuard, UnAuthGuard],
   bootstrap: [AppComponent],

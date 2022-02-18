@@ -1,0 +1,30 @@
+<form [formGroup]="mobileNumberForm" (ngSubmit)="addContact()">
+  <h1 mat-dialog-title>New phone number</h1>
+  <div mat-dialog-content>
+    <mat-form-field appearance="standard" class="mr-5">
+      <mat-label>Phone number</mat-label>
+      <input matInput formControlName="phoneNumber" />
+    </mat-form-field>
+
+    <mat-form-field appearance="standard">
+      <mat-select formControlName="type">
+        <mat-option value="HOME">Home</mat-option>
+        <mat-option value="WORK">Work</mat-option>
+        <mat-option value="OTHER">Other</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-flat-button type="button" (click)="onNoClick()">Cancel</button>
+    <button
+      mat-flat-button
+      color="primary"
+      mat-buttoncdkFocusInitial
+      type="submit"
+      [disabled]="
+      !mobileNumberForm.valid"
+    >
+      Ok
+    </button>
+  </div>
+</form>
