@@ -84,6 +84,7 @@ export class EditProfilePageComponent implements OnInit {
       defaultApplicationValue = defaultApplicationValue.replace('_', '-');
       this.defaultApplication.setValue(defaultApplicationValue);
 
+      this.user.phoneNumbers = this.sortPhoneNumbers(this.user.phoneNumbers);
       this.setPhoneNumberMessage();
     });
   }
@@ -196,6 +197,7 @@ export class EditProfilePageComponent implements OnInit {
     this.userService.getCurrentUser().subscribe((data) => {
       this.user = data;
       this.setPhoneNumberMessage();
+      this.user.phoneNumbers = this.sortPhoneNumbers(this.user.phoneNumbers);
     });
   }
 
@@ -209,6 +211,16 @@ export class EditProfilePageComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       this.refreshUser();
+    });
+  }
+
+  sortPhoneNumbers(entities: any[]) {
+    return entities.sort((n1, n2) => {
+      if (n1.id < n2.id) {
+        return 1;
+      } else {
+        return -1;
+      }
     });
   }
 }
@@ -229,7 +241,7 @@ export class CreateNewUserPhoneDialog implements OnInit {
   ngOnInit(): void {
     this.mobileNumberForm = new FormGroup({
       phoneNumber: new FormControl(null, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.pattern('[0-9-+]+')],
         updateOn: 'change',
       }),
       type: new FormControl('OTHER', {

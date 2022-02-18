@@ -18,7 +18,7 @@ export class EditUserPhoneNumberComponent implements OnInit {
   ngOnInit(): void {
     this.mobileNumberForm = new FormGroup({
       phoneNumber: new FormControl(this.phone.phoneNumber, {
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.pattern('[0-9-+]+')],
         updateOn: 'change',
       }),
       type: new FormControl(this.phone.type, {
