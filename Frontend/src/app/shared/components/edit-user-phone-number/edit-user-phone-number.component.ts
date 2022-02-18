@@ -38,5 +38,13 @@ export class EditUserPhoneNumberComponent implements OnInit {
     }
   }
 
-  changeContact() {}
+  changeContact() {
+    let dto = new UserPhoneNumber();
+    dto.id = this.phone.id;
+    dto.phoneNumber = this.mobileNumberForm.controls.phoneNumber.value;
+    dto.type = this.mobileNumberForm.controls.type.value;
+    this.userService.changeUserPhoneNumber(dto).subscribe((data) => {
+      this.doRefreshUser.emit(null);
+    });
+  }
 }
