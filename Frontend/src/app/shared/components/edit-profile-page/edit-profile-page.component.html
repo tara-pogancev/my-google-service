@@ -164,20 +164,24 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <p *ngIf="user.phoneNumbers.length == 0">No phone numbers added.</p>
+            <form>
+              <p *ngIf="user.phoneNumbers.length == 0">
+                No phone numbers added.
+              </p>
 
-            <div *ngFor="let phone of user.phoneNumbers">
-              <edit-user-phone-number
-                [phone]="phone"
-                (doRefreshUser)="refreshUser()"
-              ></edit-user-phone-number>
-            </div>
+              <div *ngFor="let phone of user.phoneNumbers">
+                <edit-user-phone-number
+                  [phone]="phone"
+                  (doRefreshUser)="refreshUser()"
+                ></edit-user-phone-number>
+              </div>
 
-            <mat-action-row>
-              <button mat-flat-button color="primary" (click)="addContact()">
-                Add new
-              </button>
-            </mat-action-row>
+              <mat-action-row>
+                <button mat-flat-button color="primary" (click)="addContact()">
+                  Add new
+                </button>
+              </mat-action-row>
+            </form>
           </mat-expansion-panel>
         </mat-accordion>
       </div>
