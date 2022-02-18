@@ -4,14 +4,12 @@ import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.security.JwtUtil;
 import mygoogleserviceapi.shared.dto.ChangePasswordDTO;
 import mygoogleserviceapi.shared.dto.UserDTO;
+import mygoogleserviceapi.shared.enumeration.DefaultApplicationEnum;
 import mygoogleserviceapi.shared.model.ApplicationUser;
 import mygoogleserviceapi.shared.repository.ApplicationUserRepository;
 import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
 import mygoogleserviceapi.shared.service.interfaces.FileStorageService;
 import org.springframework.core.io.Resource;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,7 +28,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
         if (email.isEmpty())
             return null;
 
-        return userRepository.findUserByEmail(email.toLowerCase().replaceAll("\\s+",""));
+        return userRepository.findUserByEmail(email.toLowerCase().replaceAll("\\s+", ""));
     }
 
     @Override
@@ -86,6 +84,17 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
             dto.password = new BCryptPasswordEncoder().encode(dto.password);
             user.setPassword(dto.password);
             userRepository.save(user);
+        }
+        return user;
+    }
+
+    @Override
+    public ApplicationUser setDefaultApplication(String app, String jwt) {
+        ApplicationUser user = getUserByJwt(jwt);
+        if (user != null) {
+            user.setDefaultApplication(DefaultApplicationEnum.getEnumFromString(app));
+            userRepository.save(user);
+
         }
         return user;
     }

@@ -27,10 +27,10 @@
         <div class="mb-5">
           <profile-picture [id]="user.id" size="56"></profile-picture>
         </div>
-        <p>
+        <p class="px-4">
           <strong>{{ user.firstName }} {{ user.lastName }}</strong>
         </p>
-        <p>{{ user.email }}</p>
+        <p class="px-4">{{ user.email }}</p>
         <hr />
         <div>
           <button mat-stroked-button (click)="signOut()">Sign out</button>

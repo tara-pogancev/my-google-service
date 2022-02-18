@@ -294,6 +294,42 @@
           </form>
         </mat-expansion-panel>
       </mat-accordion>
+
+      <gap height="10"> </gap>
+
+      <mat-accordion class="example-headers-align">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Default application </mat-panel-title>
+            <mat-panel-description>
+              The default application you will be redirected to upon signing in
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <form (ngSubmit)="changeDefaultApplication()">
+            <mat-form-field appearance="fill">
+              <mat-label>Default application</mat-label>
+              <mat-select [formControl]="defaultApplication" required>
+                <mat-option value="google-contacts">Google Contacts</mat-option>
+                <mat-option value="google-photos">Google Photos</mat-option>
+                <mat-option value="none">None</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-action-row>
+              <button
+                mat-flat-button
+                color="primary"
+                type="submit"
+                [disabled]="
+                  !defaultApplication.touched || !defaultApplication.valid
+                "
+              >
+                Save
+              </button>
+            </mat-action-row>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
 
     <gap height="150" class="my-5"></gap>

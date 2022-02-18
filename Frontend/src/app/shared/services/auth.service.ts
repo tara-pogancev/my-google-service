@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { server } from 'src/app/app-global';
 import { ActiveUser } from '../model/active-user';
 import { AuthenticationRequest } from '../model/authentication-request';
+import { UserService } from './user-service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +22,8 @@ export class AuthService {
 
   loginSetUser(activeUser: ActiveUser) {
     this.user = activeUser;
-    console.log(this.user);
     localStorage.setItem('currentUser', JSON.stringify(this.user));
-    window.location.href = '/';
+    this.redirectUserToDefaultApp(this.user.defaultApplication);
   }
 
   logout() {
@@ -61,5 +61,15 @@ export class AuthService {
 
   checkIfEmailExists(request: AuthenticationRequest): Observable<boolean> {
     return this._http.post<boolean>(this.url + '/email-exists', request);
+  }
+
+  redirectUserToDefaultApp(deffaultApp: string) {
+    if (deffaultApp == 'GOOGLE_CONTACTS') {
+      window.location.href = '/contacts';
+    } else if (deffaultApp == 'GOOGLE_PHOTOS') {
+      window.location.href = '/photos';
+    } else {
+      window.location.href = '/';
+    }
   }
 }

@@ -29,6 +29,7 @@ export class EditProfilePageComponent implements OnInit {
   nameChangeForm: FormGroup = new FormGroup({});
   passwordChangeForm: FormGroup = new FormGroup({});
   newMobileNumberForm: FormGroup = new FormGroup({});
+  defaultApplication: FormControl = new FormControl({});
   mobileNumberForm: FormGroup[] = [];
 
   constructor(
@@ -65,12 +66,18 @@ export class EditProfilePageComponent implements OnInit {
       .get('confirmPassword')!
       .addValidators(ConfirmedValidator('password'));
 
+    this.defaultApplication = new FormControl('', Validators.required);
+
     this.user.id = this.authService.getCurrentUser().id;
     this.userService.getCurrentUser().subscribe((data) => {
       this.user = data;
 
       this.nameChangeForm.controls.firstName.setValue(this.user.firstName);
       this.nameChangeForm.controls.lastName.setValue(this.user.lastName);
+
+      let defaultApplicationValue = this.user.defaultApplication.toLowerCase();
+      defaultApplicationValue = defaultApplicationValue.replace('_', '-');
+      this.defaultApplication.setValue(defaultApplicationValue);
     });
   }
 
@@ -154,6 +161,17 @@ export class EditProfilePageComponent implements OnInit {
         }
       );
     }
+  }
+
+  changeDefaultApplication() {
+    this.userService
+      .changeDefaultApplication(this.defaultApplication.value)
+      .subscribe((data) => {
+        this._snackBar.open(
+          'Your default application has been changed.',
+          'Close'
+        );
+      });
   }
 
   addContact() {
