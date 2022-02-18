@@ -1,12 +1,17 @@
 import { isDtsPath } from '@angular/compiler-cli/src/ngtsc/util/src/typescript';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthenticationRequest } from '../../model/authentication-request';
 import { ChangePasswordModel } from '../../model/change-password';
 import { CreateUser } from '../../model/create-user';
 import { User } from '../../model/user-model';
+import { UserPhoneNumber } from '../../model/user-phone-number';
 import { AuthService } from '../../services/auth.service';
 import { ProfilePictureService } from '../../services/profile-picture.service';
 import { UserService } from '../../services/user-service';
@@ -18,19 +23,18 @@ import { ConfirmedValidator } from '../../services/validator.service';
   styleUrls: ['./edit-profile-page.component.scss'],
 })
 export class EditProfilePageComponent implements OnInit {
-  phoneContacts: string[] = ['2'];
-  canAddNewContact: boolean = true;
   user: User = new User();
 
   fileToUpload: File | any = null;
   invalidPicture: boolean = false;
   invalidPassword: boolean = false;
 
+  phoneNumberMessage: string = '0 phone numbers';
+
   nameChangeForm: FormGroup = new FormGroup({});
   passwordChangeForm: FormGroup = new FormGroup({});
   newMobileNumberForm: FormGroup = new FormGroup({});
   defaultApplication: FormControl = new FormControl({});
-  mobileNumberForm: FormGroup[] = [];
 
   constructor(
     private userService: UserService,
@@ -71,6 +75,7 @@ export class EditProfilePageComponent implements OnInit {
     this.user.id = this.authService.getCurrentUser().id;
     this.userService.getCurrentUser().subscribe((data) => {
       this.user = data;
+      console.log(this.user);
 
       this.nameChangeForm.controls.firstName.setValue(this.user.firstName);
       this.nameChangeForm.controls.lastName.setValue(this.user.lastName);
@@ -78,7 +83,20 @@ export class EditProfilePageComponent implements OnInit {
       let defaultApplicationValue = this.user.defaultApplication.toLowerCase();
       defaultApplicationValue = defaultApplicationValue.replace('_', '-');
       this.defaultApplication.setValue(defaultApplicationValue);
+
+      this.setPhoneNumberMessage();
     });
+  }
+
+  setPhoneNumberMessage() {
+    if (this.user.phoneNumbers.length == 0) {
+      this.phoneNumberMessage = '0 phone numbers';
+    } else if (this.user.phoneNumbers.length == 1) {
+      this.phoneNumberMessage = '1 phone number';
+    } else {
+      this.phoneNumberMessage =
+        this.user.phoneNumbers.length + ' phone numbers';
+    }
   }
 
   setPicture() {
@@ -174,8 +192,63 @@ export class EditProfilePageComponent implements OnInit {
       });
   }
 
+  refreshUser() {
+    this.userService.getCurrentUser().subscribe((data) => {
+      this.user = data;
+      this.setPhoneNumberMessage();
+    });
+  }
+
+  changeContact() {
+    this.refreshUser();
+  }
+
   addContact() {
-    this.phoneContacts.push('3');
-    this.canAddNewContact = false;
+    const dialogRef = this.dialog.open(CreateNewUserPhoneDialog);
+    let phoneNumber = UserPhoneNumber;
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.refreshUser();
+    });
+  }
+}
+
+@Component({
+  selector: 'create-new-user-phone-dialog',
+  templateUrl: './create-new-user-phone-dialog.html',
+})
+export class CreateNewUserPhoneDialog implements OnInit {
+  mobileNumberForm: FormGroup = new FormGroup({});
+
+  constructor(
+    public dialogRef: MatDialogRef<CreateNewUserPhoneDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: UserPhoneNumber,
+    private userService: UserService
+  ) {}
+
+  ngOnInit(): void {
+    this.mobileNumberForm = new FormGroup({
+      phoneNumber: new FormControl(null, {
+        validators: [Validators.required],
+        updateOn: 'change',
+      }),
+      type: new FormControl('OTHER', {
+        validators: [Validators.required],
+        updateOn: 'change',
+      }),
+    });
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  addContact() {
+    let phoneNumber = new UserPhoneNumber();
+    phoneNumber.phoneNumber = this.mobileNumberForm.controls.phoneNumber.value;
+    phoneNumber.type = this.mobileNumberForm.controls.type.value;
+    this.userService.addNewUserPhoneNummber(phoneNumber).subscribe((data) => {
+      this.dialogRef.close();
+    });
   }
 }

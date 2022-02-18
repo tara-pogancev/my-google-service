@@ -28,6 +28,7 @@ public class UserPhoneNumberServiceImpl implements UserPhoneNumberService {
             phoneNumber.setType(ContactTypeEnum.getEnumFromString(dto.type));
 
             phoneNumberRepository.save(phoneNumber);
+            return phoneNumber;
 
         }
         return null;

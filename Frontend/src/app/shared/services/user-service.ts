@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { server } from 'src/app/app-global';
 import { ChangePasswordModel } from '../model/change-password';
 import { CreateUser } from '../model/create-user';
+import { UserPhoneNumber } from '../model/user-phone-number';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -50,6 +51,30 @@ export class UserService {
     const url = this.url + '/set-default-application/' + app;
     const headers = this.authService.getHeaders();
     return this._http.put<any>(url, null, {
+      headers: headers,
+    });
+  }
+
+  changeUserPhoneNumber(dto: UserPhoneNumber) {
+    const url = this.url + '/change-phone-number';
+    const headers = this.authService.getHeaders();
+    return this._http.put<any>(url, dto, {
+      headers: headers,
+    });
+  }
+
+  addNewUserPhoneNummber(dto: UserPhoneNumber) {
+    const url = this.url + '/add-phone-number';
+    const headers = this.authService.getHeaders();
+    return this._http.post<any>(url, dto, {
+      headers: headers,
+    });
+  }
+
+  deleteUserPhoneNumber(dto: UserPhoneNumber) {
+    const url = this.url + '/delete-phone-number';
+    const headers = this.authService.getHeaders();
+    return this._http.put<any>(url, dto, {
       headers: headers,
     });
   }

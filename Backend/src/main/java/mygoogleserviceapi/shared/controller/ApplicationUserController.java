@@ -89,7 +89,7 @@ public class ApplicationUserController {
         } else return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/delete-phone-number")
+    @PutMapping("/delete-phone-number")
     public ResponseEntity<?> deleteUserPhoneNumber(@RequestBody UserPhoneNumberDTO dto, @RequestHeader(name = "Authorization") String jwt) throws Exception {
         Boolean success = userPhoneNumberService.deletePhoneNumber(dto, jwt);
         if (success) {
