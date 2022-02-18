@@ -33,9 +33,8 @@ public class ApplicationUser extends DatabaseEntity {
     @OneToMany(mappedBy = "applicationUser")
     private Set<UserPhoneNumber> phoneNumbers;
 
-    //Todo: Profile picture
-
     public String getFullName() {
         return firstName + " " + lastName;
     }
+
 }
