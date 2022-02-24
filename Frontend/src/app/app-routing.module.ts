@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactsPageComponent } from './google-contacts/components/contacts-page/contacts-page.component';
 import { PhotosPageComponent } from './google-photos/photos-page/photos-page.component';
+import { ConnectionRefusedErrorComponent } from './shared/components/connection-refused-error/connection-refused-error.component';
 import { EditProfilePageComponent } from './shared/components/edit-profile-page/edit-profile-page.component';
 import { ErrorPageComponent } from './shared/components/error-page/error-page.component';
 import { LoginComponent } from './shared/components/login/login.component';
@@ -37,6 +38,7 @@ const routes: Routes = [
   },
 
   { path: '', component: ServiceSelectionComponent, canActivate: [AuthGuard] },
+  { path: 'api-error', component: ConnectionRefusedErrorComponent },
   { path: '**', component: ErrorPageComponent },
 ];
 

@@ -1,0 +1,44 @@
+<div class="centered-content">
+  <div class="columns stretch-height container">
+    <div class="column is-flex is-flex-direction-column is-align-items-center">
+      <div
+        class="column is-flex is-flex-direction-column is-justify-content-space-around pl-5 ml-5 pt- mt-5"
+      >
+        <div>
+          <img
+            src="../../../../assets/google.svg"
+            width="75px"
+            class="image mb-2"
+          />
+          <h1>Connection refused</h1>
+          <h4>Looks like the API hasn't been started.</h4>
+          <button
+            mat-flat-button
+            color="primary"
+            (click)="redirectHomepage()"
+            type="button"
+          >
+            Go back
+          </button>
+          <br />
+          <br />
+          <a href="https://my-google-service-api.herokuapp.com/" target="none">
+            Open API on Heroku
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="column is-flex is-flex-direction-column is-align-items-center is-justify-content-space-around pl-5 ml-5"
+    >
+      <div
+        class="is-flex is-flex-direction-column is-align-items-center align-text-center"
+      >
+        <img src="../../../../assets/Google_Error.png" width="244px" />
+      </div>
+    </div>
+  </div>
+
+  <made-by-label></made-by-label>
+</div>

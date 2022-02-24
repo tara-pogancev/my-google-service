@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ErrorHandler, OnInit } from '@angular/core';
 import { User } from '../../model/user-model';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user-service';
@@ -20,6 +20,8 @@ export class HeaderComponent implements OnInit {
     this.user.id = this.authService.getCurrentUser().id;
     this.userService.getCurrentUser().subscribe((data) => (this.user = data));
   }
+
+
 
   redirectContacts() {
     window.location.href = '/contacts';

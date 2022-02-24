@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,6 +29,15 @@ import { HeaderComponent } from './shared/components/header/header.component';
 import { GapComponent } from './shared/components/gap/gap.component';
 import { ProfilePictureComponent } from './shared/components/profile-picture/profile-picture.component';
 import { EditUserPhoneNumberComponent } from './shared/components/edit-user-phone-number/edit-user-phone-number.component';
+import { ConnectionRefusedErrorComponent } from './shared/components/connection-refused-error/connection-refused-error.component';
+
+class MyErrorHandler implements ErrorHandler {
+  handleError(error: any): void {
+    if (error.status == 0) {
+      window.location.href = '/api-error';
+    }
+  }
+}
 
 @NgModule({
   declarations: [
@@ -53,6 +62,7 @@ import { EditUserPhoneNumberComponent } from './shared/components/edit-user-phon
     ProfilePictureComponent,
     EditUserPhoneNumberComponent,
     CreateNewUserPhoneDialog,
+    ConnectionRefusedErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +74,11 @@ import { EditUserPhoneNumberComponent } from './shared/components/edit-user-phon
     ReactiveFormsModule,
     FormsModule,
   ],
-  providers: [AuthGuard, UnAuthGuard],
+  providers: [
+    AuthGuard,
+    UnAuthGuard,
+    { provide: ErrorHandler, useClass: MyErrorHandler },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
