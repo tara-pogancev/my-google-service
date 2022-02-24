@@ -1,0 +1,65 @@
+p {
+  margin-bottom: 0px;
+}
+
+hr {
+  color: lightgray;
+  width: 100%;
+}
+
+.profileMenu {
+  min-width: 200px !important;
+}
+
+.mat-toolbar {
+  background-color: #f8f8f800;
+}
+
+.profile-picture-menu {
+  margin: 0;
+  height: 36px !important;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap");
+
+.google-title {
+  color: #5f6368;
+  font-family: "Quicksand";
+  font-weight: 600;
+  font-size: 22px;
+}
+
+.header-logo {
+  width: 280px;
+}
+
+.search-form-field-width {
+  width: 722px !important;
+  position: relative;
+  bottom: 5px;
+}
+
+.search-form-field-text {
+  font-size: 16px;
+}
+
+.search-form-field {
+  font-size: 15px;
+  border: none !important;
+  padding-top: 19px;
+}
+
+.mat-input-element {
+  position: relative;
+  bottom: 6px;
+}
+
+.input-background {
+  position: absolute;
+  top: 8px;
+  background-color: #f1f3f4;
+  z-index: -1;
+  width: 722px;
+  height: 46px;
+  border-radius: 8px 8px 0 0;
+}
