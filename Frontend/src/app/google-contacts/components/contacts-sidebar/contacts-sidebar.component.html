@@ -1,1 +1,72 @@
-<p>contacts-sidebar works!</p>
+<div class="pr-5">
+  <button class="special-button clickable">
+    <div class="is-flex stretch-width is-justify-content-space-around">
+      <div class="is-flex is-align-items-center">
+        <img src="./assets/Plus_icon.png" width="22px" />
+        <p class="special-button-title ml-3">Create contact</p>
+      </div>
+    </div>
+  </button>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 1 }"
+  >
+    <mat-icon color="red">person_outline</mat-icon>
+    <p class="button-title">Contacts</p>
+    <span class="stretch-width"></span>
+    <p class="button-title">15</p>
+  </button>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 2 }"
+  >
+    <mat-icon>call_merge</mat-icon>
+    <p class="button-title">Merge and fix</p>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 3 }"
+  >
+    <mat-icon>edit</mat-icon>
+    <p class="button-title">My account</p>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 4 }"
+  >
+    <mat-icon>upload</mat-icon>
+    <p class="button-title">Import</p>
+  </button>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 5 }"
+  >
+    <mat-icon>cloud_download</mat-icon>
+    <p class="button-title">Export</p>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 6 }"
+  >
+    <mat-icon>delete_outline</mat-icon>
+    <p class="button-title">Bin</p>
+  </button>
+</div>
