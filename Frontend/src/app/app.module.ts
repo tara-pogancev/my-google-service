@@ -5,9 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactsHeaderComponent } from './google-contacts/components/contacts-header/contacts-header.component';
-import { ContactsPageBodyComponent } from './google-contacts/components/contacts-page-body/contacts-page-body.component';
 import { ContactsPageComponent } from './google-contacts/components/contacts-page/contacts-page.component';
-import { ContactsSidebarItemComponent } from './google-contacts/components/contacts-sidebar-item/contacts-sidebar-item.component';
 import { ContactsSidebarComponent } from './google-contacts/components/contacts-sidebar/contacts-sidebar.component';
 import { ContactsTableItemComponent } from './google-contacts/components/contacts-table-item/contacts-table-item.component';
 import { ContactsTableComponent } from './google-contacts/components/contacts-table/contacts-table.component';
@@ -30,6 +28,12 @@ import { GapComponent } from './shared/components/gap/gap.component';
 import { ProfilePictureComponent } from './shared/components/profile-picture/profile-picture.component';
 import { EditUserPhoneNumberComponent } from './shared/components/edit-user-phone-number/edit-user-phone-number.component';
 import { ConnectionRefusedErrorComponent } from './shared/components/connection-refused-error/connection-refused-error.component';
+import { CreateNewPageComponent } from './google-contacts/components/create-new-page/create-new-page.component';
+import { ContactPersonPageComponent } from './google-contacts/components/contact-person-page/contact-person-page.component';
+import { TrashPageComponent } from './google-contacts/components/trash-page/trash-page.component';
+import { ImportPageComponent } from './google-contacts/components/import-page/import-page.component';
+import { ExportPageComponent } from './google-contacts/components/export-page/export-page.component';
+import { SuggestionsPageComponent } from './google-contacts/components/suggestions-page/suggestions-page.component';
 
 class MyErrorHandler implements ErrorHandler {
   handleError(error: any): void {
@@ -50,9 +54,7 @@ class MyErrorHandler implements ErrorHandler {
     ServiceSelectionComponent,
     ContactsHeaderComponent,
     ContactsSidebarComponent,
-    ContactsSidebarItemComponent,
     CreateContactButtonComponent,
-    ContactsPageBodyComponent,
     ContactsTableItemComponent,
     ContactsTableComponent,
     MadeByLabelComponent,
@@ -63,6 +65,12 @@ class MyErrorHandler implements ErrorHandler {
     EditUserPhoneNumberComponent,
     CreateNewUserPhoneDialog,
     ConnectionRefusedErrorComponent,
+    CreateNewPageComponent,
+    ContactPersonPageComponent,
+    TrashPageComponent,
+    ImportPageComponent,
+    ExportPageComponent,
+    SuggestionsPageComponent,
   ],
   imports: [
     BrowserModule,

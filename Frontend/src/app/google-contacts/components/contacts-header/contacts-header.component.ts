@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/app/shared/model/user-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user-service';
@@ -9,6 +9,8 @@ import { UserService } from 'src/app/shared/services/user-service';
   styleUrls: ['./contacts-header.component.scss'],
 })
 export class ContactsHeaderComponent implements OnInit {
+  @Output() doToggleSidebar: EventEmitter<any> = new EventEmitter();
+  @Output() doSearch: EventEmitter<string> = new EventEmitter();
   user: User = new User();
   searchValue: string = '';
 
@@ -38,9 +40,13 @@ export class ContactsHeaderComponent implements OnInit {
     this.authService.logout();
   }
 
-  search() {}
+  search() {
+    if (this.searchValue.trim() != '') {
+      this.doSearch.emit(this.searchValue.trim());
+    }
+  }
 
-  toggleSidebar() {}
-
-  
+  toggleSidebar() {
+    this.doToggleSidebar.emit(null);
+  }
 }

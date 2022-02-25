@@ -31,5 +31,9 @@ export class ContactsPageComponent implements OnInit {
     );
   }
 
+  search(searchString: string) {
+    alert(searchString);
+  }
 
+  toggleSidebar() {}
 }

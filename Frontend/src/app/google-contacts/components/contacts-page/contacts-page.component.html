@@ -1,3 +1,15 @@
-<contacts-header></contacts-header>
+<contacts-header
+  (doToggleSidebar)="drawer.toggle()"
+  (doSearch)="search($event)"
+></contacts-header>
 
-<contacts-page-body></contacts-page-body>
+<mat-drawer-container class="body-container">
+  <mat-drawer #drawer mode="side" opened="true">
+    <contacts-sidebar></contacts-sidebar>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="stretch-height">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,18 +1,13 @@
-.example-spacer {
-  flex: 1 1 auto;
+.mat-drawer {
+  width: 280px;
+  border: none;
 }
 
-.example-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.body-container {
+  min-height: calc(100vh - 64px);
+  background-color: white !important;
 }
 
-.example-events {
-  width: 300px;
-  height: 200px;
-  overflow: auto;
-  border: 1px solid #555;
+.mat-drawer-content {
+  padding: 15px;
 }

@@ -3,7 +3,10 @@
     <mat-icon>menu</mat-icon>
   </button>
 
-  <div class="is-flex is-align-items-center header-logo">
+  <div
+    class="is-flex is-align-items-center header-logo clickable"
+    (click)="redirectContacts()"
+  >
     <img src="assets/Google_Contacts.png" width="36px" />
     <p class="google-title ml-3">Contacts</p>
   </div>
@@ -20,6 +23,7 @@
         [(ngModel)]="searchValue"
         placeholder="Search"
         class="search-form-field-text"
+        (keyup.enter)="search()"
       />
 
       <button
