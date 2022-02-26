@@ -1,30 +1,167 @@
-<div class="example-container mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource">
-    <!-- Position Column -->
-    <ng-container matColumnDef="position">
-      <th mat-header-cell *matHeaderCellDef>No.</th>
-      <td mat-cell *matCellDef="let element">{{ element.position }}</td>
-    </ng-container>
-
-    <!-- Name Column -->
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-    </ng-container>
-
-    <!-- Weight Column -->
-    <ng-container matColumnDef="weight">
-      <th mat-header-cell *matHeaderCellDef>Weight</th>
-      <td mat-cell *matCellDef="let element">{{ element.weight }}</td>
-    </ng-container>
-
-    <!-- Symbol Column -->
-    <ng-container matColumnDef="symbol">
-      <th mat-header-cell *matHeaderCellDef>Symbol</th>
-      <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+<div class="table-container">
+  <table class="table is-fullwidth">
+    <thead>
+      <tr>
+        <th class="name-column">
+          <div class="is-flex is-align-items-center stretch-height">Name</div>
+        </th>
+        <th class="email-column">
+          <div class="is-flex is-align-items-center stretch-height">Email</div>
+        </th>
+        <th class="phone-column">
+          <div class="is-flex is-align-items-center stretch-height">
+            Phone number
+          </div>
+        </th>
+        <th class="menu-column"></th>
+      </tr>
+    </thead>
   </table>
+
+  <div *ngIf="contacts.length != 0">
+    <p class="my-3 contacts-label" *ngIf="starredContacts.length != 0">
+      Starred contacts ({{ starredContacts.length }})
+    </p>
+    <table class="table" *ngIf="starredContacts.length != 0">
+      <thead [style.display]="'none'">
+        <tr>
+          <th class="name-column">
+            <div class="is-flex is-align-items-center stretch-height">Name</div>
+          </th>
+          <th class="email-column">
+            <div class="is-flex is-align-items-center stretch-height">
+              Email
+            </div>
+          </th>
+          <th class="phone-column">
+            <div class="is-flex is-align-items-center stretch-height">
+              Phone number
+            </div>
+          </th>
+          <th class="menu-column"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngIf="contacts.length == 0">
+          <p class="m-5">No contacts to display.</p>
+        </tr>
+        <tr *ngFor="let contact of starredContacts">
+          <td class="name-column">
+            <div class="is-flex is-align-items-center">
+              <profile-picture size="36"></profile-picture>
+              <p class="ml-4">{{ contact.fullName }}</p>
+            </div>
+          </td>
+          <td class="email-column" *ngIf="contact.emails.length == 0"></td>
+          <td class="email-column" *ngIf="contact.emails.length != 0">
+            <div class="is-flex is-align-items-center stretch-height">
+              <span *ngFor="let email of contact.emails.slice(0, 1)">
+                {{ email.email }}
+              </span>
+            </div>
+          </td>
+          <td
+            class="phone-column"
+            *ngIf="contact.phoneNumbers.length == 0"
+          ></td>
+          <td class="phone-column" *ngIf="contact.phoneNumbers.length != 0">
+            <div class="is-flex is-align-items-center stretch-height">
+              <span
+                *ngFor="let phoneNumber of contact.phoneNumbers.slice(0, 3)"
+                class="mr-5"
+              >
+                {{ phoneNumber.phoneNumber }}
+              </span>
+            </div>
+          </td>
+          <td class="menu-column"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="my-3 contacts-label">Contacts ({{ contacts.length }})</p>
+    <table class="table">
+      <thead [style.display]="'none'">
+        <tr>
+          <th class="name-column">
+            <div class="is-flex is-align-items-center stretch-height">Name</div>
+          </th>
+          <th class="email-column">
+            <div class="is-flex is-align-items-center stretch-height">
+              Email
+            </div>
+          </th>
+          <th class="phone-column">
+            <div class="is-flex is-align-items-center stretch-height">
+              Phone number
+            </div>
+          </th>
+          <th class="menu-column"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngIf="contacts.length == 0">
+          <p class="m-5">No contacts to display.</p>
+        </tr>
+        <tr *ngFor="let contact of contacts">
+          <td class="name-column">
+            <div class="is-flex is-align-items-center">
+              <profile-picture size="36"></profile-picture>
+              <p class="ml-4">{{ contact.fullName }}</p>
+            </div>
+          </td>
+          <td class="email-column" *ngIf="contact.emails.length == 0"></td>
+          <td class="email-column" *ngIf="contact.emails.length != 0">
+            <div class="is-flex is-align-items-center stretch-height">
+              <span *ngFor="let email of contact.emails.slice(0, 1)">
+                {{ email.email }}
+              </span>
+            </div>
+          </td>
+          <td
+            class="phone-column"
+            *ngIf="contact.phoneNumbers.length == 0"
+          ></td>
+          <td class="phone-column" *ngIf="contact.phoneNumbers.length != 0">
+            <div class="is-flex is-align-items-center stretch-height">
+              <span
+                *ngFor="let phoneNumber of contact.phoneNumbers.slice(0, 3)"
+                class="mr-5"
+              >
+                {{ phoneNumber.phoneNumber }}
+              </span>
+            </div>
+          </td>
+          <td class="menu-column">
+            <div class="is-flex is-align-items-center stretch-height contact-menu">
+              <button mat-icon-button>
+                <mat-icon *ngIf="contact.starred">star</mat-icon>
+                <mat-icon *ngIf="!contact.starred">star_border</mat-icon>
+              </button>
+
+              <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                  <mat-icon>dialpad</mat-icon>
+                  <span>Redial</span>
+                </button>
+                <button mat-menu-item disabled>
+                  <mat-icon>voicemail</mat-icon>
+                  <span>Check voice mail</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>notifications_off</mat-icon>
+                  <span>Disable alerts</span>
+                </button>
+              </mat-menu>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -17,7 +18,7 @@ import java.util.Set;
 public class ContactList extends DatabaseEntity {
 
     @OneToMany(mappedBy = "contactList")
-    private Set<Contact> contacts;
+    private List<Contact> contacts;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)

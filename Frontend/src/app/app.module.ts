@@ -9,7 +9,6 @@ import { ContactsPageComponent } from './google-contacts/components/contacts-pag
 import { ContactsSidebarComponent } from './google-contacts/components/contacts-sidebar/contacts-sidebar.component';
 import { ContactsTableItemComponent } from './google-contacts/components/contacts-table-item/contacts-table-item.component';
 import { ContactsTableComponent } from './google-contacts/components/contacts-table/contacts-table.component';
-import { CreateContactButtonComponent } from './google-contacts/components/create-contact-button/create-contact-button.component';
 import { PhotosPageComponent } from './google-photos/photos-page/photos-page.component';
 import { MaterialModule } from './material-module';
 import { ErrorPageComponent } from './shared/components/error-page/error-page.component';
@@ -54,7 +53,6 @@ class MyErrorHandler implements ErrorHandler {
     ServiceSelectionComponent,
     ContactsHeaderComponent,
     ContactsSidebarComponent,
-    CreateContactButtonComponent,
     ContactsTableItemComponent,
     ContactsTableComponent,
     MadeByLabelComponent,

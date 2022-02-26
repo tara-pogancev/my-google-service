@@ -1,6 +1,7 @@
 package mygoogleserviceapi.contacts.controller;
 
 import lombok.RequiredArgsConstructor;
+import mygoogleserviceapi.contacts.dto.ContactDTO;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.service.interfaces.ContactListService;
 import mygoogleserviceapi.shared.converter.DataConverter;
@@ -24,7 +25,7 @@ public class ContactListController {
     @GetMapping("/all")
     public ResponseEntity<?> getContactList(@RequestHeader(name = "Authorization") String jwt) {
         List<Contact> contacts = contactListService.getContacts(jwt);
-        return new ResponseEntity(contacts, HttpStatus.OK);
+        return new ResponseEntity<>(converter.convert(contacts, ContactDTO.class), HttpStatus.OK);
     }
 
 }
