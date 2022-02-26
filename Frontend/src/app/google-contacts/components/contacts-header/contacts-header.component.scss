@@ -63,3 +63,7 @@ hr {
   height: 46px;
   border-radius: 8px 8px 0 0;
 }
+
+::ng-deep .mat-form-field-underline {
+  color: #cbd2d6 !important;
+}
