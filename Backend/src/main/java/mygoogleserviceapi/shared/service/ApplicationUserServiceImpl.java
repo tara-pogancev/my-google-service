@@ -1,6 +1,8 @@
 package mygoogleserviceapi.shared.service;
 
 import lombok.RequiredArgsConstructor;
+import mygoogleserviceapi.contacts.model.ContactList;
+import mygoogleserviceapi.contacts.repository.ContactListRepository;
 import mygoogleserviceapi.security.JwtUtil;
 import mygoogleserviceapi.shared.dto.ChangePasswordDTO;
 import mygoogleserviceapi.shared.dto.UserDTO;
@@ -22,6 +24,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     private final JwtUtil jwtUtil;
     private final FileStorageService fileStorageService;
     private final ApplicationUserRepository userRepository;
+    private final ContactListRepository contactListRepository;
 
     @Override
     public ApplicationUser findByEmail(String email) {
@@ -49,8 +52,11 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
             user.setLastName(newUser.lastName);
             user.setEmail(newUser.email);
             user.setPassword(new BCryptPasswordEncoder().encode(newUser.password));
-            return userRepository.save(user);
-
+            ApplicationUser createdUser = userRepository.save(user);
+            ContactList contactList = new ContactList();
+            contactList.setOwner(createdUser);
+            contactListRepository.save(contactList);
+            return createdUser;
         } else return null;
     }
 

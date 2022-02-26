@@ -16,3 +16,45 @@ INSERT INTO public.user_phone_number(phone_number, type, user_id)   VALUES
     ('619-378-4713', 0, 4),
     ('216-785-5235', 2, 5),
     ('413-736-7664', 1, 5);
+
+-- CONTACT LIST
+INSERT INTO public.contact_list(owner_id)	VALUES
+    (1),
+    (2),
+    (3),
+    (4),
+    (5);
+
+-- CONTACTS (User ID 5)
+INSERT INTO public.contact(
+	deleted, last_name, first_name, starred, user_id, contact_list_id)	VALUES
+	(false, 'Edison', 'Marylu', false, null, 5),
+	(false, 'Rosario', 'Tahmid', true, null, 5),
+	(false, 'Husnain', 'Allan', true, null, 5),
+	(false, 'Rubio', 'Ahyan', false, null, 5),
+	(false, 'Calderon', 'Joel', false, null, 5),
+	(false, 'Peyton', 'Cline', true, null, 5),
+	(false, 'Ruqayyah', 'Rivers', false, null, 5),
+	(false, 'Salahuddin', 'Blackmore', false, null, 5);
+
+INSERT INTO public.contact_phone_number(phone_number, type, contact_id)	VALUES
+    ('212-200-1436', 1, 1),
+    ('212-205-5074', 2, 2),
+    ('212-206-6992', 0, 3),
+    ('212-288-1436', 1, 4),
+    ('212-219-7204', 2, 5),
+    ('212-226-3940', 0, 6),
+    ('212-236-0225', 0, 7),
+    ('212-238-1681', 1, 7),
+    ('212-247-6592', 2, 2),
+    ('212-258-5956', 1, 3);
+
+INSERT INTO public.contact_email_address(email, type, contact_id)	VALUES
+    ('roseli785@gmail.com', 1, 1),
+    ('rubio78@gmail.com', 2, 1),
+    ('ahyyyyan@gmail.com', 0, 4),
+    ('joeljeol@hotmail.com', 0, 5),
+    ('blue.rivers@hotmail.com', 2, 6),
+    ('salahuddinlikescats@yahoo.com', 1, 6);
+
+
