@@ -83,3 +83,13 @@ $custom-typography: mat.define-typography-config(
 .clickable {
   cursor: pointer;
 }
+
+/* Hide scroll bar*/
+.main-container::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Hide scrollbar for IE and Edge */
+.main-container {
+  -ms-overflow-style: none !important;
+}
