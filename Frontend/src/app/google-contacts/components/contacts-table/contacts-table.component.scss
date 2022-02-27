@@ -1,5 +1,6 @@
 table {
   width: 100%;
+  margin: 0 !important;
 }
 
 td {
@@ -94,4 +95,23 @@ mat-icon {
 
 .name-column .stretch-width {
   width: 90%;
+}
+
+.scrollabe {
+  overflow-y: scroll;
+  height: calc(100vh - 129px);
+}
+
+.selection-menu button {
+  margin-right: 15px;
+}
+
+.selection-menu p {
+  color: #1a73e8;
+}
+
+::ng-deep .selection-menu .mat-icon-button {
+  height: 34px !important;
+  width: 34px !important;
+  line-height: 34px !important;
 }

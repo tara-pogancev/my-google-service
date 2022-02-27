@@ -69,4 +69,23 @@ export class ContactsTableComponent implements OnInit {
       );
     }
   }
+
+  selectAll() {
+    this.selectedContacts = [];
+    for (let contact of this.contacts) {
+      this.selectedContacts.push(contact.id);
+    }
+  }
+
+  selectNone() {
+    this.selectedContacts = [];
+  }
+
+  deleteSelected() {
+    //TODO delete selected
+  }
+
+  exportSelected() {
+    //TODO export selected
+  }
 }
