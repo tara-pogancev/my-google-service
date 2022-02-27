@@ -52,11 +52,46 @@ tbody tr {
   visibility: hidden;
 }
 
+tr:hover profile-picture {
+  display: none;
+}
+
+tr:hover .checkbox-container {
+  display: flex !important;
+}
+
 tr:hover .contact-menu {
   visibility: visible;
+}
+
+.selected {
+  background-color: #f2f2f2;
+}
+
+.selected-picture {
+  display: none;
+}
+
+.selected-checkbox {
+  display: flex !important;
+}
+
+.checkbox-container {
+  width: 36px !important;
+  height: 36px !important;
+}
+
+mat-checkbox {
+  z-index: 999;
+  line-height: 36px;
+  margin: auto;
 }
 
 mat-icon {
   transform: scale(0.9);
   color: #5f6368;
+}
+
+.name-column .stretch-width {
+  width: 90%;
 }

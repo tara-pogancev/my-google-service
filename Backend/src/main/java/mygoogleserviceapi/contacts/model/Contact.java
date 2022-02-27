@@ -42,7 +42,7 @@ public class Contact extends DatabaseEntity {
     private ContactList contactList;
 
     public String getFullName() {
-        return name + " " + lastName;
+        return (name + " " + lastName).trim();
     }
 
 }

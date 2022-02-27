@@ -34,7 +34,7 @@ public class ApplicationUser extends DatabaseEntity {
     private Set<UserPhoneNumber> phoneNumbers;
 
     public String getFullName() {
-        return firstName + " " + lastName;
+        return (firstName + " " + lastName).trim();
     }
 
 }

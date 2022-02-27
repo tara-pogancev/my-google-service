@@ -105,15 +105,47 @@
         <tr *ngIf="contacts.length == 0">
           <p class="m-5">No contacts to display.</p>
         </tr>
-        <tr *ngFor="let contact of contacts">
+        <tr
+          *ngFor="let contact of contacts"
+          [ngClass]="{ selected: selectedContacts.includes(contact.id) }"
+        >
           <td class="name-column">
-            <div class="is-flex is-align-items-center">
-              <profile-picture size="36"></profile-picture>
-              <p class="ml-4">{{ contact.fullName }}</p>
+            <div
+              class="is-flex is-align-items-center stretch-height stretch-width is-flex-direction-row"
+            >
+              <profile-picture
+                size="36"
+                [ngClass]="{
+                  'selected-picture': selectedContacts.includes(contact.id)
+                }"
+              ></profile-picture>
+              <div
+                class="checkbox-container"
+                [style.display]="
+                  selectedContacts.includes(contact.id) ? 'flex' : 'none'
+                "
+              >
+                <mat-checkbox (change)="selectContact($event.checked, contact)">
+                </mat-checkbox>
+              </div>
+              <div
+                class="clickable stretch-width stretch-height is-flex is-align-items-center"
+                (click)="redirectContact(contact.id)"
+              >
+                <p class="ml-4">{{ contact.fullName }}</p>
+              </div>
             </div>
           </td>
-          <td class="email-column" *ngIf="contact.emails.length == 0"></td>
-          <td class="email-column" *ngIf="contact.emails.length != 0">
+          <td
+            class="email-column clickable"
+            (click)="redirectContact(contact.id)"
+            *ngIf="contact.emails.length == 0"
+          ></td>
+          <td
+            class="email-column clickable"
+            (click)="redirectContact(contact.id)"
+            *ngIf="contact.emails.length != 0"
+          >
             <div class="is-flex is-align-items-center stretch-height">
               <span *ngFor="let email of contact.emails.slice(0, 1)">
                 {{ email.email }}
@@ -121,10 +153,15 @@
             </div>
           </td>
           <td
-            class="phone-column"
+            class="phone-column clickable"
+            (click)="redirectContact(contact.id)"
             *ngIf="contact.phoneNumbers.length == 0"
           ></td>
-          <td class="phone-column" *ngIf="contact.phoneNumbers.length != 0">
+          <td
+            class="phone-column clickable"
+            (click)="redirectContact(contact.id)"
+            *ngIf="contact.phoneNumbers.length != 0"
+          >
             <div class="is-flex is-align-items-center stretch-height">
               <span
                 *ngFor="let phoneNumber of contact.phoneNumbers.slice(0, 3)"
@@ -143,23 +180,13 @@
                 <mat-icon *ngIf="!contact.starred">star_border</mat-icon>
               </button>
 
-              <button mat-icon-button [matMenuTriggerFor]="menu">
-                <mat-icon>more_vert</mat-icon>
+              <button mat-icon-button>
+                <mat-icon>edit</mat-icon>
               </button>
-              <mat-menu #menu="matMenu">
-                <button mat-menu-item>
-                  <mat-icon>dialpad</mat-icon>
-                  <span>Redial</span>
-                </button>
-                <button mat-menu-item disabled>
-                  <mat-icon>voicemail</mat-icon>
-                  <span>Check voice mail</span>
-                </button>
-                <button mat-menu-item>
-                  <mat-icon>notifications_off</mat-icon>
-                  <span>Disable alerts</span>
-                </button>
-              </mat-menu>
+
+              <button mat-icon-button>
+                <mat-icon>delete</mat-icon>
+              </button>
             </div>
           </td>
         </tr>
@@ -167,3 +194,5 @@
     </table>
   </div>
 </div>
+
+<button (click)="refreshContactCountSidebar()">da</button>

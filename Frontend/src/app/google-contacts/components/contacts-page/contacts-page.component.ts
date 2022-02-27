@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { ContactsSidebarComponent } from '../contacts-sidebar/contacts-sidebar.component';
 
 @Component({
   selector: 'contacts-page',
@@ -12,9 +13,10 @@ export class ContactsPageComponent implements OnInit {
   myControl = new FormControl();
   options: string[] = ['One', 'Two', 'Three'];
   filteredOptions: Observable<string[]> | undefined;
-
   events: string[] = [];
   opened: boolean = true;
+
+  constructor() {}
 
   ngOnInit() {
     this.filteredOptions = this.myControl.valueChanges.pipe(

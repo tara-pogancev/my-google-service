@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { ContactListService } from '../../services/contact-list.service';
+import { RefreshContactsCountService } from './refresh-contact-count.service';
 
 @Component({
   selector: 'contacts-sidebar',
@@ -9,11 +12,27 @@ import { Router } from '@angular/router';
 export class ContactsSidebarComponent implements OnInit {
   tab: number = 1;
   route: string = '';
+  contacts: number = 0;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private contactListService: ContactListService,
+    private refreshContactsCountService: RefreshContactsCountService
+  ) {
+    refreshContactsCountService.refreshContacts$.subscribe(() =>
+      this.refreshContactsCount()
+    );
+  }
 
   ngOnInit(): void {
     this.toggleSelectedMenuItem();
+    this.refreshContactsCount();
+  }
+
+  refreshContactsCount() {
+    this.contactListService.getAllContacts().subscribe((data) => {
+      this.contacts = data.length;
+    });
   }
 
   toggleSelectedMenuItem() {
