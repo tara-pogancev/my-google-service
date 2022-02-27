@@ -21,9 +21,14 @@ export class ContactsTableComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.refreshContacts();
+  }
+
+  refreshContacts() {
     this.contactListService.getAllContacts().subscribe((data) => {
       this.contacts = this.sortContacts(data);
       this.setStarredContacts();
+      this.refreshContactsCountService.announceRefreshing();
     });
   }
 
@@ -45,6 +50,16 @@ export class ContactsTableComponent implements OnInit {
     this.router.navigateByUrl('/contacts/person/' + id);
   }
 
+  starContact(id: number) {
+    //todo: Star//unstar contact
+    this.refreshContacts();
+  }
+
+  deleteContact(id: number) {
+    //todo delete single comment
+    this.refreshContacts();
+  }
+
   selectContact(checked: boolean, contact: Contact) {
     if (checked) {
       this.selectedContacts.push(contact.id);
@@ -53,9 +68,5 @@ export class ContactsTableComponent implements OnInit {
         (idNumber) => idNumber != contact.id
       );
     }
-  }
-
-  refreshContactCountSidebar() {
-    this.refreshContactsCountService.announceRefreshing();
   }
 }
