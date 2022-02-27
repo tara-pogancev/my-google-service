@@ -1,26 +1,26 @@
-import { Component, Input, OnInit, Sanitizer } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ProfilePictureService } from '../../services/profile-picture.service';
+import { ContactPictureService } from '../../services/contact-picture.service';
 
 @Component({
-  selector: 'profile-picture',
-  templateUrl: './profile-picture.component.html',
-  styleUrls: ['./profile-picture.component.scss'],
+  selector: 'contact-profile-picture',
+  templateUrl: './contact-profile-picture.component.html',
+  styleUrls: ['./contact-profile-picture.component.scss']
 })
-export class ProfilePictureComponent implements OnInit {
+export class ContactProfilePictureComponent implements OnInit {
   @Input() size: string = '50';
   @Input() img: SafeResourceUrl =
     '../../../../assets/missing_profile_picture.png';
   @Input() id: number = 0;
 
   constructor(
-    private profilePictureService: ProfilePictureService,
+    private contactPictureService: ContactPictureService,
     private _sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
-    this.profilePictureService
-      .getProfilePicture(this.id)
+    this.contactPictureService
+      .getContactPicture(this.id)
       .subscribe((data: Blob) => {
         if (data.size != 0)
           this.img = this._sanitizer.bypassSecurityTrustResourceUrl(
@@ -28,4 +28,5 @@ export class ProfilePictureComponent implements OnInit {
           );
       });
   }
+
 }

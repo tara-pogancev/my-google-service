@@ -18,7 +18,7 @@
     </thead>
   </table>
 
-  <div *ngIf="contacts.length != 0">
+  <div>
     <p class="my-3 contacts-label" *ngIf="starredContacts.length != 0">
       Starred contacts ({{ starredContacts.length }})
     </p>
@@ -49,7 +49,10 @@
         <tr *ngFor="let contact of starredContacts">
           <td class="name-column">
             <div class="is-flex is-align-items-center">
-              <profile-picture size="36"></profile-picture>
+              <contact-profile-picture
+                [id]="contact.id"
+                size="36"
+              ></contact-profile-picture>
               <p class="ml-4">{{ contact.fullName }}</p>
             </div>
           </td>
@@ -113,12 +116,13 @@
             <div
               class="is-flex is-align-items-center stretch-height stretch-width is-flex-direction-row"
             >
-              <profile-picture
+              <contact-profile-picture
+                [id]="contact.id"
                 size="36"
                 [ngClass]="{
                   'selected-picture': selectedContacts.includes(contact.id)
                 }"
-              ></profile-picture>
+              ></contact-profile-picture>
               <div
                 class="checkbox-container"
                 [style.display]="

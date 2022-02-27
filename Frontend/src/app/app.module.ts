@@ -34,6 +34,7 @@ import { ImportPageComponent } from './google-contacts/components/import-page/im
 import { ExportPageComponent } from './google-contacts/components/export-page/export-page.component';
 import { SuggestionsPageComponent } from './google-contacts/components/suggestions-page/suggestions-page.component';
 import { RefreshContactsCountService } from './google-contacts/components/contacts-sidebar/refresh-contact-count.service';
+import { ContactProfilePictureComponent } from './google-contacts/components/contact-profile-picture/contact-profile-picture.component';
 
 class MyErrorHandler implements ErrorHandler {
   handleError(error: any): void {
@@ -70,6 +71,7 @@ class MyErrorHandler implements ErrorHandler {
     ImportPageComponent,
     ExportPageComponent,
     SuggestionsPageComponent,
+    ContactProfilePictureComponent,
   ],
   imports: [
     BrowserModule,

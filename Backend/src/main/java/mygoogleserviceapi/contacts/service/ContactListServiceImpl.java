@@ -9,8 +9,11 @@ import mygoogleserviceapi.contacts.repository.ContactListRepository;
 import mygoogleserviceapi.contacts.repository.ContactPhoneNumberRepository;
 import mygoogleserviceapi.contacts.repository.ContactRepository;
 import mygoogleserviceapi.contacts.service.interfaces.ContactListService;
+import mygoogleserviceapi.contacts.service.interfaces.ContactPictureStorageService;
 import mygoogleserviceapi.shared.model.ApplicationUser;
 import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
+import mygoogleserviceapi.shared.service.interfaces.FileStorageService;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +28,8 @@ public class ContactListServiceImpl implements ContactListService {
     private final ContactListRepository contactListRepository;
     private final ContactPhoneNumberRepository contactPhoneNumberRepository;
     private final ContactEmailAddressRepository contactEmailAddressRepository;
+    private final ContactPictureStorageService contactPictureStorageService;
+    private final FileStorageService fileStorageService;
 
     @Override
     public ContactList getContactList(String jwt) {
@@ -75,5 +80,15 @@ public class ContactListServiceImpl implements ContactListService {
     @Override
     public Boolean deleteAllContactsFromTrash(String jwt) {
         return null;
+    }
+
+    @Override
+    public Resource getContactPicture(Long id) {
+        Contact contact = contactRepository.getById(id);
+        Resource contactPicture = contactPictureStorageService.loadContactPicture(id);
+        if (contactPicture == null && contact.getContactApplicationUser() != null) {
+            contactPicture = fileStorageService.loadProfilePicture(contact.getContactApplicationUser().getId());
+        }
+        return contactPicture;
     }
 }

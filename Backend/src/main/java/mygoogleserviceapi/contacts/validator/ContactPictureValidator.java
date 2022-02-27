@@ -1,5 +1,6 @@
-package mygoogleserviceapi.shared.validator;
+package mygoogleserviceapi.contacts.validator;
 
+import mygoogleserviceapi.contacts.validator.annotation.ValidContactPicture;
 import mygoogleserviceapi.shared.exception.InvalidImageDimensionException;
 import mygoogleserviceapi.shared.exception.InvalidImageFormatException;
 import mygoogleserviceapi.shared.exception.NullImageException;
@@ -14,15 +15,15 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ProfilePictureValidator implements ConstraintValidator<ValidProfilePicture, MultipartFile> {
+public class ContactPictureValidator implements ConstraintValidator<ValidContactPicture, MultipartFile> {
+
     @Override
-    public void initialize(ValidProfilePicture constraintAnnotation) {
+    public void initialize(ValidContactPicture constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
     @Override
     public boolean isValid(MultipartFile multipartFile, ConstraintValidatorContext constraintValidatorContext) {
-        boolean result = true;
         if (multipartFile == null || multipartFile.isEmpty()) {
             throw new NullImageException();
         }
@@ -36,17 +37,11 @@ public class ProfilePictureValidator implements ConstraintValidator<ValidProfile
             InputStream in = new ByteArrayInputStream(image);
             BufferedImage originalImage = null;
             originalImage = ImageIO.read(in);
-            // Get image dimensions
-            /*int height = originalImage.getHeight();
-            int width = originalImage.getWidth();
-            if (height != width) {
-                throw new InvalidImageDimensionException();
-            } */
         } catch (IOException e) {
             return false;
         }
         //TODO: add check for size
-        return result;
+        return true;
     }
 
 
@@ -55,4 +50,5 @@ public class ProfilePictureValidator implements ConstraintValidator<ValidProfile
                 || contentType.equals("image/jpg")
                 || contentType.equals("image/jpeg");
     }
+
 }

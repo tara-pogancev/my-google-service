@@ -4,6 +4,7 @@ import mygoogleserviceapi.contacts.dto.ContactDTO;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.model.ContactList;
 import mygoogleserviceapi.shared.model.ApplicationUser;
+import org.springframework.core.io.Resource;
 
 import java.util.List;
 
@@ -25,4 +26,5 @@ public interface ContactListService {
 
     Boolean deleteAllContactsFromTrash(String jwt);
 
+    Resource getContactPicture(Long id);
 }

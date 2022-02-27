@@ -1,9 +1,7 @@
-package mygoogleserviceapi.shared.service;
+package mygoogleserviceapi.contacts.service;
 
-
+import mygoogleserviceapi.contacts.service.interfaces.ContactPictureStorageService;
 import mygoogleserviceapi.shared.config.FileStorageProperties;
-import mygoogleserviceapi.shared.exception.ProfilePictureNotFoundException;
-import mygoogleserviceapi.shared.service.interfaces.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -20,24 +18,27 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Service
-public class FileStorageServiceImpl implements FileStorageService {
+
+public class ContactPictureStorageServiceImpl implements ContactPictureStorageService {
 
     private final Path fileStorageLocation;
-    private static final String PROFILES_DIRECTORY = "profiles";
+    private static final String CONTACTS_DIRECTORY = "contacts";
 
     @Autowired
-    public FileStorageServiceImpl(FileStorageProperties fileStorageProperties) {
+    public ContactPictureStorageServiceImpl(FileStorageProperties fileStorageProperties) {
         this.fileStorageLocation = Paths.get(System.getProperty("user.dir") + File.separator + fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
-            Files.createDirectories(Paths.get(this.fileStorageLocation + File.separator + PROFILES_DIRECTORY));
+            Files.createDirectories(Paths.get(this.fileStorageLocation + File.separator + CONTACTS_DIRECTORY));
         } catch (Exception ex) {
             throw new RuntimeException("Could not create the directory where the uploaded files will be stored.", ex);
         }
     }
 
-    public String storeProfilePicture(MultipartFile file, Long userId) {
+
+    @Override
+    public String storeContactPicture(MultipartFile file, Long contactId) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
@@ -47,7 +48,7 @@ public class FileStorageServiceImpl implements FileStorageService {
                 throw new RuntimeException("Filename contains invalid path sequence " + fileName);
             }
 
-            Path targetLocation = this.fileStorageLocation.resolve(PROFILES_DIRECTORY + File.separator + userId);
+            Path targetLocation = this.fileStorageLocation.resolve(CONTACTS_DIRECTORY + File.separator + contactId);
 
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
@@ -57,19 +58,18 @@ public class FileStorageServiceImpl implements FileStorageService {
         }
     }
 
-    public Resource loadProfilePicture(Long userId) {
+    @Override
+    public Resource loadContactPicture(Long contactId) {
         try {
-            Path filePath = this.fileStorageLocation.resolve(PROFILES_DIRECTORY + File.separator + userId).normalize();
+            Path filePath = this.fileStorageLocation.resolve(CONTACTS_DIRECTORY + File.separator + contactId).normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists()) {
                 return resource;
             } else {
                 return null;
-                //throw new ProfilePictureNotFoundException();
             }
         } catch (MalformedURLException ex) {
             return null;
-            //throw new ProfilePictureNotFoundException();
         }
     }
 }

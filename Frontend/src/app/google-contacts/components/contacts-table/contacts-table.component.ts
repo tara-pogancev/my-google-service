@@ -51,12 +51,12 @@ export class ContactsTableComponent implements OnInit {
   }
 
   starContact(id: number) {
-    //todo: Star//unstar contact
+    //TODO Star//unstar contact
     this.refreshContacts();
   }
 
   deleteContact(id: number) {
-    //todo delete single comment
+    //TODO delete single comment
     this.refreshContacts();
   }
 
