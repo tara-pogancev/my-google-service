@@ -2,6 +2,7 @@ package mygoogleserviceapi.contacts.validator;
 
 import mygoogleserviceapi.contacts.validator.annotation.ValidContactPicture;
 import mygoogleserviceapi.shared.exception.InvalidImageFormatException;
+import mygoogleserviceapi.shared.exception.InvalidImageSizeException;
 import mygoogleserviceapi.shared.exception.NullImageException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,10 +36,12 @@ public class ContactPictureValidator implements ConstraintValidator<ValidContact
             InputStream in = new ByteArrayInputStream(image);
             BufferedImage originalImage = null;
             originalImage = ImageIO.read(in);
+            if (image.length > 2000000) {
+                throw new InvalidImageSizeException();
+            }
         } catch (IOException e) {
             return false;
         }
-        //TODO: add check for size
         return true;
     }
 

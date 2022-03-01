@@ -1,6 +1,7 @@
 package mygoogleserviceapi.shared.validator;
 
 import mygoogleserviceapi.shared.exception.InvalidImageFormatException;
+import mygoogleserviceapi.shared.exception.InvalidImageSizeException;
 import mygoogleserviceapi.shared.exception.NullImageException;
 import mygoogleserviceapi.shared.validator.annotation.ValidProfilePicture;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,10 +42,13 @@ public class ProfilePictureValidator implements ConstraintValidator<ValidProfile
             if (height != width) {
                 throw new InvalidImageDimensionException();
             } */
+
+            if (image.length > 2000000) {
+                throw new InvalidImageSizeException();
+            }
         } catch (IOException e) {
             return false;
         }
-        //TODO: add check for size
         return result;
     }
 

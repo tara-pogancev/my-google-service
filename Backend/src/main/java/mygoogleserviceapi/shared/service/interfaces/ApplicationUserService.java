@@ -25,4 +25,6 @@ public interface ApplicationUserService {
     ApplicationUser changePassword(ChangePasswordDTO dto, String jwt) throws Exception;
 
     ApplicationUser setDefaultApplication(String app, String jwt);
+
+    Boolean deleteUserProfilePicture(String jwt);
 }
