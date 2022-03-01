@@ -72,6 +72,10 @@ $custom-typography: mat.define-typography-config(
   max-width: 900px;
 }
 
+.max-width-1200 {
+  max-width: 1200px;
+}
+
 /* Border */
 .container {
   border: 0.8px solid lightgray;
