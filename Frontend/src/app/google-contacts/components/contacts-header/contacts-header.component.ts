@@ -1,3 +1,4 @@
+import { AbsoluteModuleStrategy } from '@angular/compiler-cli/src/ngtsc/imports';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/app/shared/model/user-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -19,7 +20,11 @@ export class ContactsHeaderComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private searchContactsService: SearchContactsService
-  ) {}
+  ) {
+    this.searchContactsService.doResetSearchValue$.subscribe(() => {
+      this.searchValue = '';
+    });
+  }
 
   ngOnInit(): void {
     this.user.id = this.authService.getCurrentUser().id;

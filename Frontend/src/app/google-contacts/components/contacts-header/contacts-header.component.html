@@ -19,11 +19,13 @@
 
       <input
         matInput
+        id="search-field"
         type="text"
         [(ngModel)]="searchValue"
         placeholder="Search"
         class="search-form-field-text"
         (keyup.enter)="search()"
+        (ngModelChange)="search()"
       />
 
       <button

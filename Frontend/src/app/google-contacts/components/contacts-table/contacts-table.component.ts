@@ -17,6 +17,7 @@ export class ContactsTableComponent implements OnInit {
   contacts: Contact[] = [];
   starredContacts: Contact[] = [];
   selectedContacts: number[] = [];
+  currentSearch: string = '';
 
   constructor(
     private contactListService: ContactListService,
@@ -29,6 +30,7 @@ export class ContactsTableComponent implements OnInit {
     searchContactsService.doSearch$.subscribe((text) => {
       this.searchContacts(text);
     });
+    this.searchContactsService.announceSearchReset();
   }
 
   ngOnInit(): void {
@@ -41,6 +43,7 @@ export class ContactsTableComponent implements OnInit {
       this.contacts = this.sortContacts(data);
       this.setStarredContacts();
       this.refreshContactsCountService.announceRefreshing();
+      this.searchContacts(this.currentSearch);
     });
   }
 
@@ -127,10 +130,12 @@ export class ContactsTableComponent implements OnInit {
   }
 
   searchContacts(text: string) {
+    this.currentSearch = text;
     if (text == '') {
       this.contacts = this.allContacts;
       this.setStarredContacts();
     } else {
+      this.selectNone();
       this.contacts = this.searchContactsService.searchContacts(
         this.allContacts,
         text
