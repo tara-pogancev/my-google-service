@@ -26,6 +26,9 @@
         class="search-form-field-text"
         (keyup.enter)="search()"
         (ngModelChange)="search()"
+        [disabled]="
+          !(router.url == '/contacts' || router.url == '/contacts/trash')
+        "
       />
 
       <button

@@ -84,6 +84,10 @@ $custom-typography: mat.define-typography-config(
   cursor: pointer;
 }
 
+.auto-margin {
+  margin: auto;
+}
+
 /* Hide scroll bar*/
 .main-container::-webkit-scrollbar {
   display: none !important;
@@ -93,7 +97,3 @@ $custom-typography: mat.define-typography-config(
 .main-container {
   -ms-overflow-style: none !important;
 }
-
-
-
-
