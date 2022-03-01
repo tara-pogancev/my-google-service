@@ -25,10 +25,10 @@ public class Contact extends DatabaseEntity {
     @Column(name = "deleted")
     private Boolean deleted = false;
 
-    @OneToMany(mappedBy = "contact")
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.REMOVE)
     private Set<ContactPhoneNumber> phoneNumbers;
 
-    @OneToMany(mappedBy = "contact")
+    @OneToMany(mappedBy = "contact", cascade = CascadeType.REMOVE)
     private Set<ContactEmailAddress> emailAddresses;
 
     //todo: contact picture

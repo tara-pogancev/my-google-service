@@ -5,7 +5,6 @@ import mygoogleserviceapi.contacts.dto.ContactDTO;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.service.interfaces.ContactListService;
 import mygoogleserviceapi.shared.converter.DataConverter;
-import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -59,6 +58,34 @@ public class ContactListController {
         }
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteContact(@PathVariable Long id, @RequestHeader(name = "Authorization") String jwt) {
+        Boolean success = contactListService.deleteContact(jwt, id);
+        if (success) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 
+    @PutMapping("/delete")
+    public ResponseEntity<?> deleteContactList(@RequestBody List<Long> idList, @RequestHeader(name = "Authorization") String jwt) {
+        Boolean success = contactListService.deleteContactList(jwt, idList);
+        if (success) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/delete-trash")
+    public ResponseEntity<?> deleteContact(@RequestHeader(name = "Authorization") String jwt) {
+        Boolean success = contactListService.deleteAllContactsFromTrash(jwt);
+        if (success) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

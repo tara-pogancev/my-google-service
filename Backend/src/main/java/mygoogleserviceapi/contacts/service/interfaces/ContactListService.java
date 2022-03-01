@@ -22,8 +22,6 @@ public interface ContactListService {
 
     Boolean deleteContact(String jwt, Long id);
 
-    Boolean deleteContactFromTrash(String jwt, Long id);
-
     Boolean deleteAllContactsFromTrash(String jwt);
 
     Resource getContactPicture(Long id);
@@ -34,4 +32,5 @@ public interface ContactListService {
 
     Boolean contactBelongsToUser(String jwt, Long contactId);
 
+    Boolean deleteContactList(String jwt, List<Long> idList);
 }

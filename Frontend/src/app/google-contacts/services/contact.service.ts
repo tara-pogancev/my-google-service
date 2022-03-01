@@ -26,4 +26,28 @@ export class ContactService {
       headers: headers,
     });
   }
+
+  deleteContact(id: number) {
+    const url = this.url + '/delete/' + id;
+    const headers = this.authService.getHeaders();
+    return this._http.delete<any>(url, {
+      headers: headers,
+    });
+  }
+
+  deleteContactList(idList: number[]) {
+    const url = this.url + '/delete';
+    const headers = this.authService.getHeaders();
+    return this._http.put<any>(url, idList, {
+      headers: headers,
+    });
+  }
+
+  deleteContactInTrash() {
+    const url = this.url + '/delete-trash';
+    const headers = this.authService.getHeaders();
+    return this._http.delete<any>(url, {
+      headers: headers,
+    });
+  }
 }

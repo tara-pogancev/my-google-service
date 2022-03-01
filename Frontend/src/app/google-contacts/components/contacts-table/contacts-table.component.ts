@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Contact } from '../../model/contact';
 import { ContactListService } from '../../services/contact-list.service';
@@ -19,7 +20,8 @@ export class ContactsTableComponent implements OnInit {
     private contactListService: ContactListService,
     private router: Router,
     private refreshContactsCountService: RefreshContactsCountService,
-    private contactService: ContactService
+    private contactService: ContactService,
+    private snackbar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -67,11 +69,6 @@ export class ContactsTableComponent implements OnInit {
     }
   }
 
-  deleteContact(id: number) {
-    //TODO delete single comment
-    this.refreshContacts();
-  }
-
   selectContact(checked: boolean, contact: Contact) {
     if (checked) {
       this.selectedContacts.push(contact.id);
@@ -93,8 +90,28 @@ export class ContactsTableComponent implements OnInit {
     this.selectedContacts = [];
   }
 
+  deleteContact(id: number) {
+    if (confirm('Are you sure you want to delete this contact?')) {
+      this.contactService.deleteContact(id).subscribe((data) => {
+        this.refreshContacts();
+        this.snackbar.open('Contact deleted', 'Close', {
+          duration: 3000,
+        });
+      });
+    }
+  }
+
   deleteSelected() {
-    //TODO delete selected
+    if (confirm('Are you sure you want to delete selected contacts?')) {
+      this.contactService
+        .deleteContactList(this.selectedContacts)
+        .subscribe((data) => {
+          this.refreshContacts();
+          this.snackbar.open('Contacts deleted', 'Close', {
+            duration: 3000,
+          });
+        });
+    }
   }
 
   exportSelected() {

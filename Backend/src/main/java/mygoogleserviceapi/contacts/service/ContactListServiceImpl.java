@@ -69,17 +69,37 @@ public class ContactListServiceImpl implements ContactListService {
 
     @Override
     public Boolean deleteContact(String jwt, Long id) {
-        return null;
+        Contact contact = contactRepository.getById(id);
+        if (contact != null && contactBelongsToUser(jwt, id)) {
+            contactRepository.delete(contact);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public Boolean deleteContactFromTrash(String jwt, Long id) {
-        return null;
+    public Boolean deleteContactList(String jwt, List<Long> idList) {
+        for (Long id : idList) {
+            Contact contact = contactRepository.getById(id);
+            if(contactBelongsToUser(jwt, id)) {
+                contactRepository.delete(contact);
+            }
+        }
+        return true;
     }
 
     @Override
     public Boolean deleteAllContactsFromTrash(String jwt) {
-        return null;
+        List<Contact> deletedContacts = getDeletedContacts(jwt);
+        if (deletedContacts != null) {
+            for (Contact contact : deletedContacts) {
+                contactRepository.delete(contact);
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
@@ -122,4 +142,5 @@ public class ContactListServiceImpl implements ContactListService {
         ApplicationUser owner = userService.getUserByJwt(jwt);
         return contact.getContactList().getOwner() == owner;
     }
+
 }
