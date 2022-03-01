@@ -1,6 +1,5 @@
 package mygoogleserviceapi.shared.validator;
 
-import mygoogleserviceapi.shared.exception.InvalidImageDimensionException;
 import mygoogleserviceapi.shared.exception.InvalidImageFormatException;
 import mygoogleserviceapi.shared.exception.NullImageException;
 import mygoogleserviceapi.shared.validator.annotation.ValidProfilePicture;

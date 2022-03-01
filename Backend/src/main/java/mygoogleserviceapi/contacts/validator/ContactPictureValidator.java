@@ -1,10 +1,8 @@
 package mygoogleserviceapi.contacts.validator;
 
 import mygoogleserviceapi.contacts.validator.annotation.ValidContactPicture;
-import mygoogleserviceapi.shared.exception.InvalidImageDimensionException;
 import mygoogleserviceapi.shared.exception.InvalidImageFormatException;
 import mygoogleserviceapi.shared.exception.NullImageException;
-import mygoogleserviceapi.shared.validator.annotation.ValidProfilePicture;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;

@@ -36,7 +36,8 @@ public class ContactListServiceImpl implements ContactListService {
         ApplicationUser user = userService.getUserByJwt(jwt);
         if (user != null) {
             return contactListRepository.getByUserId(user.getId());
-        } return null;
+        }
+        return null;
     }
 
     @Override
@@ -50,7 +51,8 @@ public class ContactListServiceImpl implements ContactListService {
         if (contactList != null) {
             List<Contact> contactsArrayList = contactList.getContacts();
             return contactsArrayList.stream().filter(c -> !c.getDeleted()).collect(Collectors.toList());
-        } return null;
+        }
+        return null;
     }
 
     @Override
@@ -76,7 +78,7 @@ public class ContactListServiceImpl implements ContactListService {
     public Boolean deleteContactList(String jwt, List<Long> idList) {
         for (Long id : idList) {
             Contact contact = contactRepository.getById(id);
-            if(contactBelongsToUser(jwt, id)) {
+            if (contactBelongsToUser(jwt, id)) {
                 contact.setStarred(false);
                 contact.setDeleted(true);
                 contactRepository.save(contact);

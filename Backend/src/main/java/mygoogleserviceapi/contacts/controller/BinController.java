@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.contacts.dto.ContactDTO;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.service.interfaces.BinService;
-import mygoogleserviceapi.contacts.service.interfaces.ContactListService;
 import mygoogleserviceapi.shared.converter.DataConverter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

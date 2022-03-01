@@ -3,7 +3,7 @@ package mygoogleserviceapi.contacts.dto;
 import lombok.Data;
 
 @Data
-public class ContactEmailAddressDTO implements Comparable<ContactEmailAddressDTO>{
+public class ContactEmailAddressDTO implements Comparable<ContactEmailAddressDTO> {
     public Long id;
     public Long contactId;
     public String email;

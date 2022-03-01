@@ -9,4 +9,6 @@ public interface ContactPictureStorageService {
 
     public Resource loadContactPicture(Long contactId);
 
+    public void deleteContactPicture(Long contactId);
+
 }
