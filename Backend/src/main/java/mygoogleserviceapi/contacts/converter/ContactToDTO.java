@@ -6,9 +6,6 @@ import mygoogleserviceapi.contacts.dto.ContactPhoneNumberDTO;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.model.ContactEmailAddress;
 import mygoogleserviceapi.contacts.model.ContactPhoneNumber;
-import mygoogleserviceapi.contacts.model.UserPhoneNumber;
-import mygoogleserviceapi.shared.dto.UserPhoneNumberDTO;
-import mygoogleserviceapi.shared.model.ApplicationUser;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -63,8 +60,6 @@ public class ContactToDTO implements Converter<Contact, ContactDTO> {
         Collections.sort(list);
         return list;
     }
-
-
 
 
 }

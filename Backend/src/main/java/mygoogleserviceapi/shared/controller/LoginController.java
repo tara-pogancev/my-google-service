@@ -41,7 +41,7 @@ public class LoginController {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
         final String jwt = jwtUtil.generateToken(userDetails);
-        return ResponseEntity.ok(new AuthenticationResponse(jwt, user.getFullName(), user.getEmail(), user.getDefaultApplication().toString() ,user.getId()));
+        return ResponseEntity.ok(new AuthenticationResponse(jwt, user.getFullName(), user.getEmail(), user.getDefaultApplication().toString(), user.getId()));
     }
 
     @PostMapping("/email-exists")

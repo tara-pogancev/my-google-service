@@ -2,7 +2,6 @@ package mygoogleserviceapi.shared.service;
 
 
 import mygoogleserviceapi.shared.config.FileStorageProperties;
-import mygoogleserviceapi.shared.exception.ProfilePictureNotFoundException;
 import mygoogleserviceapi.shared.service.interfaces.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

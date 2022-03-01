@@ -72,4 +72,20 @@ public class ContactPictureStorageServiceImpl implements ContactPictureStorageSe
             return null;
         }
     }
+
+    @Override
+    public void deleteContactPicture(Long contactId) {
+        try {
+            Path filePath = this.fileStorageLocation.resolve(CONTACTS_DIRECTORY + File.separator + contactId).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists()) {
+                Files.delete(filePath);
+                return;
+            } else {
+                return;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
