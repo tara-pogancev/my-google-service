@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Contact } from '../../model/contact';
 import { ContactListService } from '../../services/contact-list.service';
+import { ContactService } from '../../services/contact.service';
 import { RefreshContactsCountService } from '../contacts-sidebar/refresh-contact-count.service';
 
 @Component({
@@ -17,7 +18,8 @@ export class ContactsTableComponent implements OnInit {
   constructor(
     private contactListService: ContactListService,
     private router: Router,
-    private refreshContactsCountService: RefreshContactsCountService
+    private refreshContactsCountService: RefreshContactsCountService,
+    private contactService: ContactService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class ContactsTableComponent implements OnInit {
 
   sortContacts(entities: any[]) {
     return entities.sort((e1, e2) => {
-      if (e1.fullName < e2.fullName) {
+      if (e1.fullName > e2.fullName) {
         return 1;
       } else {
         return -1;
@@ -51,8 +53,18 @@ export class ContactsTableComponent implements OnInit {
   }
 
   starContact(id: number) {
-    //TODO Star//unstar contact
-    this.refreshContacts();
+    let contact = this.contacts.filter((contact) => {
+      return contact.id == id;
+    })[0];
+    if (contact != null && contact.starred == false) {
+      this.contactService.starContact(id).subscribe((data) => {
+        this.refreshContacts();
+      });
+    } else if (contact != null && contact.starred == true) {
+      this.contactService.unstarContact(id).subscribe((data) => {
+        this.refreshContacts();
+      });
+    }
   }
 
   deleteContact(id: number) {

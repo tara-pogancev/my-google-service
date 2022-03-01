@@ -27,4 +27,11 @@ public interface ContactListService {
     Boolean deleteAllContactsFromTrash(String jwt);
 
     Resource getContactPicture(Long id);
+
+    Boolean starContact(String jwt, Long id);
+
+    Boolean unstarContact(String jwt, Long id);
+
+    Boolean contactBelongsToUser(String jwt, Long contactId);
+
 }

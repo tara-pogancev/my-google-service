@@ -91,4 +91,35 @@ public class ContactListServiceImpl implements ContactListService {
         }
         return contactPicture;
     }
+
+    @Override
+    public Boolean starContact(String jwt, Long id) {
+        Contact contact = contactRepository.getById(id);
+        if (contact != null && contactBelongsToUser(jwt, id)) {
+            contact.setStarred(true);
+            contactRepository.save(contact);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean unstarContact(String jwt, Long id) {
+        Contact contact = contactRepository.getById(id);
+        if (contact != null && contactBelongsToUser(jwt, id)) {
+            contact.setStarred(false);
+            contactRepository.save(contact);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean contactBelongsToUser(String jwt, Long contactId) {
+        Contact contact = contactRepository.getById(contactId);
+        ApplicationUser owner = userService.getUserByJwt(jwt);
+        return contact.getContactList().getOwner() == owner;
+    }
 }

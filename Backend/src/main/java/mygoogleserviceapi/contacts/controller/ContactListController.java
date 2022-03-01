@@ -39,4 +39,26 @@ public class ContactListController {
         return new ResponseEntity<>(converter.convert(contacts, ContactDTO.class), HttpStatus.OK);
     }
 
+    @PutMapping("/star/{id}")
+    public ResponseEntity<?> starContact(@PathVariable Long id, @RequestHeader(name = "Authorization") String jwt) {
+        Boolean success = contactListService.starContact(jwt, id);
+        if (success) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/unstar/{id}")
+    public ResponseEntity<?> unstarContact(@PathVariable Long id, @RequestHeader(name = "Authorization") String jwt) {
+        Boolean success = contactListService.unstarContact(jwt, id);
+        if (success) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
 }
