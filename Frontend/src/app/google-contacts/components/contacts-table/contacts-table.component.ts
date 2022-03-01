@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Contact } from '../../model/contact';
 import { ContactListService } from '../../services/contact-list.service';
 import { ContactService } from '../../services/contact.service';
+import { SearchContactsService } from '../contacts-header/search-contacts.service';
 import { RefreshContactsCountService } from '../contacts-sidebar/refresh-contact-count.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { RefreshContactsCountService } from '../contacts-sidebar/refresh-contact
   styleUrls: ['./contacts-table.component.scss'],
 })
 export class ContactsTableComponent implements OnInit {
+  allContacts: Contact[] = [];
   contacts: Contact[] = [];
   starredContacts: Contact[] = [];
   selectedContacts: number[] = [];
@@ -20,9 +22,14 @@ export class ContactsTableComponent implements OnInit {
     private contactListService: ContactListService,
     private router: Router,
     private refreshContactsCountService: RefreshContactsCountService,
+    private searchContactsService: SearchContactsService,
     private contactService: ContactService,
     private snackbar: MatSnackBar
-  ) {}
+  ) {
+    searchContactsService.doSearch$.subscribe((text) => {
+      this.searchContacts(text);
+    });
+  }
 
   ngOnInit(): void {
     this.refreshContacts();
@@ -30,6 +37,7 @@ export class ContactsTableComponent implements OnInit {
 
   refreshContacts() {
     this.contactListService.getAllContacts().subscribe((data) => {
+      this.allContacts = this.sortContacts(data);
       this.contacts = this.sortContacts(data);
       this.setStarredContacts();
       this.refreshContactsCountService.announceRefreshing();
@@ -116,5 +124,18 @@ export class ContactsTableComponent implements OnInit {
 
   exportSelected() {
     //TODO export selected
+  }
+
+  searchContacts(text: string) {
+    if (text == '') {
+      this.contacts = this.allContacts;
+      this.setStarredContacts();
+    } else {
+      this.contacts = this.searchContactsService.searchContacts(
+        this.allContacts,
+        text
+      );
+      this.setStarredContacts();
+    }
   }
 }

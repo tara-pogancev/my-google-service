@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/app/shared/model/user-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user-service';
+import { SearchContactsService } from './search-contacts.service';
 
 @Component({
   selector: 'contacts-header',
@@ -16,7 +17,8 @@ export class ContactsHeaderComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private searchContactsService: SearchContactsService
   ) {}
 
   ngOnInit(): void {
@@ -41,9 +43,7 @@ export class ContactsHeaderComponent implements OnInit {
   }
 
   search() {
-    if (this.searchValue.trim() != '') {
-      this.doSearch.emit(this.searchValue.trim());
-    }
+    this.searchContactsService.announceSearch(this.searchValue.trim());
   }
 
   toggleSidebar() {

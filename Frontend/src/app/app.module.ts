@@ -35,6 +35,7 @@ import { ExportPageComponent } from './google-contacts/components/export-page/ex
 import { SuggestionsPageComponent } from './google-contacts/components/suggestions-page/suggestions-page.component';
 import { RefreshContactsCountService } from './google-contacts/components/contacts-sidebar/refresh-contact-count.service';
 import { ContactProfilePictureComponent } from './google-contacts/components/contact-profile-picture/contact-profile-picture.component';
+import { SearchContactsService } from './google-contacts/components/contacts-header/search-contacts.service';
 
 class MyErrorHandler implements ErrorHandler {
   handleError(error: any): void {
@@ -88,6 +89,7 @@ class MyErrorHandler implements ErrorHandler {
     UnAuthGuard,
     { provide: ErrorHandler, useClass: MyErrorHandler },
     RefreshContactsCountService,
+    SearchContactsService,
   ],
   bootstrap: [AppComponent],
 })
