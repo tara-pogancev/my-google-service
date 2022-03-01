@@ -9,4 +9,6 @@ public interface FileStorageService {
 
     public Resource loadProfilePicture(Long userId);
 
+    public void deleteProfilePicture(Long userId);
+
 }

@@ -87,9 +87,19 @@
                 >Invalid picture.</span
               >
             </div>
-            <p>Picture must be either JPG, JPEG or PNG.</p>
+            <p>
+              Picture must be either JPG, JPEG or PNG. Max file size is 2MB.
+            </p>
 
             <mat-action-row>
+              <button
+                mat-flat-button
+                type="button"
+                (click)="removeProfilePicture()"
+                *ngIf="userHasProfilePicture"
+              >
+                Remove
+              </button>
               <button mat-flat-button color="primary" type="submit">
                 Save
               </button>

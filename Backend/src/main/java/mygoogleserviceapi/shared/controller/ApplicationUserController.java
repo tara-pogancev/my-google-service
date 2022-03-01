@@ -48,6 +48,14 @@ public class ApplicationUserController {
                 .body(resource);
     }
 
+    @DeleteMapping("/profile-picture")
+    public ResponseEntity<Resource> getProfilePicture(@RequestHeader(name = "Authorization") String jwt) {
+        Boolean success = applicationUserService.deleteUserProfilePicture(jwt);
+        if (success) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         ApplicationUser user = applicationUserService.getById(id);

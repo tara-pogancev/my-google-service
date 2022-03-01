@@ -71,4 +71,20 @@ public class FileStorageServiceImpl implements FileStorageService {
             //throw new ProfilePictureNotFoundException();
         }
     }
+
+    @Override
+    public void deleteProfilePicture(Long userId) {
+        try {
+            Path filePath = this.fileStorageLocation.resolve(PROFILES_DIRECTORY + File.separator + userId).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists()) {
+                Files.delete(filePath);
+                return;
+            } else {
+                return;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

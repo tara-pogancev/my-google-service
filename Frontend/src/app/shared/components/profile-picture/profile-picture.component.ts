@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Sanitizer } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ProfilePictureService } from '../../services/profile-picture.service';
+import { ProfileRefreshService } from '../edit-profile-page/profile-refresh.service';
 
 @Component({
   selector: 'profile-picture',
@@ -15,17 +16,29 @@ export class ProfilePictureComponent implements OnInit {
 
   constructor(
     private profilePictureService: ProfilePictureService,
-    private _sanitizer: DomSanitizer
-  ) {}
+    private _sanitizer: DomSanitizer,
+    private profileRefreshService: ProfileRefreshService
+  ) {
+    this.profileRefreshService.doRefreshImage$.subscribe(() => {
+      this.ngOnInit();
+    });
+  }
 
   ngOnInit(): void {
+    this.loadProfilePicture();
+  }
+
+  loadProfilePicture() {
     this.profilePictureService
       .getProfilePicture(this.id)
       .subscribe((data: Blob) => {
-        if (data.size != 0)
+        if (data.size != 0) {
           this.img = this._sanitizer.bypassSecurityTrustResourceUrl(
             window.URL.createObjectURL(data)
           );
+        } else {
+          this.img = '../../../../assets/missing_profile_picture.png';
+        }
       });
   }
 }

@@ -105,5 +105,16 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
         return user;
     }
 
+    @Override
+    public Boolean deleteUserProfilePicture(String jwt) {
+        ApplicationUser user = getUserByJwt(jwt);
+        if (user != null) {
+            this.fileStorageService.deleteProfilePicture(user.getId());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
 }

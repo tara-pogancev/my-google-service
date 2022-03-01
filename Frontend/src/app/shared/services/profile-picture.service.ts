@@ -30,4 +30,12 @@ export class ProfilePictureService {
       }
     );
   }
+
+  deleteProfilePicture() {
+    const url = this.baseUrl + 'users/profile-picture';
+    const headers = this.authService.getHeaders();
+    return this.http.delete(url, {
+      headers: headers,
+    });
+  }
 }
