@@ -16,13 +16,9 @@ public interface ContactListService {
 
     List<Contact> getContacts(String jwt);
 
-    List<Contact> getDeletedContacts(String jwt);
-
     Contact addNewContact(String jwt, ContactDTO dto);
 
     Boolean deleteContact(String jwt, Long id);
-
-    Boolean deleteAllContactsFromTrash(String jwt);
 
     Resource getContactPicture(Long id);
 

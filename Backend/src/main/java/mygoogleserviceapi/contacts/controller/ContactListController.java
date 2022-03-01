@@ -22,7 +22,6 @@ public class ContactListController {
     private final DataConverter converter;
     private final ContactListService contactListService;
 
-
     @GetMapping("/{id}/contact-picture")
     public ResponseEntity<Resource> getContactPicture(@PathVariable Long id, HttpServletRequest request) {
         Resource resource = contactListService.getContactPicture(id);
@@ -78,14 +77,5 @@ public class ContactListController {
         }
     }
 
-    @DeleteMapping("/delete-trash")
-    public ResponseEntity<?> deleteContact(@RequestHeader(name = "Authorization") String jwt) {
-        Boolean success = contactListService.deleteAllContactsFromTrash(jwt);
-        if (success) {
-            return new ResponseEntity<>(null, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-    }
 
 }

@@ -42,12 +42,4 @@ export class ContactService {
       headers: headers,
     });
   }
-
-  deleteContactInTrash() {
-    const url = this.url + '/delete-trash';
-    const headers = this.authService.getHeaders();
-    return this._http.delete<any>(url, {
-      headers: headers,
-    });
-  }
 }

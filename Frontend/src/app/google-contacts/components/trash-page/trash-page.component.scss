@@ -1,0 +1,117 @@
+table {
+  width: 100%;
+  margin: 0 !important;
+}
+
+td {
+  height: 56px;
+  border: none !important;
+}
+
+td p {
+  margin: 0;
+}
+
+th {
+  height: 49px;
+  color: #5f6368 !important;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12) !important;
+}
+
+tbody tr {
+  &:hover {
+    background-color: #f2f2f2;
+  }
+}
+
+.name-column {
+  width: 25%;
+}
+
+.email-column {
+  width: 25%;
+}
+
+.phone-column {
+  width: 40%;
+}
+
+.menu-column {
+  width: 10%;
+}
+
+.contacts-label {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 11px;
+  color: #5f6368;
+  letter-spacing: 1px;
+}
+
+.contact-menu {
+  visibility: hidden;
+}
+
+tr:hover contact-profile-picture {
+  display: none;
+}
+
+tr:hover .checkbox-container {
+  display: flex !important;
+}
+
+tr:hover .contact-menu {
+  visibility: visible;
+}
+
+.selected {
+  background-color: #f2f2f2;
+}
+
+.selected-picture {
+  display: none;
+}
+
+.selected-checkbox {
+  display: flex !important;
+}
+
+.checkbox-container {
+  width: 36px !important;
+  height: 36px !important;
+}
+
+mat-checkbox {
+  z-index: 999;
+  line-height: 36px;
+  margin: auto;
+}
+
+mat-icon {
+  transform: scale(0.9);
+  color: #5f6368;
+}
+
+.name-column .stretch-width {
+  width: 90%;
+}
+
+.scrollabe {
+  overflow-y: scroll;
+  height: calc(100vh - 129px);
+}
+
+.selection-menu button {
+  margin-right: 15px;
+}
+
+.selection-menu p {
+  color: #1a73e8;
+}
+
+::ng-deep .selection-menu .mat-icon-button {
+  height: 34px !important;
+  width: 34px !important;
+  line-height: 34px !important;
+}

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -121,6 +121,7 @@ export class ContactsTableComponent implements OnInit {
         .deleteContactList(this.selectedContacts)
         .subscribe((data) => {
           this.refreshContacts();
+          this.selectNone();
           this.snackbar.open('Contacts deleted', 'Close', {
             duration: 3000,
           });

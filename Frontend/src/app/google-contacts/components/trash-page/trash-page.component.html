@@ -1,1 +1,164 @@
-<p>trash-page works!</p>
+<div class="table-container main-container">
+  <table class="table is-fullwidth">
+    <thead class="top-table-header">
+      <tr *ngIf="selectedContacts.length == 0">
+        <th class="name-column">
+          <div class="is-flex is-align-items-center stretch-height">Name</div>
+        </th>
+        <th class="email-column">
+          <div class="is-flex is-align-items-center stretch-height">Email</div>
+        </th>
+        <th class="phone-column">
+          <div class="is-flex is-align-items-center stretch-height">
+            Phone number
+          </div>
+        </th>
+        <th class="menu-column">
+          <button mat-button color="warn" (click)="deleteAllForever()">
+            Empty bin now
+          </button>
+        </th>
+      </tr>
+      <tr class="selection-menu" *ngIf="selectedContacts.length != 0">
+        <th>
+          <div
+            class="is-flex is-align-items-center stretch-height is-justify-content-space-between"
+          >
+            <div>
+              <button
+                mat-icon-button
+                [matMenuTriggerFor]="menu"
+                matTooltip="Select"
+              >
+                <mat-icon>indeterminate_check_box</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="selectAll()">
+                  <span>All</span>
+                </button>
+                <button mat-menu-item (click)="selectNone()">
+                  <span>None</span>
+                </button>
+              </mat-menu>
+              <button mat-button color="primary" (click)="deleteSelectedForever()">
+                Delete forever
+              </button>
+              <button mat-button color="primary" (click)="recoverSelected()">
+                Recover
+              </button>
+            </div>
+            <div class="mr-5">
+              <p>{{ selectedContacts.length }} selected</p>
+            </div>
+          </div>
+        </th>
+      </tr>
+    </thead>
+  </table>
+
+  <div class="scrollabe">
+    <p class="my-3 contacts-label">Bin ({{ contacts.length }})</p>
+    <table class="table">
+      <thead [style.display]="'none'">
+        <tr>
+          <th class="name-column">
+            <div class="is-flex is-align-items-center stretch-height">Name</div>
+          </th>
+          <th class="email-column">
+            <div class="is-flex is-align-items-center stretch-height">
+              Email
+            </div>
+          </th>
+          <th class="phone-column">
+            <div class="is-flex is-align-items-center stretch-height">
+              Phone number
+            </div>
+          </th>
+          <th class="menu-column"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngIf="contacts.length == 0">
+          <p class="m-5">No contacts to display.</p>
+        </tr>
+        <tr
+          *ngFor="let contact of contacts"
+          [ngClass]="{ selected: selectedContacts.includes(contact.id) }"
+        >
+          <td class="name-column">
+            <div
+              class="is-flex is-align-items-center stretch-height stretch-width is-flex-direction-row"
+            >
+              <contact-profile-picture
+                [id]="contact.id"
+                size="36"
+                [ngClass]="{
+                  'selected-picture': selectedContacts.includes(contact.id)
+                }"
+              ></contact-profile-picture>
+              <div
+                class="checkbox-container"
+                [style.display]="
+                  selectedContacts.includes(contact.id) ? 'flex' : 'none'
+                "
+              >
+                <mat-checkbox
+                  (change)="selectContact($event.checked, contact)"
+                  [checked]="selectedContacts.includes(contact.id)"
+                >
+                </mat-checkbox>
+              </div>
+              <div
+                class="clickable stretch-width stretch-height is-flex is-align-items-center"
+              >
+                <p class="ml-4">{{ contact.fullName }}</p>
+              </div>
+            </div>
+          </td>
+          <td
+            class="email-column clickable"
+            *ngIf="contact.emails.length == 0"
+          ></td>
+          <td class="email-column clickable" *ngIf="contact.emails.length != 0">
+            <div class="is-flex is-align-items-center stretch-height">
+              <span *ngFor="let email of contact.emails.slice(0, 1)">
+                {{ email.email }}
+              </span>
+            </div>
+          </td>
+          <td
+            class="phone-column clickable"
+            *ngIf="contact.phoneNumbers.length == 0"
+          ></td>
+          <td
+            class="phone-column clickable"
+            *ngIf="contact.phoneNumbers.length != 0"
+          >
+            <div class="is-flex is-align-items-center stretch-height">
+              <span
+                *ngFor="let phoneNumber of contact.phoneNumbers.slice(0, 3)"
+                class="mr-5"
+              >
+                {{ phoneNumber.phoneNumber }}
+              </span>
+            </div>
+          </td>
+          <td class="menu-column">
+            <div
+              class="is-flex is-align-items-center stretch-height contact-menu"
+            >
+              <button
+                mat-button
+                color="primary"
+                (click)="recoverContact(contact.id)"
+              >
+                Recover
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

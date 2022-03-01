@@ -25,11 +25,11 @@ public class ContactListServiceImpl implements ContactListService {
 
     private final ApplicationUserService userService;
     private final ContactRepository contactRepository;
+    private final FileStorageService fileStorageService;
     private final ContactListRepository contactListRepository;
+    private final ContactPictureStorageService contactPictureStorageService;
     private final ContactPhoneNumberRepository contactPhoneNumberRepository;
     private final ContactEmailAddressRepository contactEmailAddressRepository;
-    private final ContactPictureStorageService contactPictureStorageService;
-    private final FileStorageService fileStorageService;
 
     @Override
     public ContactList getContactList(String jwt) {
@@ -54,16 +54,8 @@ public class ContactListServiceImpl implements ContactListService {
     }
 
     @Override
-    public List<Contact> getDeletedContacts(String jwt) {
-        ContactList contactList = getContactList(jwt);
-        if (contactList != null) {
-            List<Contact> contactsArrayList = contactList.getContacts();
-            return contactsArrayList.stream().filter(c -> c.getDeleted()).collect(Collectors.toList());
-        } return null;
-    }
-
-    @Override
     public Contact addNewContact(String jwt, ContactDTO dto) {
+        //todo: add new contact
         return null;
     }
 
@@ -71,7 +63,9 @@ public class ContactListServiceImpl implements ContactListService {
     public Boolean deleteContact(String jwt, Long id) {
         Contact contact = contactRepository.getById(id);
         if (contact != null && contactBelongsToUser(jwt, id)) {
-            contactRepository.delete(contact);
+            contact.setStarred(false);
+            contact.setDeleted(true);
+            contactRepository.save(contact);
             return true;
         } else {
             return false;
@@ -83,23 +77,12 @@ public class ContactListServiceImpl implements ContactListService {
         for (Long id : idList) {
             Contact contact = contactRepository.getById(id);
             if(contactBelongsToUser(jwt, id)) {
-                contactRepository.delete(contact);
+                contact.setStarred(false);
+                contact.setDeleted(true);
+                contactRepository.save(contact);
             }
         }
         return true;
-    }
-
-    @Override
-    public Boolean deleteAllContactsFromTrash(String jwt) {
-        List<Contact> deletedContacts = getDeletedContacts(jwt);
-        if (deletedContacts != null) {
-            for (Contact contact : deletedContacts) {
-                contactRepository.delete(contact);
-            }
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
