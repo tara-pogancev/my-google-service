@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Contact } from '../../model/contact';
@@ -6,6 +7,7 @@ import { ContactListService } from '../../services/contact-list.service';
 import { ContactService } from '../../services/contact.service';
 import { SearchContactsService } from '../contacts-header/search-contacts.service';
 import { RefreshContactsCountService } from '../contacts-sidebar/refresh-contact-count.service';
+import { ExportSelectedPageComponent } from '../export-selected-page/export-selected-page.component';
 
 @Component({
   selector: 'contacts-table',
@@ -25,7 +27,8 @@ export class ContactsTableComponent implements OnInit {
     private refreshContactsCountService: RefreshContactsCountService,
     private searchContactsService: SearchContactsService,
     private contactService: ContactService,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     searchContactsService.doSearch$.subscribe((text) => {
       this.searchContacts(text);
@@ -126,7 +129,11 @@ export class ContactsTableComponent implements OnInit {
   }
 
   exportSelected() {
-    //TODO export selected
+    if (this.selectedContacts.length != 0) {
+      const dialogRef = this.dialog.open(ExportSelectedPageComponent, {
+        data: this.selectedContacts,
+      });
+    }
   }
 
   searchContacts(text: string) {

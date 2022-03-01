@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { ContactsHeaderComponent } from './google-contacts/components/contacts-header/contacts-header.component';
 import { ContactsPageComponent } from './google-contacts/components/contacts-page/contacts-page.component';
 import { ContactsSidebarComponent } from './google-contacts/components/contacts-sidebar/contacts-sidebar.component';
-import { ContactsTableItemComponent } from './google-contacts/components/contacts-table-item/contacts-table-item.component';
 import { ContactsTableComponent } from './google-contacts/components/contacts-table/contacts-table.component';
 import { PhotosPageComponent } from './google-photos/photos-page/photos-page.component';
 import { MaterialModule } from './material-module';
@@ -36,6 +35,7 @@ import { SuggestionsPageComponent } from './google-contacts/components/suggestio
 import { RefreshContactsCountService } from './google-contacts/components/contacts-sidebar/refresh-contact-count.service';
 import { ContactProfilePictureComponent } from './google-contacts/components/contact-profile-picture/contact-profile-picture.component';
 import { SearchContactsService } from './google-contacts/components/contacts-header/search-contacts.service';
+import { ExportSelectedPageComponent } from './google-contacts/components/export-selected-page/export-selected-page.component';
 
 class MyErrorHandler implements ErrorHandler {
   handleError(error: any): void {
@@ -56,7 +56,6 @@ class MyErrorHandler implements ErrorHandler {
     ServiceSelectionComponent,
     ContactsHeaderComponent,
     ContactsSidebarComponent,
-    ContactsTableItemComponent,
     ContactsTableComponent,
     MadeByLabelComponent,
     EditProfilePageComponent,
@@ -73,6 +72,7 @@ class MyErrorHandler implements ErrorHandler {
     ExportPageComponent,
     SuggestionsPageComponent,
     ContactProfilePictureComponent,
+    ExportSelectedPageComponent,
   ],
   imports: [
     BrowserModule,

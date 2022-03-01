@@ -2,11 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactPersonPageComponent } from './google-contacts/components/contact-person-page/contact-person-page.component';
 import { ContactsPageComponent } from './google-contacts/components/contacts-page/contacts-page.component';
-import { ContactsSidebarComponent } from './google-contacts/components/contacts-sidebar/contacts-sidebar.component';
-import { ContactsTableItemComponent } from './google-contacts/components/contacts-table-item/contacts-table-item.component';
 import { ContactsTableComponent } from './google-contacts/components/contacts-table/contacts-table.component';
 import { CreateNewPageComponent } from './google-contacts/components/create-new-page/create-new-page.component';
 import { ExportPageComponent } from './google-contacts/components/export-page/export-page.component';
+import { ExportSelectedPageComponent } from './google-contacts/components/export-selected-page/export-selected-page.component';
 import { ImportPageComponent } from './google-contacts/components/import-page/import-page.component';
 import { SuggestionsPageComponent } from './google-contacts/components/suggestions-page/suggestions-page.component';
 import { TrashPageComponent } from './google-contacts/components/trash-page/trash-page.component';
@@ -56,10 +55,17 @@ const routes: Routes = [
         component: TrashPageComponent,
       },
       {
+        //TODO remove later
         path: 'import',
         component: ImportPageComponent,
       },
       {
+        //TODO remove later
+        path: 'export-selected',
+        component: ExportSelectedPageComponent,
+      },
+      {
+        //TODO remove later
         path: 'export',
         component: ExportPageComponent,
       },

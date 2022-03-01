@@ -3,13 +3,12 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'export-page',
   templateUrl: './export-page.component.html',
-  styleUrls: ['./export-page.component.scss']
+  styleUrls: ['./export-page.component.scss'],
 })
 export class ExportPageComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-  }
-
+  //TODO Export all contacts
 }

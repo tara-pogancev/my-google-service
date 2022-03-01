@@ -48,7 +48,7 @@
     mat-menu-item
     class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
     [ngClass]="{ 'mat-menu-item-toggle': tab == 4 }"
-    (click)="navigateRoute('import')"
+    (click)="navigateImport()"
   >
     <mat-icon>upload</mat-icon>
     <p class="button-title">Import</p>
@@ -58,7 +58,7 @@
     mat-menu-item
     class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
     [ngClass]="{ 'mat-menu-item-toggle': tab == 5 }"
-    (click)="navigateRoute('export')"
+    (click)="navigateExport()"
   >
     <mat-icon>cloud_download</mat-icon>
     <p class="button-title">Export</p>
