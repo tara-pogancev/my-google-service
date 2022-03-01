@@ -1,1 +1,97 @@
-<p>create-new-page works!</p>
+<div>
+  <form>
+    <div class="is-flex is-justify-content-space-between max-width-800">
+      <div class="is-flex">
+        <button mat-icon-button>
+          <mat-icon>close</mat-icon>
+        </button>
+        <div
+          class="backogrund-image is-flex is-flex-direction-column is-justify-content-space-around"
+        >
+          <div class="auto-margin">
+            <button mat-fab>
+              <mat-icon>add_a_photo</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="is-flex is-flex-direction-column-reverse">
+        <button mat-flat-button color="primary">Save</button>
+      </div>
+    </div>
+
+    <mat-divider class="my-3"></mat-divider>
+
+    <div class="columns max-width-600 ml-5">
+      <div class="column icon-column"><mat-icon>person_outline</mat-icon></div>
+      <div class="column">
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="standard">
+            <mat-label>First name</mat-label>
+            <input type="text" matInput placeholder="text" />
+            <mat-error> First name is <strong>required</strong> </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="standard">
+            <mat-label>Last name</mat-label>
+            <input type="text" matInput placeholder="text" />
+            <mat-error> First name is <strong>required</strong> </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns max-width-700 ml-5">
+      <div class="column icon-column"><mat-icon>email</mat-icon></div>
+      <div class="column">
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="standard">
+            <mat-label>First name</mat-label>
+            <input type="text" matInput placeholder="text" />
+            <mat-error> First name is <strong>required</strong> </mat-error>
+          </mat-form-field>
+          <span class="side-buttons"
+            ><button
+              mat-icon-button
+              class="ml-3"
+              color="link"
+              matTooltip="Remove"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" matTooltip="Add">
+              <mat-icon>add_circle</mat-icon>
+            </button></span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="columns max-width-700 ml-5">
+      <div class="column icon-column"><mat-icon>phone</mat-icon></div>
+      <div class="column">
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="standard">
+            <mat-label>First name</mat-label>
+            <input type="text" matInput placeholder="text" />
+            <mat-error> First name is <strong>required</strong> </mat-error>
+          </mat-form-field>
+          <span class="side-buttons"
+            ><button
+              mat-icon-button
+              class="ml-3"
+              color="link"
+              matTooltip="Remove"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" matTooltip="Add">
+              <mat-icon>add_circle</mat-icon>
+            </button></span
+          >
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

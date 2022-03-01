@@ -161,13 +161,9 @@ export class EditProfilePageComponent implements OnInit {
         this.user.lastName = dto.lastName;
         this.profileRefreshService.announceRefreshName();
 
-        this._snackBar.open(
-          'Your name has been changed.',
-          'Close',
-          {
-            duration: 3000,
-          }
-        );
+        this._snackBar.open('Your name has been changed.', 'Close', {
+          duration: 3000,
+        });
       });
     }
   }
@@ -256,6 +252,8 @@ export class EditProfilePageComponent implements OnInit {
       }
     });
   }
+
+  //TODO DELETE PROFILE OPTION
 }
 
 @Component({
