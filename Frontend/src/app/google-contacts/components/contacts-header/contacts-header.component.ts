@@ -1,5 +1,6 @@
 import { AbsoluteModuleStrategy } from '@angular/compiler-cli/src/ngtsc/imports';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { User } from 'src/app/shared/model/user-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user-service';
@@ -19,7 +20,8 @@ export class ContactsHeaderComponent implements OnInit {
   constructor(
     private userService: UserService,
     private authService: AuthService,
-    private searchContactsService: SearchContactsService
+    private searchContactsService: SearchContactsService,
+    public router: Router
   ) {
     this.searchContactsService.doResetSearchValue$.subscribe(() => {
       this.searchValue = '';

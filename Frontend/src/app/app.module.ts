@@ -36,6 +36,7 @@ import { RefreshContactsCountService } from './google-contacts/components/contac
 import { ContactProfilePictureComponent } from './google-contacts/components/contact-profile-picture/contact-profile-picture.component';
 import { SearchContactsService } from './google-contacts/components/contacts-header/search-contacts.service';
 import { ExportSelectedPageComponent } from './google-contacts/components/export-selected-page/export-selected-page.component';
+import { MergeContactsDialogComponent } from './google-contacts/components/merge-contacts-dialog/merge-contacts-dialog.component';
 
 class MyErrorHandler implements ErrorHandler {
   handleError(error: any): void {
@@ -73,6 +74,7 @@ class MyErrorHandler implements ErrorHandler {
     SuggestionsPageComponent,
     ContactProfilePictureComponent,
     ExportSelectedPageComponent,
+    MergeContactsDialogComponent,
   ],
   imports: [
     BrowserModule,

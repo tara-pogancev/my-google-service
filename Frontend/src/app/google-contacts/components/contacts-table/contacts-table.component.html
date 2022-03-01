@@ -38,6 +38,14 @@
               </mat-menu>
               <button
                 mat-icon-button
+                matTooltip="Merge"
+                (click)="mergeSelected()"
+                *ngIf="selectedContacts.length > 1"
+              >
+                <mat-icon>call_merge</mat-icon>
+              </button>
+              <button
+                mat-icon-button
                 matTooltip="Export"
                 (click)="exportSelected()"
               >
