@@ -8,6 +8,7 @@ import mygoogleserviceapi.shared.enumeration.DefaultApplicationEnum;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -31,7 +32,7 @@ public class ApplicationUser extends DatabaseEntity {
     private DefaultApplicationEnum defaultApplication = DefaultApplicationEnum.NONE;
 
     @OneToMany(mappedBy = "applicationUser")
-    private Set<UserPhoneNumber> phoneNumbers;
+    private Set<UserPhoneNumber> phoneNumbers = new HashSet<>();
 
     public String getFullName() {
         return (firstName + " " + lastName).trim();

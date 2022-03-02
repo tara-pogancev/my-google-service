@@ -21,7 +21,7 @@ public class ContactToDTO implements Converter<Contact, ContactDTO> {
         ContactDTO dto = new ContactDTO();
         dto.setId(source.getId());
         dto.setContactOwnerId(source.getContactList().getOwner().getId());
-        dto.setFirstName(source.getName());
+        dto.setFirstName(source.getFirstName());
         dto.setLastName(source.getLastName());
         dto.setFullName(source.getFullName());
         dto.setStarred(source.getStarred());
