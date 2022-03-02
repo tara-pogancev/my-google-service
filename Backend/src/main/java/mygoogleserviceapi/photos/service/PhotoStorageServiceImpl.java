@@ -1,42 +1,38 @@
-package mygoogleserviceapi.shared.service;
+package mygoogleserviceapi.photos.service;
 
-
+import mygoogleserviceapi.photos.service.interfaces.PhotoStorageService;
 import mygoogleserviceapi.shared.config.FileStorageProperties;
-import mygoogleserviceapi.shared.service.interfaces.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @Service
-public class FileStorageServiceImpl implements FileStorageService {
-
+public class PhotoStorageServiceImpl implements PhotoStorageService {
     private final Path fileStorageLocation;
-    private static final String PROFILES_DIRECTORY = "profiles";
+    private static final String PHOTOS_DIRECTORY = "photos";
+
 
     @Autowired
-    public FileStorageServiceImpl(FileStorageProperties fileStorageProperties) {
+    public PhotoStorageServiceImpl(FileStorageProperties fileStorageProperties) {
         this.fileStorageLocation = Paths.get(System.getProperty("user.dir") + File.separator + fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
         try {
-            Files.createDirectories(this.fileStorageLocation);
-            Files.createDirectories(Paths.get(this.fileStorageLocation + File.separator + PROFILES_DIRECTORY));
+            Files.createDirectories(Paths.get(this.fileStorageLocation + File.separator + PHOTOS_DIRECTORY));
         } catch (Exception ex) {
             throw new RuntimeException("Could not create the directory where the uploaded files will be stored.", ex);
         }
     }
 
-    public String storeProfilePicture(MultipartFile file, Long userId) {
+    @Override
+    public MultipartFile savePhoto(MultipartFile file, String email) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
@@ -45,30 +41,14 @@ public class FileStorageServiceImpl implements FileStorageService {
             if (fileName.contains("..")) {
                 throw new RuntimeException("Filename contains invalid path sequence " + fileName);
             }
-
-            Path targetLocation = this.fileStorageLocation.resolve(PROFILES_DIRECTORY + File.separator + userId);
+            Files.createDirectories(Paths.get(this.fileStorageLocation + File.separator + PHOTOS_DIRECTORY + File.separator + email));
+            Path targetLocation = this.fileStorageLocation.resolve(PHOTOS_DIRECTORY + File.separator + email + File.separator + fileName);
 
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            return fileName;
+            return file;
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
-        }
-    }
-
-    public Resource loadProfilePicture(Long userId) {
-        try {
-            Path filePath = this.fileStorageLocation.resolve(PROFILES_DIRECTORY + File.separator + userId).normalize();
-            Resource resource = new UrlResource(filePath.toUri());
-            if (resource.exists()) {
-                return resource;
-            } else {
-                return null;
-                //throw new ProfilePictureNotFoundException();
-            }
-        } catch (MalformedURLException ex) {
-            return null;
-            //throw new ProfilePictureNotFoundException();
         }
     }
 }

@@ -30,7 +30,6 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     public ApplicationUser findByEmail(String email) {
         if (email.isEmpty())
             return null;
-
         return userRepository.findUserByEmail(email.toLowerCase().replaceAll("\\s+", ""));
     }
 
