@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { textChangeRangeIsUnchanged } from 'typescript';
 import { Contact } from '../../model/contact';
+import { ContactEmail } from '../../model/contact-email';
+import { ContactPhoneNumber } from '../../model/contact-phone-number';
+import { ContactPictureService } from '../../services/contact-picture.service';
+import { ContactService } from '../../services/contact.service';
 import { SearchContactsService } from '../contacts-header/search-contacts.service';
 import { UploadContactPictureDialogComponent } from './upload-contact-picture-dialog/upload-contact-picture-dialog.component';
 
@@ -17,7 +22,9 @@ export class CreateNewPageComponent implements OnInit {
 
   constructor(
     private searchContactsService: SearchContactsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private contactService: ContactService,
+    private contactPictureService: ContactPictureService
   ) {
     this.searchContactsService.announceSearchReset();
   }
@@ -58,25 +65,22 @@ export class CreateNewPageComponent implements OnInit {
 
   addNewEmailForm() {
     const emailForm = new FormGroup({
-      email: new FormControl(null, {
+      email: new FormControl('', {
         validators: [Validators.email, Validators.maxLength(30)],
         updateOn: 'change',
       }),
-      type: new FormControl('OTHER', Validators.required),
+      type: new FormControl('OTHER'),
     });
     this.emailListForm.push(emailForm);
   }
 
   addNewPhoneNumberForm() {
     const mobileNumberForm = new FormGroup({
-      phoneNumber: new FormControl(null, {
+      phoneNumber: new FormControl('', {
         validators: [Validators.pattern('[0-9-+]+')],
         updateOn: 'change',
       }),
-      type: new FormControl('OTHER', {
-        validators: [Validators.required],
-        updateOn: 'change',
-      }),
+      type: new FormControl('OTHER'),
     });
 
     this.phoneNumberListForm.push(mobileNumberForm);
@@ -96,7 +100,6 @@ export class CreateNewPageComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result.name);
       if (result.size > 0) {
         this.fileToUpload = result;
       }
@@ -117,5 +120,64 @@ export class CreateNewPageComponent implements OnInit {
     }
   }
 
-  submitForm() {}
+  submitForm() {
+    if (this.contactForm.valid == true) {
+      this.contact = new Contact();
+      this.contact.firstName = this.contactForm.controls.firstName.value;
+      this.contact.lastName = this.contactForm.controls.lastName.value;
+
+      for (let emailForm of this.getEmailListForm()) {
+        if (
+          emailForm.valid &&
+          emailForm.touched &&
+          emailForm.controls.email.value.trim() != ''
+        ) {
+          let email = new ContactEmail();
+          email.email = emailForm.controls.email.value.trim();
+          email.type = emailForm.controls.type.value;
+          this.contact.emails.push(email);
+        }
+      }
+
+      if (this.getPhoneNumberListForm().length > 0) {
+        for (let phoneNumberForm of this.getPhoneNumberListForm()) {
+          if (
+            phoneNumberForm.valid &&
+            phoneNumberForm.touched &&
+            phoneNumberForm.controls.phoneNumber.value != ''
+          ) {
+            let phoneNumber = new ContactPhoneNumber();
+            phoneNumber.phoneNumber =
+              phoneNumberForm.controls.phoneNumber.value.trim();
+            phoneNumber.type = phoneNumberForm.controls.type.value;
+            this.contact.phoneNumbers.push(phoneNumber);
+          }
+        }
+      }
+
+      this.contactService.createNewContact(this.contact).subscribe(
+        (data) => {
+          if (this.fileToUpload != null) {
+            const formData = new FormData();
+            formData.append('file', this.fileToUpload, this.fileToUpload.name);
+            this.contactPictureService
+              .postProfilePicture(data.id, formData)
+              .subscribe(
+                (data) => {
+                  window.location.href = '/contacts';
+                },
+                (err) => {
+                  window.location.href = '/error';
+                }
+              );
+          } else {
+            window.location.href = '/contacts';
+          }
+        },
+        (err) => {
+          window.location.href = '/error';
+        }
+      );
+    }
+  }
 }
