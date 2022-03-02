@@ -28,7 +28,8 @@ public class PhotoServiceImpl implements PhotoService {
         }
         if (savedFile != null) {
             ApplicationUser user = userService.findByEmail(email);
-            return new Photo(file.getOriginalFilename(), user);
+            Photo photo = new Photo(file.getOriginalFilename(), user);
+            return photoRepository.save(photo);
         }
         return null;
     }
