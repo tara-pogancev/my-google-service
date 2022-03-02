@@ -15,6 +15,7 @@ import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
 import mygoogleserviceapi.shared.service.interfaces.FileStorageService;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -85,6 +86,25 @@ public class ContactListServiceImpl implements ContactListService {
             }
         }
         return true;
+    }
+
+    @Override
+    public String saveContactPicture(MultipartFile file, Long contactId, String jwt) {
+        if (contactBelongsToUser(jwt, contactId)) {
+            return contactPictureStorageService.storeContactPicture(file, contactId);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean deleteContactPicture(Long contactId, String jwt) {
+        if (contactBelongsToUser(jwt, contactId)) {
+            contactPictureStorageService.deleteContactPicture(contactId);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

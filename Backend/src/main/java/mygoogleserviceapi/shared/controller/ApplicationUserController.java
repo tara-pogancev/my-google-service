@@ -7,7 +7,7 @@ import mygoogleserviceapi.shared.converter.DataConverter;
 import mygoogleserviceapi.shared.dto.ChangePasswordDTO;
 import mygoogleserviceapi.shared.dto.UserDTO;
 import mygoogleserviceapi.shared.dto.UserPhoneNumberDTO;
-import mygoogleserviceapi.shared.dto.response.ProfilePictureResponseDTO;
+import mygoogleserviceapi.shared.dto.response.PictureResponseDTO;
 import mygoogleserviceapi.shared.model.ApplicationUser;
 import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
 import mygoogleserviceapi.shared.service.interfaces.UserPhoneNumberService;
@@ -33,10 +33,10 @@ public class ApplicationUserController {
     private final ApplicationUserService applicationUserService;
 
     @PostMapping("/{id}/profile-picture")
-    public ResponseEntity<ProfilePictureResponseDTO> postProfilePicture(@PathVariable Long id, @RequestPart("file") @ValidProfilePicture MultipartFile file) {
+    public ResponseEntity<PictureResponseDTO> postProfilePicture(@PathVariable Long id, @RequestPart("file") @ValidProfilePicture MultipartFile file) {
         String fileName = "";
         fileName = applicationUserService.saveProfilePicture(file, id);
-        return ResponseEntity.ok(new ProfilePictureResponseDTO(fileName, file.getContentType(), file.getSize()));
+        return ResponseEntity.ok(new PictureResponseDTO(fileName, file.getContentType(), file.getSize()));
     }
 
     @GetMapping("/{id}/profile-picture")
@@ -49,7 +49,7 @@ public class ApplicationUserController {
     }
 
     @DeleteMapping("/profile-picture")
-    public ResponseEntity<Resource> getProfilePicture(@RequestHeader(name = "Authorization") String jwt) {
+    public ResponseEntity<Resource> deleteProfilePicture(@RequestHeader(name = "Authorization") String jwt) {
         Boolean success = applicationUserService.deleteUserProfilePicture(jwt);
         if (success) {
             return new ResponseEntity<>(null, HttpStatus.OK);

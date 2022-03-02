@@ -36,7 +36,6 @@ public class ContactPictureStorageServiceImpl implements ContactPictureStorageSe
         }
     }
 
-
     @Override
     public String storeContactPicture(MultipartFile file, Long contactId) {
         // Normalize file name
@@ -88,4 +87,5 @@ public class ContactPictureStorageServiceImpl implements ContactPictureStorageSe
             e.printStackTrace();
         }
     }
+
 }
