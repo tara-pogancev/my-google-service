@@ -13,6 +13,7 @@ import mygoogleserviceapi.contacts.repository.ContactEmailAddressRepository;
 import mygoogleserviceapi.contacts.repository.ContactListRepository;
 import mygoogleserviceapi.contacts.repository.ContactPhoneNumberRepository;
 import mygoogleserviceapi.contacts.repository.ContactRepository;
+import mygoogleserviceapi.contacts.service.interfaces.ContactAppUserService;
 import mygoogleserviceapi.contacts.service.interfaces.ContactListService;
 import mygoogleserviceapi.contacts.service.interfaces.ContactService;
 import mygoogleserviceapi.shared.model.ApplicationUser;
@@ -29,6 +30,7 @@ public class ContactServiceImpl implements ContactService {
     private final ApplicationUserService userService;
     private final ContactRepository contactRepository;
     private final ContactListService contactListService;
+    private final ContactAppUserService contactAppUserService;
     private final ContactListRepository contactListRepository;
     private final ContactPhoneNumberRepository contactPhoneNumberRepository;
     private final ContactEmailAddressRepository contactEmailAddressRepository;
@@ -65,26 +67,12 @@ public class ContactServiceImpl implements ContactService {
 
             contact.setEmailAddresses(emailAddresses);
             contact.setPhoneNumbers(phoneNumbers);
-            checkForApplicationEmailMatch(contact.getId());
+            contactAppUserService.checkForApplicationEmailMatch(contact.getId());
 
             return contactRepository.get(contact.getId());
 
         } else {
             return null;
-        }
-    }
-
-    private void checkForApplicationEmailMatch(Long contactId) {
-        Contact contact = contactRepository.get(contactId);
-        if (contact != null) {
-            for (ContactEmailAddress email : contact.getEmailAddresses()) {
-                ApplicationUser contactUser = userService.findByEmail(email.getEmail());
-                if (contactUser != null) {
-                    contact.setContactApplicationUser(contactUser);
-                    contactRepository.save(contact);
-                    break;
-                }
-            }
         }
     }
 

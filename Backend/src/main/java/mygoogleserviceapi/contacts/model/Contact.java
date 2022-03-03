@@ -44,4 +44,14 @@ public class Contact extends DatabaseEntity {
         return (firstName + " " + lastName).trim();
     }
 
+    public Boolean hasEmailAddress(String email) {
+        for (ContactEmailAddress emailAddress : this.getEmailAddresses()) {
+            if (emailAddress.getEmail().equals(email)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
