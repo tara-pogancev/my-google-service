@@ -41,9 +41,14 @@ export class DeleteAccountDialogComponent implements OnInit {
     this.authService.login(this.authRequest).subscribe(
       (data) => {
         this.invalidPassword = false;
-        this.userService.deleteUserAccount().subscribe((data) => {
-          this.authService.logout();
-        });
+        this.userService.deleteUserAccount().subscribe(
+          (data) => {
+            this.authService.logout();
+          },
+          (err) => {
+            window.location.href = '/error';
+          }
+        );
       },
       (err) => {
         this.invalidPassword = true;
