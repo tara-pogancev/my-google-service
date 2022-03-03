@@ -19,18 +19,13 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public Photo savePhoto(MultipartFile file, String email) {
-        MultipartFile savedFile;
         try {
-            savedFile = photoStorageService.savePhoto(file, email);
-        } catch (RuntimeException runtimeException) {
-            runtimeException.printStackTrace();
-            savedFile = null;
+            photoStorageService.savePhoto(file, email);
+        } catch (RuntimeException e) {
+            return null;
         }
-        if (savedFile != null) {
-            ApplicationUser user = userService.findByEmail(email);
-            Photo photo = new Photo(file.getOriginalFilename(), user);
-            return photoRepository.save(photo);
-        }
-        return null;
+        ApplicationUser user = userService.findByEmail(email);
+        Photo photo = new Photo(file.getOriginalFilename(), user);
+        return photoRepository.save(photo);
     }
 }

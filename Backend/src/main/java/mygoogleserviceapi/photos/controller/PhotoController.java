@@ -2,7 +2,7 @@ package mygoogleserviceapi.photos.controller;
 
 import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.photos.dto.request.UserInfoRequestDTO;
-import mygoogleserviceapi.photos.dto.response.PhotoResponseDTO;
+import mygoogleserviceapi.photos.dto.response.AddPhotoResponseDTO;
 import mygoogleserviceapi.photos.model.Photo;
 import mygoogleserviceapi.photos.service.interfaces.PhotoService;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +23,17 @@ public class PhotoController {
     private final PhotoService photoService;
 
     @PostMapping()
-    public ResponseEntity<List<PhotoResponseDTO>> addPhoto(@RequestPart("files") MultipartFile[] files,
-                                                           @RequestPart("info") @Valid UserInfoRequestDTO userInfoRequestDTO) {
-        System.out.println(userInfoRequestDTO.getEmail());
-        System.out.println(files);
-        List<PhotoResponseDTO> photos = new ArrayList<>();
+    public ResponseEntity<List<AddPhotoResponseDTO>> addPhoto(@RequestPart("files") MultipartFile[] files,
+                                                              @RequestPart("info") @Valid UserInfoRequestDTO userInfoRequestDTO) {
+        List<AddPhotoResponseDTO> photos = new ArrayList<>();
         for (MultipartFile file : files) {
             Photo photo = photoService.savePhoto(file, userInfoRequestDTO.getEmail());
-            if (photo != null)
-                System.out.println(photo.getFileName());
+            if (photo == null)
+                photos.add(new AddPhotoResponseDTO(null, file.getOriginalFilename(), false));
+            else {
+                photos.add(new AddPhotoResponseDTO(photo.getId(), file.getOriginalFilename(), true));
+            }
         }
-
         return ResponseEntity.ok(photos);
     }
 
