@@ -27,4 +27,6 @@ public interface ApplicationUserService {
     ApplicationUser setDefaultApplication(String app, String jwt);
 
     Boolean deleteUserProfilePicture(String jwt);
+
+    Boolean deleteUserAccount(String jwt);
 }

@@ -3,6 +3,7 @@ package mygoogleserviceapi.shared.service;
 import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.contacts.model.ContactList;
 import mygoogleserviceapi.contacts.repository.ContactListRepository;
+import mygoogleserviceapi.contacts.service.interfaces.ContactAppUserService;
 import mygoogleserviceapi.security.JwtUtil;
 import mygoogleserviceapi.shared.dto.ChangePasswordDTO;
 import mygoogleserviceapi.shared.dto.UserDTO;
@@ -25,6 +26,7 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
     private final FileStorageService fileStorageService;
     private final ApplicationUserRepository userRepository;
     private final ContactListRepository contactListRepository;
+    private final ContactAppUserService contactAppUserService;
 
     @Override
     public ApplicationUser findByEmail(String email) {
@@ -50,12 +52,15 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
             ApplicationUser user = new ApplicationUser();
             user.setFirstName(newUser.firstName);
             user.setLastName(newUser.lastName);
-            user.setEmail(newUser.email);
+            user.setEmail(newUser.email.toLowerCase());
             user.setPassword(new BCryptPasswordEncoder().encode(newUser.password));
             ApplicationUser createdUser = userRepository.save(user);
             ContactList contactList = new ContactList();
             contactList.setOwner(createdUser);
             contactListRepository.save(contactList);
+
+            contactAppUserService.refreshContactAppUserByEmail(createdUser.getEmail());
+
             return createdUser;
         } else return null;
     }
@@ -114,6 +119,11 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public Boolean deleteUserAccount(String jwt) {
+        return null;
     }
 
 
