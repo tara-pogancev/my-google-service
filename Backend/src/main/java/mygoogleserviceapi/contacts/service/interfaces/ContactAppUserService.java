@@ -18,4 +18,6 @@ public interface ContactAppUserService {
 
     void removeAppUserFromContactList(List<Contact> contacts);
 
+    void removeAppUserFromContactsByEmail(String email);
+
 }

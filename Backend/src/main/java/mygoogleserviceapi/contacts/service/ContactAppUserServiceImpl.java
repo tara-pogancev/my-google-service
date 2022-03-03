@@ -81,4 +81,10 @@ public class ContactAppUserServiceImpl implements ContactAppUserService {
         }
     }
 
+    @Override
+    public void removeAppUserFromContactsByEmail(String email) {
+        List<Contact> contactsToRemoveUserFrom = findContactWithEmail(email);
+        removeAppUserFromContactList(contactsToRemoveUserFrom);
+    }
+
 }
