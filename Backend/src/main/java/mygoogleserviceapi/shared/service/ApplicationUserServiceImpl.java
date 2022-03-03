@@ -121,10 +121,4 @@ public class ApplicationUserServiceImpl implements ApplicationUserService {
         }
     }
 
-    @Override
-    public Boolean deleteUserAccount(String jwt) {
-        return null;
-    }
-
-
 }

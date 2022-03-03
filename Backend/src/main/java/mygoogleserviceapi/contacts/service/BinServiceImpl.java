@@ -3,6 +3,7 @@ package mygoogleserviceapi.contacts.service;
 import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.model.ContactList;
+import mygoogleserviceapi.contacts.repository.ContactListRepository;
 import mygoogleserviceapi.contacts.repository.ContactRepository;
 import mygoogleserviceapi.contacts.service.interfaces.BinService;
 import mygoogleserviceapi.contacts.service.interfaces.ContactListService;
@@ -19,6 +20,7 @@ public class BinServiceImpl implements BinService {
     private final ContactListService contactListService;
     private final ContactRepository contactRepository;
     private final ContactPictureStorageService storageService;
+    private final ContactListRepository contactListRepository;
 
     @Override
     public List<Contact> getDeletedContacts(String jwt) {
@@ -90,5 +92,13 @@ public class BinServiceImpl implements BinService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void deleteContactListByUser(String jwt) {
+        for (Contact contact : contactListService.getContactList(jwt).getContacts()) {
+            deleteContact(jwt, contact.getId());
+        }
+        contactListRepository.delete(contactListService.getContactList(jwt));
     }
 }

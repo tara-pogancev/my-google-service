@@ -10,12 +10,12 @@ public interface ContactAppUserService {
 
     List<Contact> findContactWithEmail(String email);
 
-    void refreshContactAppUserList (List<Contact> contacts);
+    void refreshContactAppUserList(List<Contact> contacts);
 
-    void refreshContactAppUserByEmail (String email);
+    void refreshContactAppUserByEmail(String email);
 
     void removeAppUserFromContact(Long contactId);
 
-    void removeAppUserFromContactList (List<Contact> contacts);
+    void removeAppUserFromContactList(List<Contact> contacts);
 
 }

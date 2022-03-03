@@ -16,6 +16,7 @@ import { AuthService } from '../../services/auth.service';
 import { ProfilePictureService } from '../../services/profile-picture.service';
 import { UserService } from '../../services/user-service';
 import { ConfirmedValidator } from '../../services/validator.service';
+import { DeleteAccountDialogComponent } from './delete-account-dialog/delete-account-dialog.component';
 import { ProfileRefreshService } from './profile-refresh.service';
 
 @Component({
@@ -253,7 +254,15 @@ export class EditProfilePageComponent implements OnInit {
     });
   }
 
-  //TODO DELETE PROFILE OPTION
+  deleteAccountDialog() {
+    const dialogRef = this.dialog.open(DeleteAccountDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        window.location.href = '/';
+      }
+    });
+  }
 }
 
 @Component({

@@ -78,4 +78,12 @@ export class UserService {
       headers: headers,
     });
   }
+
+  deleteUserAccount() {
+    const url = this.url + '/delete-account';
+    const headers = this.authService.getHeaders();
+    return this._http.delete<any>(url, {
+      headers: headers,
+    });
+  }
 }
