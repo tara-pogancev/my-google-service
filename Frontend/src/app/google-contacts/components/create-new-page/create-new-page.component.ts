@@ -157,6 +157,7 @@ export class CreateNewPageComponent implements OnInit {
 
       this.contactService.createNewContact(this.contact).subscribe(
         (data) => {
+          let newContactId = data.id;
           if (this.fileToUpload != null) {
             const formData = new FormData();
             formData.append('file', this.fileToUpload, this.fileToUpload.name);
@@ -164,14 +165,14 @@ export class CreateNewPageComponent implements OnInit {
               .postProfilePicture(data.id, formData)
               .subscribe(
                 (data) => {
-                  window.location.href = '/contacts';
+                  window.location.href = '/contacts/person/' + newContactId;
                 },
                 (err) => {
                   window.location.href = '/error';
                 }
               );
           } else {
-            window.location.href = '/contacts';
+            window.location.href = '/contacts/person/' + newContactId;
           }
         },
         (err) => {

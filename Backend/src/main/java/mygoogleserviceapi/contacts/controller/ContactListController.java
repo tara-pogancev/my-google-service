@@ -7,7 +7,6 @@ import mygoogleserviceapi.contacts.service.interfaces.ContactListService;
 import mygoogleserviceapi.contacts.validator.annotation.ValidContactPicture;
 import mygoogleserviceapi.shared.converter.DataConverter;
 import mygoogleserviceapi.shared.dto.response.PictureResponseDTO;
-import mygoogleserviceapi.shared.validator.annotation.ValidProfilePicture;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -103,14 +102,5 @@ public class ContactListController {
         }
     }
 
-    @PostMapping("/new")
-    public ResponseEntity<?> addNewContact(@RequestBody ContactDTO dto, @RequestHeader(name = "Authorization") String jwt) {
-        Contact newContact = contactListService.addNewContact(jwt, dto);
-        if (newContact != null) {
-            return new ResponseEntity<>(converter.convert(newContact, ContactDTO.class), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        }
-    }
 
 }

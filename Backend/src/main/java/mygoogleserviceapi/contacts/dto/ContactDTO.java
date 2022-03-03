@@ -15,5 +15,6 @@ public class ContactDTO {
     public Boolean deleted;
     public List<ContactEmailAddressDTO> emails;
     public List<ContactPhoneNumberDTO> phoneNumbers;
+    public String appUserEmail;
 
 }
