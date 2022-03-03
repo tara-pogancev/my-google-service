@@ -28,6 +28,9 @@ public class ContactToDTO implements Converter<Contact, ContactDTO> {
         dto.setDeleted(source.getDeleted());
         dto.setPhoneNumbers(getPhoneNumbers(source));
         dto.setEmails(getEmails(source));
+        if (source.getContactApplicationUser() != null) {
+            dto.setAppUserEmail(source.getContactApplicationUser().getEmail());
+        }
         return dto;
     }
 

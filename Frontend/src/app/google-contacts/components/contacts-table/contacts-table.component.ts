@@ -27,7 +27,7 @@ export class ContactsTableComponent implements OnInit {
     private router: Router,
     private refreshContactsCountService: RefreshContactsCountService,
     private searchContactsService: SearchContactsService,
-    private contactService: ContactService,
+    private contactService: ContactListService,
     private snackbar: MatSnackBar,
     private dialog: MatDialog
   ) {
