@@ -17,4 +17,6 @@ public interface BinService {
     Boolean recoverContactList(List<Long> idList, String jwt);
 
     Boolean recoverContact(String jwt, Long id);
+
+    void deleteContactListByUser(String jwt);
 }

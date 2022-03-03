@@ -28,5 +28,4 @@ public interface ApplicationUserService {
 
     Boolean deleteUserProfilePicture(String jwt);
 
-    Boolean deleteUserAccount(String jwt);
 }
