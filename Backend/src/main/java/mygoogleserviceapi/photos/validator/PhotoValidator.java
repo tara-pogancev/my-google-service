@@ -1,6 +1,5 @@
 package mygoogleserviceapi.photos.validator;
 
-import mygoogleserviceapi.shared.exception.InvalidImageFormatException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,10 +12,7 @@ public class PhotoValidator {
         if (file == null || file.getContentType() == null) {
             return false;
         }
-        if (!isSupportedContentType(file.getContentType())) {
-            throw new InvalidImageFormatException();
-        }
-        return true;
+        return isSupportedContentType(file.getContentType());
     }
 
 

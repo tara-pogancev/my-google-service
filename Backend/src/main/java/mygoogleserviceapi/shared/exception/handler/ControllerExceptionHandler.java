@@ -2,6 +2,7 @@ package mygoogleserviceapi.shared.exception.handler;
 
 import mygoogleserviceapi.shared.exception.InvalidImageDimensionException;
 import mygoogleserviceapi.shared.exception.InvalidImageFormatException;
+import mygoogleserviceapi.shared.exception.NotAllowedException;
 import mygoogleserviceapi.shared.exception.NullImageException;
 import mygoogleserviceapi.shared.exception.ProfilePictureNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -44,5 +45,13 @@ public class ControllerExceptionHandler {
                 ex.getMessage(),
                 new Date());
         return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NotAllowedException.class)
+    public ResponseEntity<ErrorMessage> notAllowedException(NotAllowedException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                ex.getMessage(),
+                new Date());
+        return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
     }
 }
