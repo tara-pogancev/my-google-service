@@ -36,5 +36,6 @@ public class PhotoController {
         }
         return ResponseEntity.ok(photos);
     }
+    
 
 }
