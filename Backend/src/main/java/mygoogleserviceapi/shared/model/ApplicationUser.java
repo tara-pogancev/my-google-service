@@ -3,6 +3,7 @@ package mygoogleserviceapi.shared.model;
 import lombok.Getter;
 import lombok.Setter;
 import mygoogleserviceapi.contacts.model.UserPhoneNumber;
+import mygoogleserviceapi.photos.model.Photo;
 import mygoogleserviceapi.shared.enumeration.DefaultApplicationEnum;
 
 import javax.persistence.CascadeType;
@@ -34,6 +35,9 @@ public class ApplicationUser extends DatabaseEntity {
 
     @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.REMOVE)
     private Set<UserPhoneNumber> phoneNumbers = new HashSet<>();
+
+    @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.REMOVE)
+    private Set<Photo> photos = new HashSet<>();
 
     public String getFullName() {
         return (firstName + " " + lastName).trim();

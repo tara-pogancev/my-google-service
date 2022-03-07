@@ -3,6 +3,7 @@ package mygoogleserviceapi.shared.service;
 import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.contacts.service.interfaces.BinService;
 import mygoogleserviceapi.contacts.service.interfaces.ContactAppUserService;
+import mygoogleserviceapi.photos.service.interfaces.PhotoService;
 import mygoogleserviceapi.shared.model.ApplicationUser;
 import mygoogleserviceapi.shared.repository.ApplicationUserRepository;
 import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
@@ -19,6 +20,7 @@ public class DeleteUserAccountServiceImpl implements DeleteUserAccountService {
     private final FileStorageService fileStorageService;
     private final ApplicationUserRepository userRepository;
     private final ContactAppUserService contactAppUserService;
+    private final PhotoService photoService;
 
     @Override
     public Boolean deleteUserAccount(String jwt) {
@@ -26,8 +28,7 @@ public class DeleteUserAccountServiceImpl implements DeleteUserAccountService {
         if (user != null) {
             this.fileStorageService.deleteProfilePicture(user.getId());
             this.binService.deleteContactListByUser(jwt);
-            //TODO: Delete images
-
+            this.photoService.deleteAllPhotos(user.getEmail());
             String deletedEmail = user.getEmail();
             contactAppUserService.removeAppUserFromContactsByEmail(deletedEmail);
             userRepository.delete(user);

@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Comparator;
 
 @Service
 public class PhotoStorageServiceImpl implements PhotoStorageService {
@@ -76,6 +77,19 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
     public void deletePhoto(String fileName, String email) {
         Path filePath = this.fileStorageLocation.resolve(PHOTOS_DIRECTORY + File.separator + email + File.separator + fileName).normalize();
         try {
+            Files.delete(filePath);
+        } catch (Exception ignored) {
+        }
+    }
+
+    @Override
+    public void deleteAllPhotos(String email) {
+        Path filePath = this.fileStorageLocation.resolve(PHOTOS_DIRECTORY + File.separator + email).normalize();
+        try {
+            Files.walk(filePath)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
             Files.delete(filePath);
         } catch (Exception ignored) {
         }
