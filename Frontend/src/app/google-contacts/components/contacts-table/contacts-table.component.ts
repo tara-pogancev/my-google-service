@@ -8,6 +8,7 @@ import { ContactService } from '../../services/contact.service';
 import { SearchContactsService } from '../contacts-header/search-contacts.service';
 import { RefreshContactsCountService } from '../contacts-sidebar/refresh-contact-count.service';
 import { ExportSelectedPageComponent } from '../export-selected-page/export-selected-page.component';
+import { MergeContactsDialogComponent } from '../merge-contacts-dialog/merge-contacts-dialog.component';
 
 @Component({
   selector: 'contacts-table',
@@ -26,7 +27,7 @@ export class ContactsTableComponent implements OnInit {
     private router: Router,
     private refreshContactsCountService: RefreshContactsCountService,
     private searchContactsService: SearchContactsService,
-    private contactService: ContactService,
+    private contactService: ContactListService,
     private snackbar: MatSnackBar,
     private dialog: MatDialog
   ) {
@@ -132,6 +133,14 @@ export class ContactsTableComponent implements OnInit {
   exportSelected() {
     if (this.selectedContacts.length != 0) {
       const dialogRef = this.dialog.open(ExportSelectedPageComponent, {
+        data: this.selectedContacts,
+      });
+    }
+  }
+
+  mergeSelected() {
+    if (this.selectedContacts.length != 0) {
+      const dialogRef = this.dialog.open(MergeContactsDialogComponent, {
         data: this.selectedContacts,
       });
     }

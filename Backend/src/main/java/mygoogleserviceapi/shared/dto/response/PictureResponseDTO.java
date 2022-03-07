@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ProfilePictureResponseDTO {
+public class PictureResponseDTO {
     private String fileName;
     private String fileType;
     private long size;

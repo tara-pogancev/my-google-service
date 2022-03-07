@@ -6,9 +6,6 @@ import mygoogleserviceapi.contacts.dto.ContactPhoneNumberDTO;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.model.ContactEmailAddress;
 import mygoogleserviceapi.contacts.model.ContactPhoneNumber;
-import mygoogleserviceapi.contacts.model.UserPhoneNumber;
-import mygoogleserviceapi.shared.dto.UserPhoneNumberDTO;
-import mygoogleserviceapi.shared.model.ApplicationUser;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -24,13 +21,16 @@ public class ContactToDTO implements Converter<Contact, ContactDTO> {
         ContactDTO dto = new ContactDTO();
         dto.setId(source.getId());
         dto.setContactOwnerId(source.getContactList().getOwner().getId());
-        dto.setFirstName(source.getName());
+        dto.setFirstName(source.getFirstName());
         dto.setLastName(source.getLastName());
         dto.setFullName(source.getFullName());
         dto.setStarred(source.getStarred());
         dto.setDeleted(source.getDeleted());
         dto.setPhoneNumbers(getPhoneNumbers(source));
         dto.setEmails(getEmails(source));
+        if (source.getContactApplicationUser() != null) {
+            dto.setAppUserEmail(source.getContactApplicationUser().getEmail());
+        }
         return dto;
     }
 
@@ -63,8 +63,6 @@ public class ContactToDTO implements Converter<Contact, ContactDTO> {
         Collections.sort(list);
         return list;
     }
-
-
 
 
 }

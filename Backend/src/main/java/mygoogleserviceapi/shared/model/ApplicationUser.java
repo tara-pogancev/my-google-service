@@ -5,9 +5,11 @@ import lombok.Setter;
 import mygoogleserviceapi.contacts.model.UserPhoneNumber;
 import mygoogleserviceapi.shared.enumeration.DefaultApplicationEnum;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -30,8 +32,8 @@ public class ApplicationUser extends DatabaseEntity {
     @Column(name = "defaultApplication")
     private DefaultApplicationEnum defaultApplication = DefaultApplicationEnum.NONE;
 
-    @OneToMany(mappedBy = "applicationUser")
-    private Set<UserPhoneNumber> phoneNumbers;
+    @OneToMany(mappedBy = "applicationUser", cascade = CascadeType.REMOVE)
+    private Set<UserPhoneNumber> phoneNumbers = new HashSet<>();
 
     public String getFullName() {
         return (firstName + " " + lastName).trim();

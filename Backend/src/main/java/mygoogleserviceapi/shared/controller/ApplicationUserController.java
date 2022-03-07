@@ -7,9 +7,10 @@ import mygoogleserviceapi.shared.converter.DataConverter;
 import mygoogleserviceapi.shared.dto.ChangePasswordDTO;
 import mygoogleserviceapi.shared.dto.UserDTO;
 import mygoogleserviceapi.shared.dto.UserPhoneNumberDTO;
-import mygoogleserviceapi.shared.dto.response.ProfilePictureResponseDTO;
+import mygoogleserviceapi.shared.dto.response.PictureResponseDTO;
 import mygoogleserviceapi.shared.model.ApplicationUser;
 import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
+import mygoogleserviceapi.shared.service.interfaces.DeleteUserAccountService;
 import mygoogleserviceapi.shared.service.interfaces.UserPhoneNumberService;
 import mygoogleserviceapi.shared.validator.annotation.ValidProfilePicture;
 import org.springframework.core.io.Resource;
@@ -31,12 +32,13 @@ public class ApplicationUserController {
     private final DataConverter converter;
     private final UserPhoneNumberService userPhoneNumberService;
     private final ApplicationUserService applicationUserService;
+    private final DeleteUserAccountService deleteUserAccountService;
 
     @PostMapping("/{id}/profile-picture")
-    public ResponseEntity<ProfilePictureResponseDTO> postProfilePicture(@PathVariable Long id, @RequestPart("file") @ValidProfilePicture MultipartFile file) {
+    public ResponseEntity<PictureResponseDTO> postProfilePicture(@PathVariable Long id, @RequestPart("file") @ValidProfilePicture MultipartFile file) {
         String fileName = "";
         fileName = applicationUserService.saveProfilePicture(file, id);
-        return ResponseEntity.ok(new ProfilePictureResponseDTO(fileName, file.getContentType(), file.getSize()));
+        return ResponseEntity.ok(new PictureResponseDTO(fileName, file.getContentType(), file.getSize()));
     }
 
     @GetMapping("/{id}/profile-picture")
@@ -46,6 +48,14 @@ public class ApplicationUserController {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .body(resource);
+    }
+
+    @DeleteMapping("/profile-picture")
+    public ResponseEntity<Resource> deleteProfilePicture(@RequestHeader(name = "Authorization") String jwt) {
+        Boolean success = applicationUserService.deleteUserProfilePicture(jwt);
+        if (success) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/{id}")
@@ -100,6 +110,14 @@ public class ApplicationUserController {
     public ResponseEntity<?> setDefaultApplication(@PathVariable String app, @RequestHeader(name = "Authorization") String jwt) throws Exception {
         ApplicationUser user = applicationUserService.setDefaultApplication(app, jwt);
         if (user != null) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/delete-account")
+    public ResponseEntity<?> deleteUserAccount(@RequestHeader(name = "Authorization") String jwt) throws Exception {
+        Boolean success = deleteUserAccountService.deleteUserAccount(jwt);
+        if (success) {
             return new ResponseEntity<>(null, HttpStatus.OK);
         } else return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }

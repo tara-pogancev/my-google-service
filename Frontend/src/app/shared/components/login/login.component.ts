@@ -85,7 +85,6 @@ export class LoginComponent implements OnInit {
       },
       (err) => {
         this.invalidPassword = true;
-        console.log(err);
       }
     );
   }

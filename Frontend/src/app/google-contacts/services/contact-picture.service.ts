@@ -23,15 +23,31 @@ export class ContactPictureService {
     );
   }
 
-  /*
-  postProfilePicture(userId: number, formData: FormData) {
+  checkIfProfilePictureIsValid(formData: FormData) {
+    const headers = this.authService.getHeadersMultipart();
+    const userId = this.authService.getCurrentUser().id;
+    const url = server + 'contacts/contact-picture';
+    return this.http.put(url, formData, {
+      headers: headers,
+    });
+  }
+
+  postProfilePicture(contactId: number, formData: FormData) {
     const headers = this.authService.getHeadersMultipart();
     return this.http.post(
-      `${this.baseUrl}users/${userId}/profile-picture`,
+      `${this.baseUrl}contacts/${contactId}/contact-picture`,
       formData,
       {
         headers: headers,
       }
     );
-  } */
+  }
+
+  deleteContactPicture(contactId: number) {
+    const url = this.baseUrl + 'contacts/' + contactId + '/contact-picture';
+    const headers = this.authService.getHeaders();
+    return this.http.delete(url, {
+      headers: headers,
+    });
+  }
 }

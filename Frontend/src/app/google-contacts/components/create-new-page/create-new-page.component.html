@@ -1,1 +1,172 @@
-<p>create-new-page works!</p>
+<div>
+  <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
+    <div class="is-flex is-justify-content-space-between max-width-800">
+      <div class="is-flex">
+        <button
+          mat-icon-button
+          matTooltip="Close"
+          type="button"
+          (click)="redirectBack()"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+        <div
+          class="backogrund-image is-flex is-flex-direction-column is-justify-content-space-around"
+        >
+          <div class="auto-margin">
+            <button mat-fab type="button" (click)="openPictureDialog()">
+              <mat-icon>add_a_photo</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="is-flex is-flex-direction-column-reverse">
+        <span>
+          <span *ngIf="fileToUpload != null">
+            <button
+              mat-icon-button
+              matTooltip="Remove contact picture"
+              (click)="removeContactPicture()"
+              type="button"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+            {{ fileToUpload.name }}
+          </span>
+          <span *ngIf="fileToUpload == null">
+            No contact picture selected.
+          </span>
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="!contactForm.valid"
+            class="ml-3"
+          >
+            Save
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <mat-divider class="my-3"></mat-divider>
+
+    <div class="columns max-width-600 ml-5">
+      <div class="column icon-column">
+        <mat-icon>person_outline</mat-icon>
+      </div>
+      <div class="column">
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="standard">
+            <mat-label>First name</mat-label>
+            <input type="text" matInput formControlName="firstName" />
+            <mat-error> First name is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="form-field-wrapper">
+          <mat-form-field appearance="standard">
+            <mat-label>Last name</mat-label>
+            <input type="text" matInput formControlName="lastName" />
+            <mat-error> Last name is required</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns max-width-700 ml-5">
+      <div class="column icon-column"><mat-icon>email</mat-icon></div>
+      <div class="column email-phone-input">
+        <ng-container formArrayName="emailListForm">
+          <ng-container
+            *ngFor="let emailForm of getEmailListForm(); let i = index"
+          >
+            <div class="form-field-wrapper" [formGroup]="emailForm">
+              <mat-form-field class="text" appearance="standard">
+                <mat-label>Email</mat-label>
+                <input type="text" matInput formControlName="email" />
+                <mat-error> Invalid email </mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="standard">
+                <mat-select formControlName="type">
+                  <mat-option value="HOME">Home</mat-option>
+                  <mat-option value="WORK">Work</mat-option>
+                  <mat-option value="OTHER">Other</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <span class="side-buttons ml-3"
+                ><button
+                  type="button"
+                  mat-icon-button
+                  color="link"
+                  matTooltip="Remove"
+                  *ngIf="emailListForm.length > 1"
+                  (click)="deleteEmail(i)"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+                <button
+                  type="button"
+                  mat-icon-button
+                  color="primary"
+                  matTooltip="Add"
+                  (click)="addNewEmailForm()"
+                  *ngIf="emailListForm.length < 10"
+                >
+                  <mat-icon>add_circle</mat-icon>
+                </button></span
+              >
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="columns max-width-700 ml-5">
+      <div class="column icon-column"><mat-icon>phone</mat-icon></div>
+      <div class="column email-phone-input">
+        <ng-container formArrayName="phoneNumberListForm">
+          <ng-container
+            *ngFor="let phoneForm of getPhoneNumberListForm(); let i = index"
+          >
+            <div class="form-field-wrapper" [formGroup]="phoneForm">
+              <mat-form-field class="text" appearance="standard">
+                <mat-label>Phone number</mat-label>
+                <input type="text" matInput formControlName="phoneNumber" />
+                <mat-error> Invalid phone number </mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="standard">
+                <mat-select formControlName="type">
+                  <mat-option value="HOME">Home</mat-option>
+                  <mat-option value="WORK">Work</mat-option>
+                  <mat-option value="OTHER">Other</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <span class="side-buttons ml-3"
+                ><button
+                  type="button"
+                  mat-icon-button
+                  color="link"
+                  matTooltip="Remove"
+                  *ngIf="phoneNumberListForm.length > 1"
+                  (click)="deletePhoneNumber(i)"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+                <button
+                  type="button"
+                  mat-icon-button
+                  color="primary"
+                  matTooltip="Add"
+                  (click)="addNewPhoneNumberForm()"
+                  *ngIf="phoneNumberListForm.length < 10"
+                >
+                  <mat-icon>add_circle</mat-icon>
+                </button></span
+              >
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </form>
+</div>

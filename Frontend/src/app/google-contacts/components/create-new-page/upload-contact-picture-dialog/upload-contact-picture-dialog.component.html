@@ -1,0 +1,56 @@
+<div class="p-5">
+  <form (ngSubmit)="setPicture()">
+    <div class="file has-name mb-5">
+      <label class="file-label">
+        <input
+          class="file-input"
+          type="file"
+          id="file-input"
+          (change)="handleFileInput($any($event).target.files)"
+          required
+        />
+        <span class="file-cta">
+          <span class="file-icon">
+            <mat-icon>upload</mat-icon>
+          </span>
+          <span class="file-label"> Choose a file… </span>
+        </span>
+        <span
+          *ngIf="fileToUpload == null"
+          class="file-name is-flex is-align-items-center pr-5"
+        >
+          No file selected.
+        </span>
+        <span
+          *ngIf="fileToUpload != null"
+          class="file-name is-flex is-align-items-center pr-5"
+        >
+          {{ fileToUpload.name }}
+        </span>
+      </label>
+    </div>
+    <p>Picture must be either JPG, JPEG or PNG. Max file size is 2MB.</p>
+
+    <hr />
+    <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+      <span class="is-flex is-align-items-center alert" *ngIf="invalidPicture"
+        >Invalid picture.</span
+      >
+      <span [style.visibility]="'hidden'">.</span>
+      <span>
+        <button mat-flat-button type="button" (click)="closeDialog()">
+          Close
+        </button>
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          class="ml-3"
+          [disabled]="fileToUpload == null"
+        >
+          Save
+        </button>
+      </span>
+    </div>
+  </form>
+</div>

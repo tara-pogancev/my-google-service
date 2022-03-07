@@ -8,7 +8,6 @@ import mygoogleserviceapi.contacts.repository.ContactRepository;
 import mygoogleserviceapi.contacts.service.interfaces.BinService;
 import mygoogleserviceapi.contacts.service.interfaces.ContactListService;
 import mygoogleserviceapi.contacts.service.interfaces.ContactPictureStorageService;
-import mygoogleserviceapi.shared.service.interfaces.FileStorageService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +19,8 @@ public class BinServiceImpl implements BinService {
 
     private final ContactListService contactListService;
     private final ContactRepository contactRepository;
+    private final ContactPictureStorageService storageService;
     private final ContactListRepository contactListRepository;
-    private final ContactPictureStorageService contactPictureStorageService;
-    private final FileStorageService fileStorageService;
 
     @Override
     public List<Contact> getDeletedContacts(String jwt) {
@@ -30,7 +28,8 @@ public class BinServiceImpl implements BinService {
         if (contactList != null) {
             List<Contact> contactsArrayList = contactList.getContacts();
             return contactsArrayList.stream().filter(c -> c.getDeleted()).collect(Collectors.toList());
-        } return null;
+        }
+        return null;
     }
 
     @Override
@@ -38,8 +37,8 @@ public class BinServiceImpl implements BinService {
         List<Contact> deletedContacts = getDeletedContacts(jwt);
         if (deletedContacts != null) {
             for (Contact contact : deletedContacts) {
+                storageService.deleteContactPicture(contact.getId());
                 contactRepository.delete(contact);
-                //todo: delete contact picture
             }
             return true;
         } else {
@@ -51,9 +50,8 @@ public class BinServiceImpl implements BinService {
     public Boolean deleteContact(String jwt, Long id) {
         Contact contact = contactRepository.getById(id);
         if (contact != null && contactListService.contactBelongsToUser(jwt, id)) {
-            contact.setDeleted(false);
+            storageService.deleteContactPicture(contact.getId());
             contactRepository.delete(contact);
-            //todo: delete contact picture
             return true;
         } else {
             return false;
@@ -64,9 +62,9 @@ public class BinServiceImpl implements BinService {
     public Boolean deleteContactList(List<Long> idList, String jwt) {
         for (Long id : idList) {
             Contact contact = contactRepository.getById(id);
-            if(contactListService.contactBelongsToUser(jwt, id)) {
+            if (contactListService.contactBelongsToUser(jwt, id)) {
+                storageService.deleteContactPicture(contact.getId());
                 contactRepository.delete(contact);
-                //todo: delete contact image
             }
         }
         return true;
@@ -76,7 +74,7 @@ public class BinServiceImpl implements BinService {
     public Boolean recoverContactList(List<Long> idList, String jwt) {
         for (Long id : idList) {
             Contact contact = contactRepository.getById(id);
-            if(contactListService.contactBelongsToUser(jwt, id)) {
+            if (contactListService.contactBelongsToUser(jwt, id)) {
                 contact.setDeleted(false);
                 contactRepository.save(contact);
             }
@@ -94,5 +92,13 @@ public class BinServiceImpl implements BinService {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void deleteContactListByUser(String jwt) {
+        for (Contact contact : contactListService.getContactList(jwt).getContacts()) {
+            deleteContact(jwt, contact.getId());
+        }
+        contactListRepository.delete(contactListService.getContactList(jwt));
     }
 }

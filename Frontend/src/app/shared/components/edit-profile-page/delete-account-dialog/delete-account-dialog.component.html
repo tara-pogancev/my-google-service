@@ -1,0 +1,28 @@
+<div class="p-5">
+  <form [formGroup]="passwordForm" (ngSubmit)="deleteAccount()">
+    <h2 class="alert">You are about to delete your account!</h2>
+    <p>
+      This action is pernament, and cannot be undone. <br />Please type in your
+      password to confirm your chocie.
+    </p>
+
+    <mat-form-field appearance="outline" class="mx-1 mt-5 stretch-width">
+      <mat-label>Enter your password</mat-label>
+      <input type="password" matInput formControlName="password" />
+    </mat-form-field>
+
+    <hr />
+    <div class="is-flex is-flex-direction-row is-justify-content-space-between">
+      <span class="alert" *ngIf="invalidPassword">Incorrect password</span>
+      <span [style.visibility]="'hidden'">.</span>
+      <span>
+        <button mat-flat-button type="button" (click)="closeDialog()">
+          Close
+        </button>
+        <button mat-flat-button class="ml-3" color="warn" type="submit">
+          Confirm
+        </button>
+      </span>
+    </div>
+  </form>
+</div>

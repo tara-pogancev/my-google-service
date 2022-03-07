@@ -4,16 +4,21 @@ import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.contacts.dto.ContactDTO;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.service.interfaces.ContactListService;
+import mygoogleserviceapi.contacts.validator.annotation.ValidContactPicture;
 import mygoogleserviceapi.shared.converter.DataConverter;
+import mygoogleserviceapi.shared.dto.response.PictureResponseDTO;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/contacts")
@@ -29,6 +34,26 @@ public class ContactListController {
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(contentType))
                 .body(resource);
+    }
+
+    @PostMapping("/{contactId}/contact-picture")
+    public ResponseEntity<PictureResponseDTO> postContactPicture(@PathVariable Long contactId, @RequestPart("file") @ValidContactPicture MultipartFile file, @RequestHeader(name = "Authorization") String jwt) {
+        String fileName = "";
+        fileName = contactListService.saveContactPicture(file, contactId, jwt);
+        return ResponseEntity.ok(new PictureResponseDTO(fileName, file.getContentType(), file.getSize()));
+    }
+
+    @PutMapping("/contact-picture")
+    public ResponseEntity<?> checkIfPictureIsValid(@RequestPart("file") @ValidContactPicture MultipartFile file) {
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{contactId}/contact-picture")
+    public ResponseEntity<Resource> deleteContactPicture(@PathVariable Long contactId, @RequestHeader(name = "Authorization") String jwt) {
+        Boolean success = contactListService.deleteContactPicture(contactId, jwt);
+        if (success) {
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } else return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("/all")

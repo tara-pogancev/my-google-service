@@ -87,9 +87,19 @@
                 >Invalid picture.</span
               >
             </div>
-            <p>Picture must be either JPG, JPEG or PNG.</p>
+            <p>
+              Picture must be either JPG, JPEG or PNG. Max file size is 2MB.
+            </p>
 
             <mat-action-row>
+              <button
+                mat-flat-button
+                type="button"
+                (click)="removeProfilePicture()"
+                *ngIf="userHasProfilePicture"
+              >
+                Remove
+              </button>
               <button mat-flat-button color="primary" type="submit">
                 Save
               </button>
@@ -213,7 +223,7 @@
 
       <gap></gap>
 
-      <mat-accordion class="example-headers-align">
+      <mat-accordion class="example-headers-align security-panel">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title> Password </mat-panel-title>
@@ -288,7 +298,7 @@
 
       <gap height="10"> </gap>
 
-      <mat-accordion class="example-headers-align">
+      <mat-accordion class="example-headers-align security-panel">
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title> Default application </mat-panel-title>
@@ -316,6 +326,31 @@
                 "
               >
                 Save
+              </button>
+            </mat-action-row>
+          </form>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <gap height="10"> </gap>
+
+      <mat-accordion class="example-headers-align security-panel">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Delete account </mat-panel-title>
+            <mat-panel-description>
+              Delete your account with all its info
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <form (ngSubmit)="deleteAccountDialog()">
+            <p class="alert">
+              This action is permanent and cannot be undone. Proceed with
+              caution.
+            </p>
+
+            <mat-action-row>
+              <button mat-flat-button color="warn" type="submit">
+                Delete my account
               </button>
             </mat-action-row>
           </form>

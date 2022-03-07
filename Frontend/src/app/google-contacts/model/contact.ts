@@ -11,6 +11,7 @@ export class Contact {
     public starred: boolean = false,
     public deleted: boolean = false,
     public emails: ContactEmail[] = [],
-    public phoneNumbers: ContactPhoneNumber[] = []
+    public phoneNumbers: ContactPhoneNumber[] = [],
+    public appUserEmail: string = ''
   ) {}
 }

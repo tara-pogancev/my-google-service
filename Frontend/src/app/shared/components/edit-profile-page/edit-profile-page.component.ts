@@ -16,6 +16,8 @@ import { AuthService } from '../../services/auth.service';
 import { ProfilePictureService } from '../../services/profile-picture.service';
 import { UserService } from '../../services/user-service';
 import { ConfirmedValidator } from '../../services/validator.service';
+import { DeleteAccountDialogComponent } from './delete-account-dialog/delete-account-dialog.component';
+import { ProfileRefreshService } from './profile-refresh.service';
 
 @Component({
   selector: 'edit-profile-page',
@@ -28,6 +30,7 @@ export class EditProfilePageComponent implements OnInit {
   fileToUpload: File | any = null;
   invalidPicture: boolean = false;
   invalidPassword: boolean = false;
+  userHasProfilePicture: boolean = true;
 
   phoneNumberMessage: string = '0 phone numbers';
 
@@ -41,7 +44,8 @@ export class EditProfilePageComponent implements OnInit {
     private authService: AuthService,
     private _snackBar: MatSnackBar,
     private profilePictureService: ProfilePictureService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private profileRefreshService: ProfileRefreshService
   ) {}
 
   ngOnInit(): void {
@@ -86,7 +90,16 @@ export class EditProfilePageComponent implements OnInit {
 
       this.user.phoneNumbers = this.sortPhoneNumbers(this.user.phoneNumbers);
       this.setPhoneNumberMessage();
+      this.checkForProfilePicture();
     });
+  }
+
+  checkForProfilePicture() {
+    this.profilePictureService
+      .getProfilePicture(this.user.id)
+      .subscribe((data: Blob) => {
+        this.userHasProfilePicture = data.size != 0;
+      });
   }
 
   setPhoneNumberMessage() {
@@ -107,13 +120,14 @@ export class EditProfilePageComponent implements OnInit {
       .postProfilePicture(this.user.id, formData)
       .subscribe(
         (data) => {
-          this._snackBar.open(
-            'Your profile picture has been set. Refresh the page to see changes.',
-            'Close'
-          );
-
           this.invalidPicture = false;
           this.fileToUpload = null;
+          this.profileRefreshService.announceRefreshImage();
+          this.checkForProfilePicture();
+
+          this._snackBar.open('Your profile picture has been set.', 'Close', {
+            duration: 3000,
+          });
         },
         (err) => {
           this.invalidPicture = true;
@@ -125,6 +139,19 @@ export class EditProfilePageComponent implements OnInit {
     this.fileToUpload = files.item(0);
   }
 
+  removeProfilePicture() {
+    if (confirm('Are you sure you want to remove your profile picture?')) {
+      this.profilePictureService.deleteProfilePicture().subscribe((data) => {
+        this.profileRefreshService.announceRefreshImage();
+        this.checkForProfilePicture();
+
+        this._snackBar.open('Your profile picture has been removed.', 'Close', {
+          duration: 3000,
+        });
+      });
+    }
+  }
+
   changeName() {
     if (this.nameChangeForm.valid) {
       let dto = new CreateUser();
@@ -133,11 +160,11 @@ export class EditProfilePageComponent implements OnInit {
       this.userService.changeName(dto).subscribe((data) => {
         this.user.firstName = dto.firstName;
         this.user.lastName = dto.lastName;
+        this.profileRefreshService.announceRefreshName();
 
-        this._snackBar.open(
-          'Your name has been changed. Refresh the page to see changes.',
-          'Close'
-        );
+        this._snackBar.open('Your name has been changed.', 'Close', {
+          duration: 3000,
+        });
       });
     }
   }
@@ -188,7 +215,10 @@ export class EditProfilePageComponent implements OnInit {
       .subscribe((data) => {
         this._snackBar.open(
           'Your default application has been changed.',
-          'Close'
+          'Close',
+          {
+            duration: 3000,
+          }
         );
       });
   }
@@ -220,6 +250,16 @@ export class EditProfilePageComponent implements OnInit {
         return 1;
       } else {
         return -1;
+      }
+    });
+  }
+
+  deleteAccountDialog() {
+    const dialogRef = this.dialog.open(DeleteAccountDialogComponent);
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        window.location.href = '/';
       }
     });
   }

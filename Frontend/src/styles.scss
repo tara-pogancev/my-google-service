@@ -30,7 +30,7 @@ $custom-typography: mat.define-typography-config(
 }
 
 .alert {
-  color: rgb(173, 0, 0);
+  color: #f44336;
   font-weight: 500;
 }
 
@@ -72,6 +72,10 @@ $custom-typography: mat.define-typography-config(
   max-width: 900px;
 }
 
+.max-width-1200 {
+  max-width: 1200px;
+}
+
 /* Border */
 .container {
   border: 0.8px solid lightgray;
@@ -84,6 +88,10 @@ $custom-typography: mat.define-typography-config(
   cursor: pointer;
 }
 
+.auto-margin {
+  margin: auto;
+}
+
 /* Hide scroll bar*/
 .main-container::-webkit-scrollbar {
   display: none !important;
@@ -93,7 +101,3 @@ $custom-typography: mat.define-typography-config(
 .main-container {
   -ms-overflow-style: none !important;
 }
-
-
-
-
