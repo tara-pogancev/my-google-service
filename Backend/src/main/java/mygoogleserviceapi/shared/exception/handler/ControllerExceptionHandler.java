@@ -1,5 +1,6 @@
 package mygoogleserviceapi.shared.exception.handler;
 
+import mygoogleserviceapi.shared.exception.EntityNotFoundException;
 import mygoogleserviceapi.shared.exception.InvalidImageDimensionException;
 import mygoogleserviceapi.shared.exception.InvalidImageFormatException;
 import mygoogleserviceapi.shared.exception.NotAllowedException;
@@ -53,5 +54,13 @@ public class ControllerExceptionHandler {
                 ex.getMessage(),
                 new Date());
         return new ResponseEntity<>(message, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorMessage> entityNotFoundException(EntityNotFoundException ex, WebRequest request) {
+        ErrorMessage message = new ErrorMessage(
+                ex.getMessage(),
+                new Date());
+        return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
     }
 }

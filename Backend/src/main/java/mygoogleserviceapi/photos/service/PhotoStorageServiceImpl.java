@@ -3,12 +3,15 @@ package mygoogleserviceapi.photos.service;
 import mygoogleserviceapi.photos.service.interfaces.PhotoStorageService;
 import mygoogleserviceapi.shared.config.FileStorageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -49,6 +52,32 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
             return file;
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
+        }
+    }
+
+    @Override
+    public Resource getPhoto(String fileName, String email) {
+        try {
+            Path filePath = this.fileStorageLocation.resolve(PHOTOS_DIRECTORY + File.separator + email + File.separator + fileName).normalize();
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists()) {
+                return resource;
+            } else {
+                return null;
+                //throw new ProfilePictureNotFoundException();
+            }
+        } catch (MalformedURLException ex) {
+            return null;
+            //throw new ProfilePictureNotFoundException();
+        }
+    }
+
+    @Override
+    public void deletePhoto(String fileName, String email) {
+        Path filePath = this.fileStorageLocation.resolve(PHOTOS_DIRECTORY + File.separator + email + File.separator + fileName).normalize();
+        try {
+            Files.delete(filePath);
+        } catch (Exception ignored) {
         }
     }
 }
