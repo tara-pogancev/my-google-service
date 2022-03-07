@@ -59,19 +59,22 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     public Resource getPhotoFile(String filename) {
         String email = authorizationService.getUsername();
-        Photo photo = photoRepository.getPhotoForUser(email, filename);
-        if (photo == null)
-            throw new EntityNotFoundException(Photo.class.getSimpleName());
+        Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
         return photoStorageService.getPhoto(filename, email);
     }
 
     @Override
     public void deletePhoto(String filename) {
         String email = authorizationService.getUsername();
-        Photo photo = photoRepository.getPhotoForUser(email, filename);
-        if (photo == null)
-            throw new EntityNotFoundException(Photo.class.getSimpleName());
+        Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
         photoStorageService.deletePhoto(filename, email);
         photoRepository.deleteById(photo.getId());
+    }
+
+    private Photo getPhotoForUserOrThrowNotFound(String email, String fileName) {
+        Photo photo = photoRepository.getPhotoForUser(email, fileName);
+        if (photo == null)
+            throw new EntityNotFoundException(Photo.class.getSimpleName());
+        return photo;
     }
 }
