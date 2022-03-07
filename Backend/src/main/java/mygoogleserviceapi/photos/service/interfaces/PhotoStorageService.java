@@ -10,4 +10,6 @@ public interface PhotoStorageService {
     Resource getPhoto(String fileName, String email);
 
     void deletePhoto(String fileName, String email);
+
+    void deleteAllPhotos(String email);
 }

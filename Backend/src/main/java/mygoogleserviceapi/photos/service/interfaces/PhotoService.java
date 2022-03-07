@@ -15,4 +15,6 @@ public interface PhotoService {
     public Resource getPhotoFile(String filename);
 
     void deletePhoto(String filename);
+
+    void deleteAllPhotos(String email);
 }

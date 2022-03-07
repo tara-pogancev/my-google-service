@@ -34,13 +34,14 @@ public class PhotoServiceImpl implements PhotoService {
         if (!photoValidator.isValid(file)) {
             return null;
         }
+        ApplicationUser user = userService.findByEmail(email);
+        if (user == null)
+            throw new EntityNotFoundException(ApplicationUser.class.getSimpleName());
         try {
             photoStorageService.savePhoto(file, email);
         } catch (RuntimeException e) {
             return null;
         }
-        ApplicationUser user = userService.findByEmail(email);
-
         Photo photo = photoRepository.getPhotoForUser(email, file.getOriginalFilename());
         if (photo == null) {
             photo = new Photo(file.getOriginalFilename(), user);
@@ -69,6 +70,11 @@ public class PhotoServiceImpl implements PhotoService {
         Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
         photoStorageService.deletePhoto(filename, email);
         photoRepository.deleteById(photo.getId());
+    }
+
+    @Override
+    public void deleteAllPhotos(String email) {
+        this.photoStorageService.deleteAllPhotos(email);
     }
 
     private Photo getPhotoForUserOrThrowNotFound(String email, String fileName) {
