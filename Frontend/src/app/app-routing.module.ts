@@ -72,15 +72,15 @@ const routes: Routes = [
         component: ExportPageComponent,
       },
       {
-        path: 'person/:id',
+        path: 'person',
         component: ContactPersonPageComponent,
         children: [
           {
-            path: '',
+            path: ':id',
             component: ViewPersonComponent,
           },
           {
-            path: 'edit',
+            path: ':id/edit',
             component: EditPersonComponent,
           },
         ],
