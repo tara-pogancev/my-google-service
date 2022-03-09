@@ -171,15 +171,19 @@
               class="is-flex is-align-items-center stretch-height contact-menu"
             >
               <button mat-icon-button (click)="starContact(contact.id)">
-                <mat-icon *ngIf="contact.starred">star</mat-icon>
-                <mat-icon *ngIf="!contact.starred">star_border</mat-icon>
+                <mat-icon *ngIf="contact.starred" matTooltip="Unstar"
+                  >star</mat-icon
+                >
+                <mat-icon *ngIf="!contact.starred" matTooltip="Star"
+                  >star_border</mat-icon
+                >
               </button>
-              <button mat-icon-button (click)="redirectContact(contact.id)">
-                <mat-icon>edit</mat-icon>
+              <button mat-icon-button (click)="redirectContactEdit(contact.id)">
+                <mat-icon matTooltip="Edit">edit</mat-icon>
               </button>
 
               <button mat-icon-button (click)="deleteContact(contact.id)">
-                <mat-icon>delete</mat-icon>
+                <mat-icon matTooltip="Delete">delete</mat-icon>
               </button>
             </div>
           </td>
@@ -287,15 +291,19 @@
               class="is-flex is-align-items-center stretch-height contact-menu"
             >
               <button mat-icon-button (click)="starContact(contact.id)">
-                <mat-icon *ngIf="contact.starred">star</mat-icon>
-                <mat-icon *ngIf="!contact.starred">star_border</mat-icon>
+                <mat-icon *ngIf="contact.starred" matTooltip="Unstar"
+                  >star</mat-icon
+                >
+                <mat-icon *ngIf="!contact.starred" matTooltip="Star"
+                  >star_border</mat-icon
+                >
               </button>
-              <button mat-icon-button (click)="redirectContact(contact.id)">
-                <mat-icon>edit</mat-icon>
+              <button mat-icon-button (click)="redirectContactEdit(contact.id)">
+                <mat-icon matTooltip="Edit">edit</mat-icon>
               </button>
 
               <button mat-icon-button (click)="deleteContact(contact.id)">
-                <mat-icon>delete</mat-icon>
+                <mat-icon matTooltip="Delete">delete</mat-icon>
               </button>
             </div>
           </td>

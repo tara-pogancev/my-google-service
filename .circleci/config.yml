@@ -69,7 +69,7 @@ workflows:
             
       - heroku/deploy-via-git:
           name: deploy-front
-          app-name: my-google-service
+          app-name: my-contacts-photos-service
           filters:
             branches:
               only:

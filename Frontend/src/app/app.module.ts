@@ -40,6 +40,8 @@ import { MergeContactsDialogComponent } from './google-contacts/components/merge
 import { ProfileRefreshService } from './shared/components/edit-profile-page/profile-refresh.service';
 import { UploadContactPictureDialogComponent } from './google-contacts/components/create-new-page/upload-contact-picture-dialog/upload-contact-picture-dialog.component';
 import { DeleteAccountDialogComponent } from './shared/components/edit-profile-page/delete-account-dialog/delete-account-dialog.component';
+import { ViewPersonComponent } from './google-contacts/components/contact-person-page/view-person/view-person.component';
+import { EditPersonComponent } from './google-contacts/components/contact-person-page/edit-person/edit-person.component';
 
 class MyErrorHandler implements ErrorHandler {
   handleError(error: any): void {
@@ -80,6 +82,8 @@ class MyErrorHandler implements ErrorHandler {
     MergeContactsDialogComponent,
     UploadContactPictureDialogComponent,
     DeleteAccountDialogComponent,
+    ViewPersonComponent,
+    EditPersonComponent,
   ],
   imports: [
     BrowserModule,
