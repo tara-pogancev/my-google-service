@@ -11,6 +11,8 @@ import { SearchContactsService } from '../contacts-header/search-contacts.servic
 })
 export class ContactPersonPageComponent implements OnInit {
   contact: Contact = new Contact();
+  editing: boolean = false;
+  fileToUpload: File | any = null;
 
   constructor(
     private searchContactsService: SearchContactsService,
@@ -27,4 +29,18 @@ export class ContactPersonPageComponent implements OnInit {
       console.log(this.contact);
     });
   }
+
+  redirectBack() {
+    if (this.editing) {
+      if (confirm('Are you sure you want to leave this page?')) {
+        window.location.href = '/contacts';
+      }
+    } else {
+      window.location.href = '/contacts';
+    }
+  }
+
+  starContact() {}
+
+  deleteContact() {}
 }

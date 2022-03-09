@@ -1,0 +1,78 @@
+.backogrund-image {
+  width: 162px;
+  height: 162px;
+  z-index: 1;
+  background-image: url("/assets/missing_profile_picture_gray.png");
+  background-size: cover;
+}
+
+.mat-fab {
+  background-color: rgba(107, 107, 107, 0.7) !important;
+}
+
+.icon-column {
+  padding-top: 40px;
+  max-width: 26px;
+  margin-right: 20px;
+}
+
+mat-form-field {
+  width: 490px;
+}
+
+.side-buttons {
+  visibility: hidden;
+}
+
+.side-buttons {
+  opacity: 0.8;
+}
+
+.side-buttons .mat-icon-button {
+  transform: scale(0.85) !important;
+  margin-right: -10px;
+}
+
+.form-field-wrapper:hover .side-buttons {
+  visibility: visible !important;
+}
+
+.email-phone-input .text {
+  width: 380px !important;
+  margin-right: 20px;
+}
+
+.email-phone-input mat-form-field {
+  width: 90px !important;
+}
+
+mat-icon {
+  transform: scale(0.9);
+  color: #5f6368;
+}
+
+.contact-details {
+  border: 0.8px solid lightgray;
+  border-radius: 10px;
+}
+
+.contact-details .google-title {
+  font-size: 16px;
+  color: black;
+}
+
+.contact-details .icon-column {
+  padding-top: 9px;
+  max-width: 26px;
+  margin-right: 20px;
+}
+
+.contact-details .contact-label {
+  color: #5f6368;
+  font-weight: 500;
+}
+
+.contact-name mat-icon {
+  margin-top: -15px;
+  color: #5f636890;
+}
