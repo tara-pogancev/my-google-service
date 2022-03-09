@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ContactPersonPageComponent } from './google-contacts/components/contact-person-page/contact-person-page.component';
+import { EditPersonComponent } from './google-contacts/components/contact-person-page/edit-person/edit-person.component';
+import { ViewPersonComponent } from './google-contacts/components/contact-person-page/view-person/view-person.component';
 import { ContactsPageComponent } from './google-contacts/components/contacts-page/contacts-page.component';
 import { ContactsTableComponent } from './google-contacts/components/contacts-table/contacts-table.component';
 import { CreateNewPageComponent } from './google-contacts/components/create-new-page/create-new-page.component';
@@ -72,6 +74,16 @@ const routes: Routes = [
       {
         path: 'person/:id',
         component: ContactPersonPageComponent,
+        children: [
+          {
+            path: '',
+            component: ViewPersonComponent,
+          },
+          {
+            path: 'edit',
+            component: EditPersonComponent,
+          },
+        ],
       },
     ],
   },

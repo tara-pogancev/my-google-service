@@ -69,6 +69,10 @@ export class ContactsTableComponent implements OnInit {
     this.router.navigateByUrl('/contacts/person/' + id);
   }
 
+  redirectContactEdit(id: number) {
+    this.router.navigateByUrl('/contacts/person/' + id + '/edit');
+  }
+
   starContact(id: number) {
     let contact = this.contacts.filter((contact) => {
       return contact.id == id;
