@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Contact } from 'src/app/google-contacts/model/contact';
 import { ContactListService } from 'src/app/google-contacts/services/contact-list.service';
 import { ContactService } from 'src/app/google-contacts/services/contact.service';
@@ -17,7 +18,9 @@ export class ViewPersonComponent implements OnInit {
     private searchContactsService: SearchContactsService,
     private route: ActivatedRoute,
     private contactService: ContactService,
-    private contactListService: ContactListService
+    private contactListService: ContactListService,
+    private router: Router,
+    private snackbar: MatSnackBar
   ) {
     this.searchContactsService.announceSearchReset();
   }
@@ -26,7 +29,6 @@ export class ViewPersonComponent implements OnInit {
     this.contact.id = this.route.snapshot.params['id'];
     this.contactService.getContact(this.contact.id).subscribe((data) => {
       this.contact = data;
-      console.log(this.contact);
     });
   }
 
@@ -48,5 +50,20 @@ export class ViewPersonComponent implements OnInit {
     }
   }
 
-  deleteContact() {}
+  deleteContact() {
+    if (confirm('Are you sure you want to delete this contact?')) {
+      this.contactListService
+        .deleteContact(this.contact.id)
+        .subscribe((data) => {
+          this.router.navigate(['/contacts']);
+          this.snackbar.open('Contact deleted', 'Close', {
+            duration: 3000,
+          });
+        });
+    }
+  }
+
+  redirectEditProfile() {
+    this.router.navigate(['/contacts/person/' + this.contact.id + '/edit']);
+  }
 }

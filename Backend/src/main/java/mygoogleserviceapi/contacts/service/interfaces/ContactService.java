@@ -13,4 +13,5 @@ public interface ContactService {
 
     Contact getContactByUser(String jwt, Long contactId);
 
+    Contact editContact(String jwt, ContactDTO dto);
 }

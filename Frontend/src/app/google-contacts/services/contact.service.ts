@@ -27,4 +27,12 @@ export class ContactService {
       headers: headers,
     });
   }
+
+  editContact(contact: Contact) {
+    const url = this.url;
+    const headers = this.authService.getHeaders();
+    return this._http.put<any>(url, contact, {
+      headers: headers,
+    });
+  }
 }

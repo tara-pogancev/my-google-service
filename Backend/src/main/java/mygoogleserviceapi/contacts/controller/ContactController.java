@@ -40,4 +40,14 @@ public class ContactController {
         }
     }
 
+    @PutMapping
+    public ResponseEntity<?> editContact(@RequestBody ContactDTO dto, @RequestHeader(name = "Authorization") String jwt) {
+        Contact contact = contactService.editContact(jwt, dto);
+        if (contact != null) {
+            return new ResponseEntity<>(converter.convert(contact, ContactDTO.class), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+    }
+
 }

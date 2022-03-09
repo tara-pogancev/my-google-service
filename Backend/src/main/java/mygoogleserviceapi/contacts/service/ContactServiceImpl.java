@@ -86,6 +86,65 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    public Contact editContact(String jwt, ContactDTO dto) {
+        Contact contact = getContactByUser(jwt, dto.id);
+        if (contact != null) {
+            contact.setFirstName(dto.firstName);
+            contact.setLastName(dto.lastName);
+            contactRepository.save(contact);
+
+            resetContactInfo(contact);
+
+            Set<ContactEmailAddress> emailAddresses = new HashSet<>();
+            for (ContactEmailAddressDTO emailDTO : dto.getEmails()) {
+                ContactEmailAddress email = new ContactEmailAddress();
+                email.setContact(contact);
+                email.setEmail(emailDTO.email.toLowerCase());
+                email.setType(ContactTypeEnum.getEnumFromString(emailDTO.type));
+                email = contactEmailAddressRepository.save(email);
+                emailAddresses.add(email);
+            }
+
+            Set<ContactPhoneNumber> phoneNumbers = new HashSet<>();
+            for (ContactPhoneNumberDTO phoneNumberDTO : dto.getPhoneNumbers()) {
+                ContactPhoneNumber phoneNumber = new ContactPhoneNumber();
+                phoneNumber.setContact(contactRepository.get(contact.getId()));
+                phoneNumber.setPhoneNumber(phoneNumberDTO.phoneNumber);
+                phoneNumber.setType(ContactTypeEnum.getEnumFromString(phoneNumberDTO.type));
+                phoneNumber = contactPhoneNumberRepository.save(phoneNumber);
+                phoneNumbers.add(phoneNumber);
+            }
+
+            contact.setEmailAddresses(emailAddresses);
+            contact.setPhoneNumbers(phoneNumbers);
+            contactRepository.save(contact);
+            contactAppUserService.checkForApplicationEmailMatch(contact.getId());
+
+            return contact;
+
+        } else {
+            return null;
+        }
+    }
+
+    private void deleteAllContactEmails(Contact contact) {
+        for (ContactEmailAddress email : contact.getEmailAddresses()) {
+            contactEmailAddressRepository.delete(email);
+        }
+    }
+
+    private void deleteAllContactPhoneNumbers(Contact contact) {
+        for (ContactPhoneNumber phoneNumber : contact.getPhoneNumbers()) {
+            contactPhoneNumberRepository.delete(phoneNumber);
+        }
+    }
+
+    private void resetContactInfo(Contact contact) {
+        deleteAllContactEmails(contact);
+        deleteAllContactPhoneNumbers(contact);
+    }
+
+    @Override
     public ContactList getContactList(ApplicationUser user) {
         return contactListRepository.getByUserId(user.getId());
     }
