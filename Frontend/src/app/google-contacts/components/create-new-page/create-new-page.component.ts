@@ -89,10 +89,16 @@ export class CreateNewPageComponent implements OnInit {
 
   deleteEmail(index: number) {
     this.emailListForm.removeAt(index);
+    if (index == 0 && this.getEmailListForm().length == 0) {
+      this.addNewEmailForm();
+    }
   }
 
   deletePhoneNumber(index: number) {
     this.phoneNumberListForm.removeAt(index);
+    if (index == 0 && this.getPhoneNumberListForm().length == 0) {
+      this.addNewPhoneNumberForm();
+    }
   }
 
   openPictureDialog() {

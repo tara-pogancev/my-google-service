@@ -93,7 +93,19 @@
                   <mat-option value="OTHER">Other</mat-option>
                 </mat-select>
               </mat-form-field>
-              <span class="side-buttons ml-3"
+              <span class="side-buttons ml-3">
+                <button
+                  type="button"
+                  mat-icon-button
+                  color="link"
+                  matTooltip="Clear"
+                  *ngIf="
+                    emailListForm.length == 1 &&
+                    (emailForm.dirty || emailForm.controls.email.value != '')
+                  "
+                  (click)="deleteEmail(i)"
+                >
+                  <mat-icon>close</mat-icon></button
                 ><button
                   type="button"
                   mat-icon-button
@@ -141,8 +153,22 @@
                   <mat-option value="OTHER">Other</mat-option>
                 </mat-select>
               </mat-form-field>
-              <span class="side-buttons ml-3"
-                ><button
+              <span class="side-buttons ml-3">
+                <button
+                  type="button"
+                  mat-icon-button
+                  color="link"
+                  matTooltip="Clear"
+                  *ngIf="
+                    phoneNumberListForm.length == 1 &&
+                    (phoneForm.dirty ||
+                      phoneForm.controls.phoneNumber.value != '')
+                  "
+                  (click)="deletePhoneNumber(i)"
+                >
+                  <mat-icon>close</mat-icon>
+                </button>
+                <button
                   type="button"
                   mat-icon-button
                   color="link"
