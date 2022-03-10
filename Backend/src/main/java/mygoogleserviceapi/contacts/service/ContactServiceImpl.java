@@ -77,6 +77,11 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    public Contact getContact(Long contactId) {
+        return contactRepository.get(contactId);
+    }
+
+    @Override
     public Contact getContactByUser(String jwt, Long contactId) {
         if (contactListService.contactBelongsToUser(jwt, contactId)) {
             return contactRepository.get(contactId);

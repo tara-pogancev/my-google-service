@@ -64,5 +64,4 @@ public class ContactToDTO implements Converter<Contact, ContactDTO> {
         return list;
     }
 
-
 }
