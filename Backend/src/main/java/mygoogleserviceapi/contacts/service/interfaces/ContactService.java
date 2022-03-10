@@ -11,6 +11,8 @@ public interface ContactService {
 
     Contact addNewContact(String jwt, ContactDTO dto);
 
+    Contact getContact(Long contactId);
+
     Contact getContactByUser(String jwt, Long contactId);
 
     Contact editContact(String jwt, ContactDTO dto);

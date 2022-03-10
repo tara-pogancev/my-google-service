@@ -1,5 +1,7 @@
+import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ExportService } from '../../services/export.service';
 
 @Component({
   selector: 'export-page',
@@ -9,7 +11,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class ExportPageComponent implements OnInit {
   exportForm: FormGroup = new FormGroup({});
 
-  constructor() {}
+  constructor(private exportService: ExportService) {}
 
   ngOnInit(): void {
     this.exportForm = new FormGroup({
@@ -21,6 +23,10 @@ export class ExportPageComponent implements OnInit {
 
   export() {
     if (this.exportForm.valid) {
+      this.exportService.exportAllCsv().subscribe((res) => {
+        var url = window.URL.createObjectURL(res.body);
+        window.open(url);
+      });
     }
   }
 }
