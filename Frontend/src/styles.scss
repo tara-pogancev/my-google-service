@@ -43,6 +43,11 @@ $custom-typography: mat.define-typography-config(
   font-size: 22px;
 }
 
+.google-bold {
+  font-family: "Quicksand";
+  font-weight: 600;
+}
+
 /* Layout */
 .centered-content {
   position: absolute;
