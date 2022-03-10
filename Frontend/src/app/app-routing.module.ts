@@ -57,21 +57,6 @@ const routes: Routes = [
         component: TrashPageComponent,
       },
       {
-        //TODO remove later
-        path: 'import',
-        component: ImportPageComponent,
-      },
-      {
-        //TODO remove later
-        path: 'export-selected',
-        component: ExportSelectedPageComponent,
-      },
-      {
-        //TODO remove later
-        path: 'export',
-        component: ExportPageComponent,
-      },
-      {
         path: 'person',
         component: ContactPersonPageComponent,
         children: [

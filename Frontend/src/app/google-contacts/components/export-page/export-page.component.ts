@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'export-page',
@@ -6,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./export-page.component.scss'],
 })
 export class ExportPageComponent implements OnInit {
+  exportForm: FormGroup = new FormGroup({});
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.exportForm = new FormGroup({
+      type: new FormControl('1', {
+        validators: [Validators.required],
+      }),
+    });
+  }
 
-  //TODO Export all contacts
+  export() {
+    if (this.exportForm.valid) {
+    }
+  }
 }
