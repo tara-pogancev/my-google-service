@@ -26,12 +26,14 @@
     "@angular/router": "~12.2.0",
     "animate.css": "^4.1.1",
     "bulma": "^0.9.3",
+    "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.5",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
     "jasmine-core": "~3.8.0",
