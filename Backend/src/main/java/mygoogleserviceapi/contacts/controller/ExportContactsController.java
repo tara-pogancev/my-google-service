@@ -29,4 +29,18 @@ public class ExportContactsController {
         exportService.exportSelectedContactsByUserToCsv(servletResponse.getWriter(), jwt, ids);
     }
 
+    @GetMapping("/json/all")
+    public void exportAllContactsJson(HttpServletResponse servletResponse, @RequestHeader(name = "Authorization") String jwt) throws IOException {
+        servletResponse.setContentType("application/json");
+        servletResponse.addHeader("Content-Disposition", "attachment; filename=\"contacts.json\"");
+        exportService.exportAllContactsByUserToJson(servletResponse.getWriter(), jwt);
+    }
+
+    @PutMapping("/json")
+    public void exportSelectedContactsJson(HttpServletResponse servletResponse, @RequestHeader(name = "Authorization") String jwt, @RequestBody List<Long> ids) throws IOException {
+        servletResponse.setContentType("application/json");
+        servletResponse.addHeader("Content-Disposition", "attachment; filename=\"contacts.json\"");
+        exportService.exportSelectedContactsByUserToJson(servletResponse.getWriter(), jwt, ids);
+    }
+
 }
