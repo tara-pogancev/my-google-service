@@ -14,7 +14,6 @@ export class ExportService {
   exportAllCsv() {
     const url = this.url + '/csv/all';
     const headers = new HttpHeaders({
-      'Content-Type': 'text/csv',
       Authorization: `Bearer ` + this.authService.getCurrentUser().jwt,
     });
     return this._http.get<any>(url, {
@@ -27,7 +26,6 @@ export class ExportService {
   exportAllJson() {
     const url = this.url + '/json/all';
     const headers = new HttpHeaders({
-      'Content-Type': 'text/json',
       Authorization: `Bearer ` + this.authService.getCurrentUser().jwt,
     });
     return this._http.get<any>(url, {
@@ -40,7 +38,6 @@ export class ExportService {
   exportSelectedCsv(ids: number[]) {
     const url = this.url + '/csv';
     const headers = new HttpHeaders({
-      'Content-Type': 'text/csv',
       Authorization: `Bearer ` + this.authService.getCurrentUser().jwt,
     });
     return this._http.put<any>(url, ids, {
@@ -53,7 +50,6 @@ export class ExportService {
   exportSelectedJson(ids: number[]) {
     const url = this.url + '/json';
     const headers = new HttpHeaders({
-      'Content-Type': 'text/json',
       Authorization: `Bearer ` + this.authService.getCurrentUser().jwt,
     });
     return this._http.put<any>(url, ids, {

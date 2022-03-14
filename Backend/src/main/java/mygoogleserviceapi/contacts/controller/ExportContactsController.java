@@ -23,7 +23,7 @@ public class ExportContactsController {
     }
 
     @PutMapping("/csv")
-    public void exportSelectedContactsCsv(HttpServletResponse servletResponse, @RequestHeader(name = "Authorization") String jwt, @RequestBody List<Long> ids) throws IOException {
+    public void exportSelectedContactsCsv(@RequestBody List<Long> ids, @RequestHeader(name = "Authorization") String jwt, HttpServletResponse servletResponse) throws IOException {
         servletResponse.setContentType("text/csv");
         servletResponse.addHeader("Content-Disposition", "attachment; filename=\"contacts.csv\"");
         exportService.exportSelectedContactsByUserToCsv(servletResponse.getWriter(), jwt, ids);
@@ -37,7 +37,7 @@ public class ExportContactsController {
     }
 
     @PutMapping("/json")
-    public void exportSelectedContactsJson(HttpServletResponse servletResponse, @RequestHeader(name = "Authorization") String jwt, @RequestBody List<Long> ids) throws IOException {
+    public void exportSelectedContactsJson(@RequestBody List<Long> ids, @RequestHeader(name = "Authorization") String jwt, HttpServletResponse servletResponse) throws IOException {
         servletResponse.setContentType("application/json");
         servletResponse.addHeader("Content-Disposition", "attachment; filename=\"contacts.json\"");
         exportService.exportSelectedContactsByUserToJson(servletResponse.getWriter(), jwt, ids);

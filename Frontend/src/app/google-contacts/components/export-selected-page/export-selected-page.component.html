@@ -1,4 +1,35 @@
-<p>export-selected-page works!</p>
-<p>Exporting: {{ data.length }} contacts.</p>
-
-<button mat-button mat-dialog-close>Close</button>
+<div class="p-2 dialog-container">
+  <form [formGroup]="exportForm" (ngSubmit)="export()">
+    <div class="google-bold is-flex is-align-items-center">
+      Export contacts
+      <a
+        href="https://support.google.com/contacts/answer/1069522?hl=en-GB&visit_id=637817501911142974-1704138972&rd=1#export"
+        target="blank"
+      >
+        <mat-icon class="ml-3" matTooltip="Learn more">help_outline</mat-icon>
+      </a>
+    </div>
+    <hr />
+    <div>
+      <p class="google-bold" *ngIf="data.length == 1">
+        Export {{ data.length }} contact as:
+      </p>
+      <p class="google-bold" *ngIf="data.length > 1">
+        Export {{ data.length }} contacts as:
+      </p>
+      <mat-radio-group
+        class="is-flex is-flex-direction-column"
+        formControlName="type"
+      >
+        <mat-radio-button value="csv">Google CSV</mat-radio-button>
+        <mat-radio-button value="json">Google JSON</mat-radio-button>
+      </mat-radio-group>
+    </div>
+    <div class="is-flex is-flex-direction-row-reverse stretch-width mt-5">
+      <button mat-button color="primary" type="submit">Export</button>
+      <button mat-button mat-dialog-close color="primary" type="button">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>
