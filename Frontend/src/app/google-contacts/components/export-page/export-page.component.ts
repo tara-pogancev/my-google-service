@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import * as FileSaver from 'file-saver';
 import { ExportService } from '../../services/export.service';
 
 @Component({
@@ -13,10 +13,7 @@ export class ExportPageComponent implements OnInit {
   downloadJsonHref: any;
   downloadCsvHref: any;
 
-  constructor(
-    private exportService: ExportService,
-    private _sanitizer: DomSanitizer
-  ) {}
+  constructor(private exportService: ExportService) {}
 
   ngOnInit(): void {
     this.exportForm = new FormGroup({
@@ -30,13 +27,11 @@ export class ExportPageComponent implements OnInit {
     if (this.exportForm.valid) {
       if (this.exportForm.controls.type.value == 'csv') {
         this.exportService.exportAllCsv().subscribe((res) => {
-          var url = window.URL.createObjectURL(res.body);
-          window.open(url);
+          FileSaver.saveAs(res.body, 'contacts.csv');
         });
       } else {
         this.exportService.exportAllJson().subscribe((res) => {
-          var url = window.URL.createObjectURL(res.body);
-          window.open(url);
+          FileSaver.saveAs(res.body, 'contacts.json');
         });
       }
     }
