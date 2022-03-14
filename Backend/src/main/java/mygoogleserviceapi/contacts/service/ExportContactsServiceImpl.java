@@ -1,7 +1,9 @@
 package mygoogleserviceapi.contacts.service;
 
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.contacts.dto.ContactCSV;
+import mygoogleserviceapi.contacts.dto.ContactJSON;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.service.interfaces.ContactListService;
 import mygoogleserviceapi.contacts.service.interfaces.ContactService;
@@ -14,7 +16,6 @@ import org.supercsv.prefs.CsvPreference;
 
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,14 +46,7 @@ public class ExportContactsServiceImpl implements ExportContactsService {
 
     @Override
     public void exportSelectedContactsByUserToCsv(Writer writer, String jwt, List<Long> ids) {
-        List<Contact> contacts = new ArrayList<>();
-
-        for (Long id : ids) {
-            if (contactListService.contactBelongsToUser(jwt, id)) {
-                contacts.add(contactService.getContact(id));
-            }
-        }
-
+        List<Contact> contacts = contactService.getContactListByIdsByUser(jwt, ids);
         try (ICsvBeanWriter csvWriter = new CsvBeanWriter(writer, CsvPreference.STANDARD_PREFERENCE)) {
             String[] csvHeader = {"First name", "Last name", "Starred", "Deleted", "Email addresses", "Phone numbers"};
             String[] nameMapping = {"firstName", "lastName", "starred", "deleted", "emails", "phoneNumbers"};
@@ -66,4 +60,29 @@ public class ExportContactsServiceImpl implements ExportContactsService {
             System.out.println("Error While writing CSV");
         }
     }
+
+    @Override
+    public void exportAllContactsByUserToJson(Writer writer, String jwt) {
+        List<Contact> contacts = contactListService.getContacts(jwt);
+        Gson gson = new Gson();
+        String contactsInJson = gson.toJson(converter.convert(contacts, ContactJSON.class));
+        try {
+            writer.write(contactsInJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void exportSelectedContactsByUserToJson(Writer writer, String jwt, List<Long> ids) {
+        List<Contact> contacts = contactService.getContactListByIdsByUser(jwt, ids);
+        Gson gson = new Gson();
+        String contactsInJson = gson.toJson(converter.convert(contacts, ContactJSON.class));
+        try {
+            writer.write(contactsInJson);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -9,4 +9,8 @@ public interface ExportContactsService {
 
     void exportSelectedContactsByUserToCsv(Writer writer, String jwt, List<Long> ids);
 
+    void exportAllContactsByUserToJson(Writer writer, String jwt);
+
+    void exportSelectedContactsByUserToJson(Writer writer, String jwt, List<Long> ids);
+
 }
