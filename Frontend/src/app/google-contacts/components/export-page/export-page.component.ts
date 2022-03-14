@@ -10,8 +10,6 @@ import { ExportService } from '../../services/export.service';
 })
 export class ExportPageComponent implements OnInit {
   exportForm: FormGroup = new FormGroup({});
-  downloadJsonHref: any;
-  downloadCsvHref: any;
 
   constructor(private exportService: ExportService) {}
 
@@ -36,12 +34,4 @@ export class ExportPageComponent implements OnInit {
       }
     }
   }
-
-  encode = function (s: any) {
-    var out = [];
-    for (var i = 0; i < s.length; i++) {
-      out[i] = s.charCodeAt(i);
-    }
-    return new Uint8Array(out);
-  };
 }
