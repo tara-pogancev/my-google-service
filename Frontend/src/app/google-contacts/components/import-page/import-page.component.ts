@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ImportService } from '../../services/import.service';
 
 @Component({
   selector: 'import-page',
@@ -6,9 +8,36 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./import-page.component.scss'],
 })
 export class ImportPageComponent implements OnInit {
-  constructor() {}
+  fileToUpload: File | any = null;
+  invalidFile: boolean = false;
+
+  constructor(
+    private importService: ImportService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {}
 
-  //TODO Import contacts
+  import() {
+    const formData = new FormData();
+    formData.append('file', this.fileToUpload, this.fileToUpload.name);
+    this.importService.sendImportData(formData).subscribe(
+      (data) => {
+        this.invalidFile = false;
+        this.fileToUpload = null;
+        window.location.href = '/contacts';
+
+        this.snackBar.open('Your contacts have been uploaded.', 'Close', {
+          duration: 3000,
+        });
+      },
+      (err) => {
+        this.invalidFile = true;
+      }
+    );
+  }
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
 }
