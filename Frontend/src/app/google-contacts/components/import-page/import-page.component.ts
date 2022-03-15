@@ -19,22 +19,25 @@ export class ImportPageComponent implements OnInit {
   ngOnInit(): void {}
 
   import() {
-    const formData = new FormData();
-    formData.append('file', this.fileToUpload, this.fileToUpload.name);
-    this.importService.sendImportData(formData).subscribe(
-      (data) => {
-        this.invalidFile = false;
-        this.fileToUpload = null;
-        window.location.href = '/contacts';
+    if (this.fileToUpload != null) {
+      const formData = new FormData();
+      formData.append('file', this.fileToUpload, this.fileToUpload.name);
 
-        this.snackBar.open('Your contacts have been uploaded.', 'Close', {
-          duration: 3000,
-        });
-      },
-      (err) => {
-        this.invalidFile = true;
-      }
-    );
+      this.importService.sendImportData(formData).subscribe(
+        (data) => {
+          this.invalidFile = false;
+          this.fileToUpload = null;
+          window.location.href = '/contacts';
+
+          this.snackBar.open('Your contacts have been uploaded.', 'Close', {
+            duration: 3000,
+          });
+        },
+        (err) => {
+          this.invalidFile = true;
+        }
+      );
+    }
   }
 
   handleFileInput(files: FileList) {

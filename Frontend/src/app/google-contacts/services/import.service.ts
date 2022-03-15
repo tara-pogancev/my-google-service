@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { server } from 'src/app/app-global';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -12,9 +12,17 @@ export class ImportService {
   constructor(private _http: HttpClient, private authService: AuthService) {}
 
   sendImportData(formData: FormData) {
-    const headers = this.authService.getHeadersMultipart();
-    return this._http.post(this.url, formData, {
+    const headers = this.getSpecialHeaders();
+    return this._http.post<any>(this.url, formData, {
       headers: headers,
     });
+  }
+
+  getSpecialHeaders() {
+    const jwt = this.authService.getCurrentUser().jwt;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ` + jwt,
+    });
+    return headers;
   }
 }
