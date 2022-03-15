@@ -48,6 +48,10 @@ $custom-typography: mat.define-typography-config(
   font-weight: 600;
 }
 
+.size-up-font {
+  font-size: 16px;
+}
+
 /* Layout */
 .centered-content {
   position: absolute;

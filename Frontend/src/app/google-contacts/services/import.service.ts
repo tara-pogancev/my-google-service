@@ -10,4 +10,11 @@ export class ImportService {
   url = server + 'import';
 
   constructor(private _http: HttpClient, private authService: AuthService) {}
+
+  sendImportData(formData: FormData) {
+    const headers = this.authService.getHeadersMultipart();
+    return this._http.post(this.url, formData, {
+      headers: headers,
+    });
+  }
 }
