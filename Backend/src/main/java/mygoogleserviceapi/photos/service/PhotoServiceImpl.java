@@ -12,6 +12,8 @@ import mygoogleserviceapi.shared.model.ApplicationUser;
 import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
 import mygoogleserviceapi.shared.service.interfaces.AuthorizationService;
 import org.springframework.core.io.Resource;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +27,8 @@ public class PhotoServiceImpl implements PhotoService {
     private final ApplicationUserService userService;
     private final PhotoValidator photoValidator;
     private final AuthorizationService authorizationService;
+
+    private final int PAGE_SIZE = 10;
 
     @Override
     public Photo savePhoto(MultipartFile file, String email) {
@@ -50,11 +54,13 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public Set<Photo> getPhotosForUser(Long userId) {
+    public Set<Photo> getPhotosForUser(Long userId, Integer page) {
         if (!authorizationService.isEmailInJWT(userId)) {
             throw new NotAllowedException();
         }
-        return photoRepository.getPhotosForUserId(userId);
+        int pageNum = (page == null || page <= 0) ? 0 : page;
+        Pageable pageRequest = PageRequest.of(pageNum, PAGE_SIZE);
+        return photoRepository.getPhotosForUserId(userId, pageRequest).toSet();
     }
 
     @Override
