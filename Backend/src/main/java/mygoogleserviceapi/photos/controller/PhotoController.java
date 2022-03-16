@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,9 +47,9 @@ public class PhotoController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<List<PhotoInfoResponseDTO>> getPhotos(@PathVariable Long id) {
+    public ResponseEntity<List<PhotoInfoResponseDTO>> getPhotos(@PathVariable Long id, @RequestParam(required = false) Integer page) {
         List<PhotoInfoResponseDTO> responseDTOS = new ArrayList<>();
-        Set<Photo> photos = photoService.getPhotosForUser(id);
+        Set<Photo> photos = photoService.getPhotosForUser(id, page);
         for (Photo photo : photos) {
             responseDTOS.add(new PhotoInfoResponseDTO(photo.getId(), photo.getFileName()));
         }

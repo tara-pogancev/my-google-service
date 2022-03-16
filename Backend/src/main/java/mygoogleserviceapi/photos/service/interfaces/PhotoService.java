@@ -10,7 +10,7 @@ public interface PhotoService {
 
     Photo savePhoto(MultipartFile file, String email);
 
-    Set<Photo> getPhotosForUser(Long userId);
+    Set<Photo> getPhotosForUser(Long userId, Integer page);
 
     public Resource getPhotoFile(String filename);
 
