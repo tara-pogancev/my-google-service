@@ -18,8 +18,7 @@ public class ImportContactsController {
 
     @PostMapping
     public ResponseEntity<?> importFromFile(@RequestPart("file") MultipartFile file, @RequestHeader(name = "Authorization") String jwt) throws IOException {
-        System.out.println(file.getContentType());
-        if (file.getContentType().equals("text/csv")) {
+        if (file.getContentType().equals("application/vnd.ms-excel")) {
             importContactsService.importFromCSV(file, jwt);
         } else if (file.getContentType().equals("application/json")) {
             importContactsService.importFromJSON(file, jwt);
@@ -29,4 +28,5 @@ public class ImportContactsController {
 
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
+
 }

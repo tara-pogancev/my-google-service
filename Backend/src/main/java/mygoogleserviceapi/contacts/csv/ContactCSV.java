@@ -1,4 +1,4 @@
-package mygoogleserviceapi.contacts.dto;
+package mygoogleserviceapi.contacts.csv;
 
 import lombok.Data;
 

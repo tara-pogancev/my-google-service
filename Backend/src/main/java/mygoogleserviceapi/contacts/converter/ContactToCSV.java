@@ -1,6 +1,6 @@
 package mygoogleserviceapi.contacts.converter;
 
-import mygoogleserviceapi.contacts.dto.ContactCSV;
+import mygoogleserviceapi.contacts.csv.ContactCSV;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.model.ContactEmailAddress;
 import mygoogleserviceapi.contacts.model.ContactPhoneNumber;

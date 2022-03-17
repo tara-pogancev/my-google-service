@@ -12,17 +12,9 @@ export class ImportService {
   constructor(private _http: HttpClient, private authService: AuthService) {}
 
   sendImportData(formData: FormData) {
-    const headers = this.getSpecialHeaders();
+    const headers = this.authService.getHeadersMultipart();
     return this._http.post<any>(this.url, formData, {
       headers: headers,
     });
-  }
-
-  getSpecialHeaders() {
-    const jwt = this.authService.getCurrentUser().jwt;
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ` + jwt,
-    });
-    return headers;
   }
 }

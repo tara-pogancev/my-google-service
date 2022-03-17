@@ -1,8 +1,8 @@
 package mygoogleserviceapi.contacts.converter;
 
-import mygoogleserviceapi.contacts.dto.ContactEmailAddressJSON;
-import mygoogleserviceapi.contacts.dto.ContactJSON;
-import mygoogleserviceapi.contacts.dto.ContactPhoneNumberJSON;
+import mygoogleserviceapi.contacts.json.ContactEmailAddressJSON;
+import mygoogleserviceapi.contacts.json.ContactJSON;
+import mygoogleserviceapi.contacts.json.ContactPhoneNumberJSON;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.model.ContactEmailAddress;
 import mygoogleserviceapi.contacts.model.ContactPhoneNumber;

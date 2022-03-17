@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public interface ImportContactsService {
 
-    public void importFromCSV(MultipartFile file, String jwt) throws IOException;
+    void importFromCSV(MultipartFile file, String jwt) throws IOException;
 
-    public void importFromJSON(MultipartFile file, String jwt);
+    void importFromJSON(MultipartFile file, String jwt);
 
 }
