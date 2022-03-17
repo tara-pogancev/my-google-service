@@ -122,7 +122,6 @@ export class TrashPageComponent implements OnInit {
   }
 
   recoverSelected() {
-    //TODO recover
     this.binService
       .recoverBinContactList(this.selectedContacts)
       .subscribe((data) => {
@@ -135,7 +134,6 @@ export class TrashPageComponent implements OnInit {
   }
 
   deleteAllForever() {
-    //TODO delete
     if (
       confirm(
         'Are you sure you want to delete all contacts in bin forever?\nThis action cannot be undone.'

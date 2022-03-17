@@ -7,11 +7,18 @@ import { SearchContactsService } from '../contacts-header/search-contacts.servic
   styleUrls: ['./suggestions-page.component.scss'],
 })
 export class SuggestionsPageComponent implements OnInit {
+  suggestions: [] = [];
+  initEmpty: Boolean = true;
+
   constructor(private searchContactsService: SearchContactsService) {
     this.searchContactsService.announceSearchReset();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.suggestions.length != 0) {
+      this.initEmpty = false;
+    }
 
-  //TODO suggestions;
+    this.initEmpty = false;
+  }
 }
