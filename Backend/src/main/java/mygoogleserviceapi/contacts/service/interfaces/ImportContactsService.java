@@ -8,6 +8,6 @@ public interface ImportContactsService {
 
     void importFromCSV(MultipartFile file, String jwt) throws IOException;
 
-    void importFromJSON(MultipartFile file, String jwt);
+    void importFromJSON(MultipartFile file, String jwt) throws IOException;
 
 }

@@ -28,17 +28,18 @@ INSERT INTO public.contact_list(owner_id)	VALUES
 -- CONTACTS (User ID 5)
 INSERT INTO public.contact(
 	deleted, last_name, first_name, starred, user_id, contact_list_id)	VALUES
-	(false, 'Edison', 'Marylu', false, null, 1),
-	(false, 'Rosario', 'Tahmid', true, null, 1),
-	(false, 'Husnain', 'Allan', true, null, 1),
+	(false, 'M', 'Madam', false, null, 1),
+	(false, 'Gainsborough', 'Aerith', true, null, 1),
+	(false, 'Turk', 'Reno', true, null, 1),
 	(false, 'Rubio', 'Ahyan', false, null, 1),
 	(false, 'Calderon', 'Joel', false, null, 1),
-	(false, 'Peyton', 'Cline', true, null, 1),
-	(false, 'Ruqayyah', 'Rivers', false, null, 1),
+	(false, 'Turk', 'Rude', true, null, 1),
+	(false, 'Shinra', 'Rufus', false, null, 1),
 	(true, 'Karsyn', 'Clarette', false, null, 1),
 	(true, 'Astor', 'Jack', false, null, 1),
 	(false, 'Strife', 'Cloud', true, 4, 1),
-	(false, 'Salahuddin', 'Blackmore', false, null, 1);
+	(false, 'Salahuddin', 'Blackmore', false, null, 1),
+	(false, 'Moshe', 'Kiran', false, null, 1);
 
 INSERT INTO public.contact_phone_number(phone_number, type, contact_id)	VALUES
     ('212-200-1436', 1, 1),

@@ -1,7 +1,9 @@
 package mygoogleserviceapi.contacts.service;
 
+import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.contacts.csv.ContactSimpleCSV;
+import mygoogleserviceapi.contacts.json.ContactJSON;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.service.interfaces.CreateContactsFromImportService;
 import mygoogleserviceapi.contacts.service.interfaces.ImportContactsService;
@@ -19,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -69,7 +72,18 @@ public class ImportContactsServiceImpl implements ImportContactsService {
     }
 
     @Override
-    public void importFromJSON(MultipartFile file, String jwt) {
+    public void importFromJSON(MultipartFile file, String jwt) throws IOException {
+        List<ContactJSON> contactsJSONS = new ArrayList<>();
+        Reader reader = new InputStreamReader(file.getInputStream());
+
+        contactsJSONS = Arrays.asList(new Gson().fromJson(reader, ContactJSON[].class));
+
+        List<Contact> contacts = converter.convert(contactsJSONS, Contact.class);
+        for (Contact contact : contacts) {
+            if (!createContactsFromImportService.userHasIdenticalContact(jwt, contact)) {
+                createContactsFromImportService.createFromImportedContact(jwt, contact);
+            }
+        }
 
     }
 

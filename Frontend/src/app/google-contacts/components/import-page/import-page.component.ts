@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { ImportService } from '../../services/import.service';
 
 @Component({
@@ -12,8 +14,10 @@ export class ImportPageComponent implements OnInit {
   invalidFile: boolean = false;
 
   constructor(
+    public dialogRef: MatDialogRef<ImportPageComponent>,
     private importService: ImportService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -25,12 +29,13 @@ export class ImportPageComponent implements OnInit {
 
       this.importService.sendImportData(formData).subscribe(
         (data) => {
+          this.dialogRef.close();
           this.invalidFile = false;
           this.fileToUpload = null;
-          window.location.href = '/contacts';
-
-          this.snackBar.open('Your contacts have been uploaded.', 'Close', {
-            duration: 3000,
+          this.router.navigate(['/contacts']).then((navigated) => {
+            this.snackBar.open('Your contacts have been uploaded.', 'Close', {
+              duration: 3000,
+            });
           });
         },
         (err) => {

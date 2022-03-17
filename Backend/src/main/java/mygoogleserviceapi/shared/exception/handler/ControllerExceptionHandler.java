@@ -1,11 +1,6 @@
 package mygoogleserviceapi.shared.exception.handler;
 
-import mygoogleserviceapi.shared.exception.EntityNotFoundException;
-import mygoogleserviceapi.shared.exception.InvalidImageDimensionException;
-import mygoogleserviceapi.shared.exception.InvalidImageFormatException;
-import mygoogleserviceapi.shared.exception.NotAllowedException;
-import mygoogleserviceapi.shared.exception.NullImageException;
-import mygoogleserviceapi.shared.exception.ProfilePictureNotFoundException;
+import mygoogleserviceapi.shared.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
