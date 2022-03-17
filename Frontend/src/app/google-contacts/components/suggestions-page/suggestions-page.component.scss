@@ -1,0 +1,35 @@
+.suggestions-sidebar {
+  width: 400px;
+  height: 100%;
+  border-right: 0.8px solid rgba(211, 211, 211, 0.7);
+}
+
+.suggestions-sidebar img {
+  margin-bottom: 10px;
+}
+
+.suggestions-sidebar .icon-left {
+  color: gray;
+  transform: scale(1.3);
+  margin-right: 30px !important;
+  margin-left: 20px;
+}
+
+.suggestions-sidebar .icon-right {
+  color: #6782db;
+  transform: scale(1.3);
+  margin-left: 50px !important;
+  margin-right: 20px !important;
+}
+
+mat-divider {
+  margin: 10px 0;
+}
+
+.light-blue {
+  background-color: #e8f0fe !important;
+}
+
+.google-bold {
+  margin-top: 10px;
+}
