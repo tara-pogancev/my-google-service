@@ -61,11 +61,11 @@ const routes: Routes = [
         component: ContactPersonPageComponent,
         children: [
           {
-            path: '',
+            path: ':id',
             component: ViewPersonComponent,
           },
           {
-            path: 'edit',
+            path: ':id/edit',
             component: EditPersonComponent,
           },
         ],
