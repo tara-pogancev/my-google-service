@@ -1,7 +1,6 @@
 .suggestions-sidebar {
   width: 400px;
   height: 100%;
-  border-right: 0.8px solid rgba(211, 211, 211, 0.7);
 }
 
 .suggestions-sidebar img {
@@ -32,4 +31,12 @@ mat-divider {
 
 .google-bold {
   margin-top: 10px;
+}
+
+.card-container {
+  width: 600px;
+}
+
+.content-panel {
+  border-left: 0.8px solid rgba(211, 211, 211, 0.7);
 }

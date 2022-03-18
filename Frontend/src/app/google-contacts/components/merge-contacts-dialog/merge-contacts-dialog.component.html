@@ -1,1 +1,18 @@
-<p>merge-contacts-dialog works!</p>
+<div class="p-3 dialog-container">
+  <p class="google-bold">Merge {{ data.length }} selected contacts</p>
+  <p>
+    You are about to merge {{ data.length }} contacts. This action cannot be
+    undone. You will be redirected to the merged contact's edit page, and be
+    able to make any additional edits if you wish.
+  </p>
+  <p>Are you sure you want to proceed?</p>
+  <hr />
+  <div class="is-flex is-flex-direction-row-reverse stretch-width mt-5">
+    <button mat-flat-button color="primary" class="ml-3" (click)="merge()">
+      Merge
+    </button>
+    <button mat-button mat-dialog-close color="primary" type="button">
+      Cancel
+    </button>
+  </div>
+</div>

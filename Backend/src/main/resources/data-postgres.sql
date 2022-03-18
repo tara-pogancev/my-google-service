@@ -39,6 +39,8 @@ INSERT INTO public.contact(
 	(true, 'Astor', 'Jack', false, null, 1),
 	(false, 'Strife', 'Cloud', true, 4, 1),
 	(false, 'Salahuddin', 'Blackmore', false, null, 1),
+	(false, 'Moshe', 'Kiran', false, null, 1),
+
 	(false, 'Moshe', 'Kiran', false, null, 1);
 
 INSERT INTO public.contact_phone_number(phone_number, type, contact_id)	VALUES

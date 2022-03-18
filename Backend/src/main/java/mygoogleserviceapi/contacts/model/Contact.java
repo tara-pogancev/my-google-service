@@ -105,4 +105,21 @@ public class Contact extends DatabaseEntity {
         return true;
     }
 
+    public Boolean hasMatchingEmail(String email) {
+        for (ContactEmailAddress emailAddress : getEmailAddresses()) {
+            if (emailAddress.getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean hasMatchingPhoneNumber(String phoneNumber) {
+        for (ContactPhoneNumber contactPhoneNumber : getPhoneNumbers()) {
+            if (contactPhoneNumber.getPhoneNumber().equals(phoneNumber)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

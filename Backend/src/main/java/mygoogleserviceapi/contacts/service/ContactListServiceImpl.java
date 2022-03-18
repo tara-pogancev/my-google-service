@@ -137,4 +137,14 @@ public class ContactListServiceImpl implements ContactListService {
         }
     }
 
+    @Override
+    public Boolean contactListBelongsToUser(String jwt, List<Long> contactIds) {
+        for (Long id : contactIds) {
+            if (!contactBelongsToUser(jwt, id)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
