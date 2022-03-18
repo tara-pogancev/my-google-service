@@ -2,6 +2,7 @@ package mygoogleserviceapi.photos.service;
 
 import lombok.AllArgsConstructor;
 import mygoogleserviceapi.photos.model.Photo;
+import mygoogleserviceapi.photos.model.PhotoMetadata;
 import mygoogleserviceapi.photos.repository.PhotoRepository;
 import mygoogleserviceapi.photos.service.interfaces.PhotoService;
 import mygoogleserviceapi.photos.service.interfaces.PhotoStorageService;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.Set;
 
 @Service
@@ -27,6 +29,7 @@ public class PhotoServiceImpl implements PhotoService {
     private final ApplicationUserService userService;
     private final PhotoValidator photoValidator;
     private final AuthorizationService authorizationService;
+    private final ExifParserImpl exifParser;
 
     private final int PAGE_SIZE = 10;
 
@@ -81,6 +84,14 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     public void deleteAllPhotos(String email) {
         this.photoStorageService.deleteAllPhotos(email);
+    }
+
+    @Override
+    public PhotoMetadata getMetadata(Photo photo) {
+        File photoFile = photoStorageService.getPhotoFile(photo.getFileName(), photo.getApplicationUser().getEmail());
+        Double latitude = exifParser.getLat(photoFile);
+        Double longitude = exifParser.getLong(photoFile);
+        return new PhotoMetadata(latitude, longitude);
     }
 
     private Photo getPhotoForUserOrThrowNotFound(String email, String fileName) {

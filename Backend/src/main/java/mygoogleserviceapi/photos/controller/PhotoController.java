@@ -5,6 +5,7 @@ import mygoogleserviceapi.photos.dto.request.UserInfoRequestDTO;
 import mygoogleserviceapi.photos.dto.response.AddPhotoResponseDTO;
 import mygoogleserviceapi.photos.dto.response.PhotoInfoResponseDTO;
 import mygoogleserviceapi.photos.model.Photo;
+import mygoogleserviceapi.photos.model.PhotoMetadata;
 import mygoogleserviceapi.photos.service.interfaces.PhotoService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -51,7 +52,9 @@ public class PhotoController {
         List<PhotoInfoResponseDTO> responseDTOS = new ArrayList<>();
         Set<Photo> photos = photoService.getPhotosForUser(id, page);
         for (Photo photo : photos) {
-            responseDTOS.add(new PhotoInfoResponseDTO(photo.getId(), photo.getFileName()));
+            PhotoMetadata metadata = photoService.getMetadata(photo);
+            responseDTOS.add(new PhotoInfoResponseDTO(photo.getId(), photo.getFileName(), metadata.getLatitude(), metadata.getLongitude()));
+            photoService.getMetadata(photo);
         }
         return ResponseEntity.ok(responseDTOS);
     }

@@ -1,6 +1,7 @@
 package mygoogleserviceapi.photos.service.interfaces;
 
 import mygoogleserviceapi.photos.model.Photo;
+import mygoogleserviceapi.photos.model.PhotoMetadata;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,4 +18,6 @@ public interface PhotoService {
     void deletePhoto(String filename);
 
     void deleteAllPhotos(String email);
+
+    PhotoMetadata getMetadata(Photo photo);
 }

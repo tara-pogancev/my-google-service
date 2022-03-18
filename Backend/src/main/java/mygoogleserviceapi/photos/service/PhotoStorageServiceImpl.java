@@ -10,7 +10,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -51,7 +50,7 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
             return file;
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
         }
     }
@@ -59,23 +58,37 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
     @Override
     public Resource getPhoto(String fileName, String email) {
         try {
-            Path filePath = this.fileStorageLocation.resolve(PHOTOS_DIRECTORY + File.separator + email + File.separator + fileName).normalize();
+            Path filePath = getPhotoPath(fileName, email);
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists()) {
                 return resource;
             } else {
                 return null;
-                //throw new ProfilePictureNotFoundException();
             }
         } catch (MalformedURLException ex) {
             return null;
-            //throw new ProfilePictureNotFoundException();
+        }
+    }
+
+    @Override
+    public File getPhotoFile(String fileName, String email) {
+        try {
+            Path filePath = getPhotoPath(fileName, email);
+            File file = filePath.toFile();
+            if (file.exists()) {
+                return file;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
     @Override
     public void deletePhoto(String fileName, String email) {
-        Path filePath = this.fileStorageLocation.resolve(PHOTOS_DIRECTORY + File.separator + email + File.separator + fileName).normalize();
+        Path filePath = getPhotoPath(fileName, email);
         try {
             Files.delete(filePath);
         } catch (Exception ignored) {
@@ -93,5 +106,9 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
             Files.delete(filePath);
         } catch (Exception ignored) {
         }
+    }
+
+    private Path getPhotoPath(String fileName, String email) {
+        return this.fileStorageLocation.resolve(PHOTOS_DIRECTORY + File.separator + email + File.separator + fileName).normalize();
     }
 }
