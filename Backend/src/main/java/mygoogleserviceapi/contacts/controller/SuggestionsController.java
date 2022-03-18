@@ -3,7 +3,6 @@ package mygoogleserviceapi.contacts.controller;
 import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.contacts.model.Suggestion;
 import mygoogleserviceapi.contacts.service.interfaces.SuggestionsService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -22,7 +21,7 @@ public class SuggestionsController {
     @GetMapping
     public ResponseEntity<?> mergeContacts(@RequestHeader(name = "Authorization") String jwt) {
         List<Suggestion> suggestions = suggestionsService.getSuggestions(jwt);
-        return new ResponseEntity<>(suggestionsService.convertListToDTO(suggestions), HttpStatus.OK);
+        return ResponseEntity.ok(suggestionsService.convertListToDTO(suggestions));
     }
 
 }

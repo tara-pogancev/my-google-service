@@ -6,7 +6,6 @@ import mygoogleserviceapi.contacts.dto.ContactDTO;
 import mygoogleserviceapi.contacts.model.Contact;
 import mygoogleserviceapi.contacts.service.interfaces.ContactService;
 import mygoogleserviceapi.shared.converter.DataConverter;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +23,9 @@ public class ContactController {
     public ResponseEntity<?> addNewContact(@RequestBody ContactDTO dto, @RequestHeader(name = "Authorization") String jwt) {
         Contact newContact = contactService.addNewContact(jwt, dto);
         if (newContact != null) {
-            return new ResponseEntity<>(converter.convert(newContact, ContactDTO.class), HttpStatus.OK);
+            return ResponseEntity.ok(converter.convert(newContact, ContactDTO.class));
         } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -34,9 +33,9 @@ public class ContactController {
     public ResponseEntity<?> getContact(@PathVariable Long contactId, @RequestHeader(name = "Authorization") String jwt) {
         Contact contact = contactService.getContactByUser(jwt, contactId);
         if (contact != null) {
-            return new ResponseEntity<>(converter.convert(contact, ContactDTO.class), HttpStatus.OK);
+            return ResponseEntity.ok(converter.convert(contact, ContactDTO.class));
         } else {
-            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -44,9 +43,9 @@ public class ContactController {
     public ResponseEntity<?> editContact(@RequestBody ContactDTO dto, @RequestHeader(name = "Authorization") String jwt) {
         Contact contact = contactService.editContact(jwt, dto);
         if (contact != null) {
-            return new ResponseEntity<>(converter.convert(contact, ContactDTO.class), HttpStatus.OK);
+            return ResponseEntity.ok(converter.convert(contact, ContactDTO.class));
         } else {
-            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            return ResponseEntity.badRequest().build();
         }
     }
 
