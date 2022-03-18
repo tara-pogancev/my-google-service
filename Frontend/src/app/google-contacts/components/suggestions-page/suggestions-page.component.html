@@ -63,8 +63,10 @@
       <mat-divider></mat-divider>
       <p *ngIf="suggestions.length == 0">No more contacts to merge.</p>
       <merge-card
-        [contacts]="[]"
+        @fade1
+        [contacts]="suggestion.contacts"
         *ngFor="let suggestion of suggestions"
+        (doRemoveSuggestion)="removeSuggestion($event)"
       ></merge-card>
     </div>
   </div>
