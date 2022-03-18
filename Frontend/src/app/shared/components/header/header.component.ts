@@ -1,4 +1,4 @@
-import { Component, ErrorHandler, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { User } from '../../model/user-model';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user-service';

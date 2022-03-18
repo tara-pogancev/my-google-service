@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Sanitizer } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ProfilePictureService } from '../../services/profile-picture.service';
 import { ProfileRefreshService } from '../edit-profile-page/profile-refresh.service';

@@ -1,7 +1,6 @@
 import {
   AbstractControl,
   AsyncValidatorFn,
-  FormControl,
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
@@ -46,26 +45,3 @@ export function EmailDoesntExistValidator(
       .pipe(map((result) => (result ? null : { emailDoesntExist: true })));
   };
 }
-
-/*
-export function IncorrectPasswordValidator(
-  authService: AuthService,
-  email: string
-): AsyncValidatorFn {
-  return (control: AbstractControl): Observable<ValidationErrors | null> => {
-    let password = '';
-    if (control.value != null) password = control.value;
-    let request = new AuthenticationRequest(email, password);
-
-    console.log(request);
-
-    return authService
-      .login(request)
-      .pipe(
-        map((response) =>
-          response.headers['status'] == 401 ? { incorrectPassword: true } : null
-        )
-      );
-  };
-}
-*/

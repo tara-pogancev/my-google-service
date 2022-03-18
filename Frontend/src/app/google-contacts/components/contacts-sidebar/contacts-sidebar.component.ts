@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
 import { ContactListService } from '../../services/contact-list.service';
 import { ExportPageComponent } from '../export-page/export-page.component';
 import { ImportPageComponent } from '../import-page/import-page.component';
@@ -18,9 +17,9 @@ export class ContactsSidebarComponent implements OnInit {
   contacts: number = 0;
 
   constructor(
-    private router: Router,    
+    private router: Router,
     private contactListService: ContactListService,
-    private refreshContactsCountService: RefreshContactsCountService,    
+    private refreshContactsCountService: RefreshContactsCountService,
     private dialog: MatDialog
   ) {
     refreshContactsCountService.refreshContacts$.subscribe(() =>
