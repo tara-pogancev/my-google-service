@@ -10,7 +10,6 @@ import { Contact } from '../../model/contact';
 import { Suggestion } from '../../model/suggestion';
 import { SuggestionsService } from '../../services/suggestions.service';
 import { SearchContactsService } from '../contacts-header/search-contacts.service';
-import { RefreshContactsCountService } from '../contacts-sidebar/refresh-contact-count.service';
 
 @Component({
   selector: 'suggestions-page',

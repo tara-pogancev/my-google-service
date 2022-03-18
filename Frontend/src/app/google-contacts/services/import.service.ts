@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { server } from 'src/app/app-global';
 import { AuthService } from 'src/app/shared/services/auth.service';

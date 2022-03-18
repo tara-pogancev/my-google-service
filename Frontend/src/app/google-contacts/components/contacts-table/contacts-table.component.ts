@@ -4,7 +4,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { Contact } from '../../model/contact';
 import { ContactListService } from '../../services/contact-list.service';
-import { ContactService } from '../../services/contact.service';
 import { SearchContactsService } from '../contacts-header/search-contacts.service';
 import { RefreshContactsCountService } from '../contacts-sidebar/refresh-contact-count.service';
 import { ExportSelectedPageComponent } from '../export-selected-page/export-selected-page.component';
