@@ -2,7 +2,6 @@ package mygoogleserviceapi.contacts.controller;
 
 import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.contacts.service.interfaces.ImportContactsService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,10 +22,10 @@ public class ImportContactsController {
         } else if (file.getContentType().equals("application/json")) {
             importContactsService.importFromJSON(file, jwt);
         } else {
-            return new ResponseEntity<>(null, HttpStatus.I_AM_A_TEAPOT);
+            return ResponseEntity.badRequest().build();
         }
 
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
 }

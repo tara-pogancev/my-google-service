@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ImportService } from '../../services/import.service';
+import { RefreshContactsCountService } from '../contacts-sidebar/refresh-contact-count.service';
 
 @Component({
   selector: 'import-page',
@@ -17,7 +18,8 @@ export class ImportPageComponent implements OnInit {
     public dialogRef: MatDialogRef<ImportPageComponent>,
     private importService: ImportService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private refreshContactsCountService: RefreshContactsCountService
   ) {}
 
   ngOnInit(): void {}
@@ -29,10 +31,14 @@ export class ImportPageComponent implements OnInit {
 
       this.importService.sendImportData(formData).subscribe(
         (data) => {
+          this.refreshContactsCountService.announceRefreshing();
           this.dialogRef.close();
           this.invalidFile = false;
           this.fileToUpload = null;
+          window.location.href = '/contacts';
+          
           this.router.navigate(['/contacts']).then((navigated) => {
+
             this.snackBar.open('Your contacts have been uploaded.', 'Close', {
               duration: 3000,
             });

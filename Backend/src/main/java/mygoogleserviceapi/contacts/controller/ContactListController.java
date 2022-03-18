@@ -8,7 +8,6 @@ import mygoogleserviceapi.contacts.validator.annotation.ValidContactPicture;
 import mygoogleserviceapi.shared.converter.DataConverter;
 import mygoogleserviceapi.shared.dto.response.PictureResponseDTO;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -45,30 +44,30 @@ public class ContactListController {
 
     @PutMapping("/contact-picture")
     public ResponseEntity<?> checkIfPictureIsValid(@RequestPart("file") @ValidContactPicture MultipartFile file) {
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{contactId}/contact-picture")
     public ResponseEntity<Resource> deleteContactPicture(@PathVariable Long contactId, @RequestHeader(name = "Authorization") String jwt) {
         Boolean success = contactListService.deleteContactPicture(contactId, jwt);
         if (success) {
-            return new ResponseEntity<>(null, HttpStatus.OK);
-        } else return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok().build();
+        } else return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/all")
     public ResponseEntity<?> getContactList(@RequestHeader(name = "Authorization") String jwt) {
         List<Contact> contacts = contactListService.getContacts(jwt);
-        return new ResponseEntity<>(converter.convert(contacts, ContactDTO.class), HttpStatus.OK);
+        return ResponseEntity.ok(converter.convert(contacts, ContactDTO.class));
     }
 
     @PutMapping("/star/{id}")
     public ResponseEntity<?> starContact(@PathVariable Long id, @RequestHeader(name = "Authorization") String jwt) {
         Boolean success = contactListService.starContact(jwt, id);
         if (success) {
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            return ResponseEntity.ok().build();
         } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -76,9 +75,9 @@ public class ContactListController {
     public ResponseEntity<?> unstarContact(@PathVariable Long id, @RequestHeader(name = "Authorization") String jwt) {
         Boolean success = contactListService.unstarContact(jwt, id);
         if (success) {
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            return ResponseEntity.ok().build();
         } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -86,9 +85,9 @@ public class ContactListController {
     public ResponseEntity<?> deleteContact(@PathVariable Long id, @RequestHeader(name = "Authorization") String jwt) {
         Boolean success = contactListService.deleteContact(jwt, id);
         if (success) {
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            return ResponseEntity.ok().build();
         } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
     }
 
@@ -96,9 +95,9 @@ public class ContactListController {
     public ResponseEntity<?> deleteContactList(@RequestBody List<Long> idList, @RequestHeader(name = "Authorization") String jwt) {
         Boolean success = contactListService.deleteContactList(jwt, idList);
         if (success) {
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            return ResponseEntity.ok().build();
         } else {
-            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
     }
 

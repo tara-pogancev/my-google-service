@@ -33,6 +33,9 @@ export class ContactsTableComponent implements OnInit {
     searchContactsService.doSearch$.subscribe((text) => {
       this.searchContacts(text);
     });
+    refreshContactsCountService.refreshContacts$.subscribe(() =>
+      this.refreshContacts()
+    );
     this.searchContactsService.announceSearchReset();
   }
 
