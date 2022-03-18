@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MergeService } from '../../services/merge.service';
 
 @Component({
   selector: 'merge-contacts-dialog',
@@ -7,9 +8,16 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./merge-contacts-dialog.component.scss'],
 })
 export class MergeContactsDialogComponent implements OnInit {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: number[]) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: number[],
+    private mergeService: MergeService
+  ) {}
 
   ngOnInit(): void {}
 
-  //TODO merge selected
+  merge() {
+    this.mergeService.mergeContacts(this.data).subscribe((data) => {
+      window.location.href = 'contacts/person/' + data + '/edit';
+    });
+  }
 }

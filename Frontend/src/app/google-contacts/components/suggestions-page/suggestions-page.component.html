@@ -8,7 +8,7 @@
   </div>
 </div>
 
-<div class="columns stretch-height" *ngIf="!initEmpty">
+<div class="columns stretch-min-height" *ngIf="!initEmpty">
   <div class="suggestions-sidebar column is-1">
     <div class="is-flex is-align-items-center p-2 mt-5 mr-3">
       <img
@@ -44,5 +44,28 @@
     </div>
     <mat-divider></mat-divider>
   </div>
-  <div class="column"></div>
+  <div
+    class="column is-flex is-flex-direction-row is-justify-content-center stretch-width content-panel"
+  >
+    <div
+      class="card-container is-flex is-flex-direction-column is-center-items-center"
+    >
+      <div class="is-flex is-justify-content-space-between">
+        <p class="google-bold">Merge duplicates ({{ suggestions.length }})</p>
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="suggestions.length == 0"
+        >
+          Merge all
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+      <p *ngIf="suggestions.length == 0">No more contacts to merge.</p>
+      <merge-card
+        [contacts]="[]"
+        *ngFor="let suggestion of suggestions"
+      ></merge-card>
+    </div>
+  </div>
 </div>
