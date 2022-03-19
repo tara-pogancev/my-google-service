@@ -1,3 +1,5 @@
+@import "../../../../breakpoints.scss";
+
 .mat-drawer {
   width: 280px;
   border: none;
@@ -10,4 +12,16 @@
 
 .mat-drawer-content {
   padding: 15px;
+}
+
+.mobile-nav {
+  @include media(">1024px") {
+    display: none !important;
+  }
+}
+
+.computer-nav {
+  @include media("<=1024px") {
+    display: none !important;
+  }
 }
