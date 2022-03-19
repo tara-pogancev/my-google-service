@@ -25,7 +25,7 @@
         >
           <mat-icon
             class="mr-2"
-            matTooltip="Verified My Google Service user."
+            matTooltip="Verified My Google Service user"
             *ngIf="contact.appUserEmail != null"
             >check_circle</mat-icon
           >
@@ -47,7 +47,13 @@
         <button mat-icon-button (click)="deleteContact()">
           <mat-icon matTooltip="Delete">delete</mat-icon>
         </button>
-        <button mat-flat-button color="primary" type="submit" class="ml-5" (click)="redirectEditProfile()">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          class="ml-5"
+          (click)="redirectEditProfile()"
+        >
           Edit
         </button>
       </span>
