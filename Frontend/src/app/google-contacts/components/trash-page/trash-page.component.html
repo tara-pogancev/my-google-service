@@ -14,7 +14,7 @@
           </div>
         </th>
         <th class="menu-column">
-          <button mat-button color="warn" (click)="deleteAllForever()">
+          <button mat-button color="warn" (click)="deleteAllForever()" class="empty-bin-button">
             Empty bin now
           </button>
         </th>
@@ -40,7 +40,11 @@
                   <span>None</span>
                 </button>
               </mat-menu>
-              <button mat-button color="primary" (click)="deleteSelectedForever()">
+              <button
+                mat-button
+                color="primary"
+                (click)="deleteSelectedForever()"
+              >
                 Delete forever
               </button>
               <button mat-button color="primary" (click)="recoverSelected()">

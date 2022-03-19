@@ -1,3 +1,5 @@
+@import "../../../../breakpoints.scss";
+
 p {
   margin-bottom: 0px;
 }
@@ -20,15 +22,40 @@ hr {
   height: 36px !important;
 }
 
-
 .header-logo {
   width: 280px;
 }
 
 .search-form-field-width {
-  width: 722px !important;
+  min-width: 722px !important;
   position: relative;
   bottom: 5px;
+
+  @include media("<=1200px", ">786px") {
+    min-width: 400px !important;
+  }
+
+  @include media("<=786px") {
+    display: none !important;
+  }
+}
+
+.input-background {
+  position: absolute;
+  top: 8px;
+  background-color: #f1f3f4;
+  z-index: -1;
+  min-width: 722px;
+  height: 46px;
+  border-radius: 8px 8px 0 0;
+
+  @include media("<=1200px", ">786px") {
+    min-width: 400px !important;
+  }
+
+  @include media("<=786px") {
+    display: none !important;
+  }
 }
 
 .search-form-field-text {
@@ -39,6 +66,10 @@ hr {
   font-size: 15px;
   border: none !important;
   padding-top: 19px;
+
+  @include media("<=phone") {
+    display: none !important;
+  }
 }
 
 .mat-input-element {
@@ -46,16 +77,12 @@ hr {
   bottom: 6px;
 }
 
-.input-background {
-  position: absolute;
-  top: 8px;
-  background-color: #f1f3f4;
-  z-index: -1;
-  width: 722px;
-  height: 46px;
-  border-radius: 8px 8px 0 0;
-}
-
 ::ng-deep .mat-form-field-underline {
   color: #cbd2d6 !important;
+}
+
+.google-title {
+  @include media("<=phone") {
+    display: none !important;
+  }
 }

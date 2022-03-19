@@ -1,10 +1,16 @@
+@import "../../../../breakpoints.scss";
+
 mat-icon {
   transform: scale(0.9);
   color: gray;
 }
 
 .dialog-container {
-  width: 300px;
+  min-width: 300px;
+
+  @include media("<=687px") {
+    min-width: 200px;
+  }
 }
 
 .mat-radio-button {
