@@ -1,0 +1,14 @@
+.search-form-field {
+  font-size: 15px;
+  border: none !important;
+  padding-top: 19px;
+}
+
+.mat-input-element {
+  position: relative;
+  bottom: 6px;
+}
+
+::ng-deep .mat-form-field-underline {
+  color: #cbd2d6 !important;
+}

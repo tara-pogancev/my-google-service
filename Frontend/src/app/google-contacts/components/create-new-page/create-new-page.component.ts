@@ -25,7 +25,7 @@ export class CreateNewPageComponent implements OnInit {
     private contactService: ContactService,
     private contactPictureService: ContactPictureService
   ) {
-    this.searchContactsService.announceSearchReset();
+    this.searchContactsService.announceSearchReset('');
   }
 
   ngOnInit(): void {

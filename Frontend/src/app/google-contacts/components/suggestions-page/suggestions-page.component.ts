@@ -36,7 +36,7 @@ export class SuggestionsPageComponent implements OnInit {
     private suggestionService: SuggestionsService,
     private mergeService: MergeService
   ) {
-    this.searchContactsService.announceSearchReset();
+    this.searchContactsService.announceSearchReset('');
   }
 
   ngOnInit(): void {

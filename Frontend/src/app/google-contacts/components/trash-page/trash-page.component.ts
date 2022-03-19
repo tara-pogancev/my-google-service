@@ -32,7 +32,7 @@ export class TrashPageComponent implements OnInit {
     searchContactsService.doSearch$.subscribe((text) => {
       this.searchContacts(text);
     });
-    this.searchContactsService.announceSearchReset();
+    this.searchContactsService.announceSearchReset('');
   }
 
   ngOnInit(): void {
@@ -140,7 +140,7 @@ export class TrashPageComponent implements OnInit {
       )
     ) {
       this.binService.deleteAllContactsInBin().subscribe((data) => {
-        this.refreshContacts();        
+        this.refreshContacts();
         this.selectNone();
         this.snackbar.open('Contacts deleted', 'Close', {
           duration: 3000,

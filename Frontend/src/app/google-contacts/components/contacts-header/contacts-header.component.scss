@@ -72,6 +72,12 @@ hr {
   }
 }
 
+.search-icon {
+  @include media(">786px") {
+    visibility: hidden !important;
+  }
+}
+
 .mat-input-element {
   position: relative;
   bottom: 6px;

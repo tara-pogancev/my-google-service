@@ -33,7 +33,7 @@ export class ContactsTableComponent implements OnInit {
     searchContactsService.doSearch$.subscribe((text) => {
       this.searchContacts(text);
     });
-    this.searchContactsService.announceSearchReset();
+    this.searchContactsService.announceSearchReset('');
   }
 
   ngOnInit(): void {

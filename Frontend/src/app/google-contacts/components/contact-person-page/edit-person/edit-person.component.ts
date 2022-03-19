@@ -29,7 +29,7 @@ export class EditPersonComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.searchContactsService.announceSearchReset();
+    this.searchContactsService.announceSearchReset("");
   }
 
   ngOnInit(): void {
