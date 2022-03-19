@@ -8,8 +8,10 @@ import {
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../../model/contact';
 import { Suggestion } from '../../model/suggestion';
+import { MergeService } from '../../services/merge.service';
 import { SuggestionsService } from '../../services/suggestions.service';
 import { SearchContactsService } from '../contacts-header/search-contacts.service';
+import { RefreshContactsCountService } from '../contacts-sidebar/refresh-contact-count.service';
 
 @Component({
   selector: 'suggestions-page',
@@ -29,8 +31,10 @@ export class SuggestionsPageComponent implements OnInit {
   initEmpty: Boolean = true;
 
   constructor(
+    private refreshContactsCountService: RefreshContactsCountService,
     private searchContactsService: SearchContactsService,
-    private suggestionService: SuggestionsService
+    private suggestionService: SuggestionsService,
+    private mergeService: MergeService
   ) {
     this.searchContactsService.announceSearchReset();
   }
@@ -49,5 +53,24 @@ export class SuggestionsPageComponent implements OnInit {
     this.suggestions = this.suggestions.filter(
       (suggestion) => suggestion.contacts != contacts
     );
+  }
+
+  mergeAll() {
+    for (let suggestion of this.suggestions) {
+      this.mergeService
+        .mergeContacts(this.excractIds(suggestion.contacts))
+        .subscribe((data) => {
+          this.refreshContactsCountService.announceRefreshing();
+          this.removeSuggestion(suggestion.contacts);
+        });
+    }
+  }
+
+  excractIds(contacts: Contact[]) {
+    var ids = [];
+    for (let contact of contacts) {
+      ids.push(contact.id);
+    }
+    return ids;
   }
 }
