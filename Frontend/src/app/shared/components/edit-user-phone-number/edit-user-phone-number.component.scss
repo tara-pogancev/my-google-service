@@ -1,5 +1,15 @@
+@import "../../../../breakpoints.scss";
+
 .gray-text {
   color: rgb(117, 117, 117);
   font-size: 0.8rem;
   align-self: center;
+}
+
+.input-spacing {
+  margin-right: 20px;
+
+  @include media(">=517px", "<=585px") {
+    margin-right: 100px;
+  }
 }

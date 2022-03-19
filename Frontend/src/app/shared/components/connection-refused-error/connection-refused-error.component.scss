@@ -1,0 +1,28 @@
+@import "../../../../breakpoints.scss";
+
+.container {
+  border: 0.8px solid lightgray;
+  border-radius: 10px;
+  padding: 48px;
+  width: 830px;
+
+  @include media("<=tablet") {
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+  }
+}
+
+.centered-content {
+  @include media("<=tablet") {
+    width: 90%;
+    padding: 10px;
+    margin: 0;
+  }
+}
+
+.image-column {
+  @include media("<=tablet") {
+    display: none !important;
+  }
+}
