@@ -1,9 +1,17 @@
+@import "../../../../breakpoints.scss";
+
 .backogrund-image {
   width: 162px;
   height: 162px;
   z-index: 1;
   background-image: url("/assets/missing_profile_picture_gray.png");
   background-size: cover;
+
+  @include media("<=tablet") {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px !important;
+  }
 }
 
 .mat-fab {
@@ -18,6 +26,10 @@
 
 mat-form-field {
   width: 490px;
+
+  @include media("<tablet") {
+    width: 200px !important;
+  }
 }
 
 .side-buttons {
@@ -40,6 +52,10 @@ mat-form-field {
 .email-phone-input .text {
   width: 380px !important;
   margin-right: 20px;
+
+  @include media("<tablet") {
+    width: 200px !important;
+  }
 }
 
 .email-phone-input mat-form-field {

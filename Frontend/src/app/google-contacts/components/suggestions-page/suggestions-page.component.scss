@@ -1,6 +1,12 @@
+@import "../../../../breakpoints.scss";
+
 .suggestions-sidebar {
   width: 400px;
   height: 100%;
+
+  @include media("<=1100px") {
+    display: none !important;
+  }
 }
 
 .suggestions-sidebar img {
