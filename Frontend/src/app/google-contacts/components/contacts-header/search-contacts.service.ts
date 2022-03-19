@@ -6,7 +6,7 @@ import { Contact } from '../../model/contact';
 export class SearchContactsService {
   // Observable string sources
   private searchActionSource = new Subject<string>();
-  private resetSearchActionSource = new Subject<void>();
+  private resetSearchActionSource = new Subject<string>();
 
   // Observable string streams
   doSearch$ = this.searchActionSource.asObservable();
@@ -18,8 +18,8 @@ export class SearchContactsService {
   }
 
   // Service message commands
-  announceSearchReset() {
-    this.resetSearchActionSource.next();
+  announceSearchReset(text: string) {
+    this.resetSearchActionSource.next(text);
   }
 
   //Search service

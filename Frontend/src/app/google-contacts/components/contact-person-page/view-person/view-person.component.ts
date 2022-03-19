@@ -22,7 +22,7 @@ export class ViewPersonComponent implements OnInit {
     private router: Router,
     private snackbar: MatSnackBar
   ) {
-    this.searchContactsService.announceSearchReset();
+    this.searchContactsService.announceSearchReset('');
   }
 
   ngOnInit(): void {

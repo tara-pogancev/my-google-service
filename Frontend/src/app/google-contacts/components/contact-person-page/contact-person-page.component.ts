@@ -8,7 +8,7 @@ import { SearchContactsService } from '../contacts-header/search-contacts.servic
 })
 export class ContactPersonPageComponent implements OnInit {
   constructor(private searchContactsService: SearchContactsService) {
-    this.searchContactsService.announceSearchReset();
+    this.searchContactsService.announceSearchReset("");
   }
 
   ngOnInit(): void {}
