@@ -1,3 +1,11 @@
+@import "../../../../breakpoints.scss";
+
+.header-title {
+  @include media("<=phone") {
+    font-size: 16px !important;
+  }
+}
+
 p {
   margin-bottom: 0px;
 }

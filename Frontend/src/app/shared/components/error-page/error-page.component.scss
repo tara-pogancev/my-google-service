@@ -1,44 +1,65 @@
+@import "../../../../breakpoints.scss";
+
 .container {
-    border: 0.8px solid lightgray;
-    border-radius: 10px;
-    padding: 48px;
-    height: 606px;
-    width: 830px;
-  }
-  
-  a {
-    font-weight: 500;
-  }
-  
-  .stretch-width {
+  border: 0.8px solid lightgray;
+  border-radius: 10px;
+  padding: 48px;
+  height: 606px;
+  width: 830px;
+
+  @include media("<=tablet") {
     width: 100%;
+    padding: 10px;
+    margin: 0;
   }
-  
-  .stretch-height {
-    height: 100%;
+}
+
+.centered-content {
+  @include media("<=tablet") {
+    width: 90%;
+    padding: 10px;
+    margin: 0;
   }
-  
-  .negative-margin {
-    margin-top: -10px;
+}
+
+.image-column {
+  @include media("<=tablet") {
+    display: none !important;
   }
-  
-  .mat-stroked-button {
-    border-radius: 500px !important;
-  }
-  
-  .null-margin {
-    margin-bottom: -35px !important;
-  }
-  
-  .align-text-center {
-    text-align: center;
-  }
-  
-  .mat-flat-button {
-    padding: 0px 24px;
-  }
-  
-  .mat-hint {
-    font-size: 12px;
-  }
-  
+}
+
+a {
+  font-weight: 500;
+}
+
+.stretch-width {
+  width: 100%;
+}
+
+.stretch-height {
+  height: 100%;
+}
+
+.negative-margin {
+  margin-top: -10px;
+}
+
+.mat-stroked-button {
+  border-radius: 500px !important;
+}
+
+.null-margin {
+  margin-bottom: -35px !important;
+}
+
+.align-text-center {
+  text-align: center;
+}
+
+.mat-flat-button {
+  padding: 0px 24px;
+}
+
+.mat-hint {
+  font-size: 12px;
+}

@@ -1,3 +1,5 @@
+@import "../../../../breakpoints.scss";
+
 .title {
   font-size: 1.75rem;
   font-weight: 400;
@@ -26,4 +28,45 @@ mat-panel-title {
 
 .security-panel mat-panel-title {
   max-width: 200px !important;
+}
+
+//RESPONSIVE
+.main-container {
+  @include media("<=940px") {
+    margin: 0 20px;
+  }
+}
+
+mat-panel-description {
+  @include media("<=940px") {
+    display: none !important;
+  }
+}
+
+.input-spacing {
+  margin-right: 20px;
+
+  @include media("<540px") {
+    margin-right: 0px;
+  }
+}
+
+mat-form-field {
+  @include media("<540px") {
+    width: 100%;
+  }
+}
+
+mat-select {
+  @include media("<540px") {
+    width: 100% !important;
+  }
+}
+
+.container {
+  @include media("<540px") {
+    border: none;
+    margin: 0;
+    padding: 5px;
+  }
 }

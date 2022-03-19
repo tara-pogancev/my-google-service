@@ -1,7 +1,13 @@
+@import "../../../../breakpoints.scss";
+
 .container {
   border: 0.8px solid lightgray;
   border-radius: 10px;
   padding: 48px;
+
+  @include media("<tablet") {
+    border: none;
+  }
 }
 
 .clickable {
@@ -12,4 +18,37 @@
 
 .clickable:hover {
   background: rgba(127, 174, 235, 0.137);
+}
+
+.item-box {
+  @include media("<tablet") {
+    border: none;
+    width: 100%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.column {
+  min-height: 100% !important;
+
+  @include media("<=1255px", ">=769px") {
+    min-height: 278px;
+  }
+}
+
+h1 {
+  align-items: center;
+  width: 100%;
+}
+
+.container-text {
+  vertical-align: middle;
+  text-align: center;
+}
+
+img {
+  @include media("<=1255px", ">=769px") {
+    min-width: 96px !important;
+  }
 }
