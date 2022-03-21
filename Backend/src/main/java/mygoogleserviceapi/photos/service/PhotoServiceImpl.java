@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import mygoogleserviceapi.photos.model.Photo;
 import mygoogleserviceapi.photos.model.PhotoMetadata;
 import mygoogleserviceapi.photos.repository.PhotoRepository;
+import mygoogleserviceapi.photos.service.interfaces.ExifParser;
 import mygoogleserviceapi.photos.service.interfaces.PhotoService;
 import mygoogleserviceapi.photos.service.interfaces.PhotoStorageService;
 import mygoogleserviceapi.photos.validator.PhotoValidator;
@@ -29,7 +30,7 @@ public class PhotoServiceImpl implements PhotoService {
     private final ApplicationUserService userService;
     private final PhotoValidator photoValidator;
     private final AuthorizationService authorizationService;
-    private final ExifParserImpl exifParser;
+    private final ExifParser exifParser;
 
     private final int PAGE_SIZE = 10;
 
@@ -88,10 +89,15 @@ public class PhotoServiceImpl implements PhotoService {
 
     @Override
     public PhotoMetadata getMetadata(Photo photo) {
-        File photoFile = photoStorageService.getPhotoFile(photo.getFileName(), photo.getApplicationUser().getEmail());
-        Double latitude = exifParser.getLat(photoFile);
-        Double longitude = exifParser.getLong(photoFile);
-        return new PhotoMetadata(latitude, longitude);
+        return photoStorageService.getMetadata(photo);
+    }
+
+    @Override
+    public void rotatePhoto(String filename) {
+        String email = authorizationService.getUsername();
+        Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
+        File photoFile = photoStorageService.getPhotoFile(filename, email);
+        exifParser.rotate(photoFile);
     }
 
     private Photo getPhotoForUserOrThrowNotFound(String email, String fileName) {

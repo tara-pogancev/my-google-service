@@ -1,5 +1,8 @@
 package mygoogleserviceapi.photos.service;
 
+import mygoogleserviceapi.photos.model.Photo;
+import mygoogleserviceapi.photos.model.PhotoMetadata;
+import mygoogleserviceapi.photos.service.interfaces.ExifParser;
 import mygoogleserviceapi.photos.service.interfaces.PhotoStorageService;
 import mygoogleserviceapi.shared.config.FileStorageProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +25,15 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
     private final Path fileStorageLocation;
     private static final String PHOTOS_DIRECTORY = "photos";
 
+    @Autowired
+    private final ExifParser exifParser;
+
 
     @Autowired
-    public PhotoStorageServiceImpl(FileStorageProperties fileStorageProperties) {
+    public PhotoStorageServiceImpl(FileStorageProperties fileStorageProperties, ExifParser exifParser) {
         this.fileStorageLocation = Paths.get(System.getProperty("user.dir") + File.separator + fileStorageProperties.getUploadDir())
                 .toAbsolutePath().normalize();
+        this.exifParser = exifParser;
         try {
             Files.createDirectories(Paths.get(this.fileStorageLocation + File.separator + PHOTOS_DIRECTORY));
         } catch (Exception ex) {
@@ -84,6 +91,14 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public PhotoMetadata getMetadata(Photo photo) {
+        File photoFile = getPhotoFile(photo.getFileName(), photo.getApplicationUser().getEmail());
+        Double latitude = exifParser.getLat(photoFile);
+        Double longitude = exifParser.getLong(photoFile);
+        return new PhotoMetadata(latitude, longitude);
     }
 
     @Override

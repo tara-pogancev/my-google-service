@@ -20,4 +20,6 @@ public interface PhotoService {
     void deleteAllPhotos(String email);
 
     PhotoMetadata getMetadata(Photo photo);
+
+    void rotatePhoto(String filename);
 }

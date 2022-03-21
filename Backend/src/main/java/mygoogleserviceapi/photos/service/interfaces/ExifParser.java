@@ -7,4 +7,5 @@ public interface ExifParser {
 
     Double getLong(File image);
 
+    void rotate(File image);
 }
