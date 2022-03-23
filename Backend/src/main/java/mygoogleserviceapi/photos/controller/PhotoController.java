@@ -1,12 +1,14 @@
 package mygoogleserviceapi.photos.controller;
 
 import lombok.RequiredArgsConstructor;
+import mygoogleserviceapi.photos.dto.request.PhotoMetadataRequestDTO;
 import mygoogleserviceapi.photos.dto.request.UserInfoRequestDTO;
 import mygoogleserviceapi.photos.dto.response.AddPhotoResponseDTO;
 import mygoogleserviceapi.photos.dto.response.PhotoInfoResponseDTO;
 import mygoogleserviceapi.photos.model.Photo;
 import mygoogleserviceapi.photos.model.PhotoMetadata;
 import mygoogleserviceapi.photos.service.interfaces.PhotoService;
+import mygoogleserviceapi.shared.converter.DataConverter;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -31,6 +34,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 @RequestMapping("/photos")
 public class PhotoController {
+    private final DataConverter converter;
     private final PhotoService photoService;
 
     @PostMapping()
@@ -72,6 +76,13 @@ public class PhotoController {
     @PutMapping("/{filename}/rotate")
     public ResponseEntity<HttpStatus> rotatePhoto(@PathVariable String filename) {
         photoService.rotatePhoto(filename);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{filename}/metadata")
+    public ResponseEntity<HttpStatus> updateMetadata(@PathVariable String filename, @RequestBody @Valid PhotoMetadataRequestDTO metadataRequestDTO) {
+        PhotoMetadata metadata = converter.convert(metadataRequestDTO, PhotoMetadata.class);
+        photoService.updateMetadata(filename, metadata);
         return ResponseEntity.noContent().build();
     }
 

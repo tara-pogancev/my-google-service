@@ -20,4 +20,6 @@ public interface PhotoStorageService {
     void deletePhoto(String fileName, String email);
 
     void deleteAllPhotos(String email);
+
+    void setMetadata(Photo photo, PhotoMetadata metadata);
 }

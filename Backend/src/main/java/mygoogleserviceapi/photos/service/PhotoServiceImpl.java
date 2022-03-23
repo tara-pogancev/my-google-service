@@ -100,6 +100,13 @@ public class PhotoServiceImpl implements PhotoService {
         exifParser.rotate(photoFile);
     }
 
+    @Override
+    public void updateMetadata(String filename, PhotoMetadata metadata) {
+        String email = authorizationService.getUsername();
+        Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
+        photoStorageService.setMetadata(photo, metadata);
+    }
+
     private Photo getPhotoForUserOrThrowNotFound(String email, String fileName) {
         Photo photo = photoRepository.getPhotoForUser(email, fileName);
         if (photo == null)

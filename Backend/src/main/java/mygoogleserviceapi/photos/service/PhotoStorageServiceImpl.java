@@ -78,27 +78,18 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
     }
 
     @Override
-    public File getPhotoFile(String fileName, String email) {
-        try {
-            Path filePath = getPhotoPath(fileName, email);
-            File file = filePath.toFile();
-            if (file.exists()) {
-                return file;
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    @Override
     public PhotoMetadata getMetadata(Photo photo) {
         File photoFile = getPhotoFile(photo.getFileName(), photo.getApplicationUser().getEmail());
         Double latitude = exifParser.getLat(photoFile);
         Double longitude = exifParser.getLong(photoFile);
         return new PhotoMetadata(latitude, longitude);
+    }
+
+    @Override
+    public void setMetadata(Photo photo, PhotoMetadata metadata) {
+        File photoFile = getPhotoFile(photo.getFileName(), photo.getApplicationUser().getEmail());
+        exifParser.setLat(photoFile, metadata.getLatitude());
+        exifParser.setLong(photoFile, metadata.getLongitude());
     }
 
     @Override
@@ -120,6 +111,22 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
                     .forEach(File::delete);
             Files.delete(filePath);
         } catch (Exception ignored) {
+        }
+    }
+
+    @Override
+    public File getPhotoFile(String fileName, String email) {
+        try {
+            Path filePath = getPhotoPath(fileName, email);
+            File file = filePath.toFile();
+            if (file.exists()) {
+                return file;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

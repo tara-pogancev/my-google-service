@@ -6,6 +6,7 @@ import com.thebuzzmedia.exiftool.core.StandardFormat;
 import com.thebuzzmedia.exiftool.core.StandardOptions;
 import com.thebuzzmedia.exiftool.core.StandardTag;
 import com.thebuzzmedia.exiftool.exceptions.UnsupportedFeatureException;
+import mygoogleserviceapi.photos.exception.ImageMetadataIOException;
 import mygoogleserviceapi.photos.service.interfaces.ExifParser;
 import org.springframework.stereotype.Service;
 
@@ -79,6 +80,28 @@ public class ExifParserImpl implements ExifParser {
     }
 
     @Override
+    public void setLat(File image, Double latitude) {
+        try {
+            exifTool.setImageMeta(image,
+                    StandardOptions.builder().withFormat(StandardFormat.NUMERIC).withOverwiteOriginal().build(),
+                    Collections.singletonMap(StandardTag.GPS_LATITUDE, latitude.toString()));
+        } catch (IOException e) {
+            throw new ImageMetadataIOException();
+        }
+    }
+
+    @Override
+    public void setLong(File image, Double longitude) {
+        try {
+            exifTool.setImageMeta(image,
+                    StandardOptions.builder().withFormat(StandardFormat.NUMERIC).withOverwiteOriginal().build(),
+                    Collections.singletonMap(StandardTag.GPS_LONGITUDE, longitude.toString()));
+        } catch (IOException e) {
+            throw new ImageMetadataIOException();
+        }
+    }
+
+    @Override
     public void rotate(File image) {
         try {
             String rotString = exifTool.getImageMeta(image, Collections.singletonList(StandardTag.ORIENTATION)).get(StandardTag.ORIENTATION);
@@ -94,4 +117,6 @@ public class ExifParserImpl implements ExifParser {
             e.printStackTrace();
         }
     }
+
+
 }

@@ -8,4 +8,9 @@ public interface ExifParser {
     Double getLong(File image);
 
     void rotate(File image);
+
+
+    void setLat(File image, Double latitude);
+
+    void setLong(File image, Double longitude);
 }
