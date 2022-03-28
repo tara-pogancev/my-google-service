@@ -1,0 +1,20 @@
+<div class="merge-card-container container">
+  <div class="contacts-container is-flex is-flex-wrap-wrap">
+    <div class="contact-preview is-flex" *ngFor="let contact of contacts">
+      <contact-profile-picture
+        [id]="contact.id"
+        size="40"
+      ></contact-profile-picture>
+      <div class="ml-3">
+        <p class="google-bold">{{ contact.fullName }}</p>
+        <p *ngFor="let email of contact.emails">{{ email.email }}</p>
+        <p *ngFor="let phoneNumber of contact.phoneNumbers">
+          {{ phoneNumber.phoneNumber }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="button-container is-flex is-flex-direction-row-reverse">
+    <button mat-button color="primary" (click)="merge()">Merge</button>
+  </div>
+</div>

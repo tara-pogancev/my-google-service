@@ -1,0 +1,7 @@
+@import "../../../../../breakpoints.scss";
+
+.file-label-text {
+  @include media("<=687px") {
+    display: none !important;
+  }
+}

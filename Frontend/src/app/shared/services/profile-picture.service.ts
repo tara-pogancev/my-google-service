@@ -10,11 +10,11 @@ import { AuthService } from './auth.service';
 export class ProfilePictureService {
   private baseUrl = server;
 
-  constructor(private http: HttpClient, private authService: AuthService) {}
+  constructor(private _http: HttpClient, private authService: AuthService) {}
 
   getProfilePicture(userId: number): Observable<Blob> {
     const headers = this.authService.getHeaders();
-    return this.http.get(`${this.baseUrl}users/${userId}/profile-picture`, {
+    return this._http.get(`${this.baseUrl}users/${userId}/profile-picture`, {
       responseType: 'blob',
       headers: headers,
     });
@@ -22,7 +22,7 @@ export class ProfilePictureService {
 
   postProfilePicture(userId: number, formData: FormData) {
     const headers = this.authService.getHeadersMultipart();
-    return this.http.post(
+    return this._http.post(
       `${this.baseUrl}users/${userId}/profile-picture`,
       formData,
       {
@@ -34,7 +34,7 @@ export class ProfilePictureService {
   deleteProfilePicture() {
     const url = this.baseUrl + 'users/profile-picture';
     const headers = this.authService.getHeaders();
-    return this.http.delete(url, {
+    return this._http.delete(url, {
       headers: headers,
     });
   }

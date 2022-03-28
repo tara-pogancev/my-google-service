@@ -1,1 +1,71 @@
-<p>import-page works!</p>
+<div class="p-2 dialog-container">
+  <form (ngSubmit)="import()">
+    <div class="google-bold size-up-font is-flex is-align-items-center mb-5">
+      Import contacts
+    </div>
+    <p>
+      To import contacts, select a CSV or JSON file.
+      <a
+        href="https://support.google.com/contacts/answer/1069522?hl=en-GB&visit_id=637829669213216871-3495811607&rd=1"
+        target="blank"
+        >Learn more</a
+      >
+    </p>
+
+    <div>
+      <div class="file has-name my-5">
+        <label class="file-label">
+          <input
+            class="file-input"
+            type="file"
+            id="file-input"
+            (change)="handleFileInput($any($event).target.files)"
+            required
+          />
+          <span class="file-cta">
+            <span class="file-icon">
+              <mat-icon>upload</mat-icon>
+            </span>
+            <span class="file-label-text"> Choose a file… </span>
+          </span>
+          <span
+            *ngIf="fileToUpload == null"
+            class="file-name is-flex is-align-items-center pr-5"
+          >
+            No file selected.
+          </span>
+          <span
+            *ngIf="fileToUpload != null"
+            class="file-name is-flex is-align-items-center pr-5"
+          >
+            {{ fileToUpload.name }}
+          </span>
+        </label>
+        <span
+          class="is-flex is-align-items-center ml-5 alert"
+          *ngIf="invalidFile"
+          >Invalid file.</span
+        >
+      </div>
+    </div>
+    <div>
+      <p>
+        No CSV or JSON file?
+        <a href="/contacts/new">Create a contact</a> instead.
+      </p>
+    </div>
+    <div class="is-flex is-flex-direction-row-reverse stretch-width mt-5">
+      <button
+        mat-button
+        color="primary"
+        type="submit"
+        [disabled]="fileToUpload == null"
+      >
+        Import
+      </button>
+      <button mat-button mat-dialog-close color="primary" type="button">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

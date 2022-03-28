@@ -1,3 +1,5 @@
+@import "../../../../breakpoints.scss";
+
 table {
   width: 100%;
   margin: 0 !important;
@@ -27,14 +29,26 @@ tbody tr {
 
 .name-column {
   width: 25%;
+
+  @include media("<=375px") {
+    width: 50%;
+  }
 }
 
 .email-column {
   width: 25%;
+
+  @include media("<=750px") {
+    display: none !important;
+  }
 }
 
 .phone-column {
   width: 40%;
+
+  @include media("<=1250px") {
+    display: none !important;
+  }
 }
 
 .menu-column {
@@ -114,4 +128,14 @@ mat-icon {
   height: 34px !important;
   width: 34px !important;
   line-height: 34px !important;
+}
+
+// RESPONSIVE
+contact-profile-picture {
+  min-width: 36px;
+}
+
+.empty-bin-button {
+  margin-top: 0;
+  margin-bottom: -5px;
 }

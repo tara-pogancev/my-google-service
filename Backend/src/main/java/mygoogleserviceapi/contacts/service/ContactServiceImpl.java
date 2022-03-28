@@ -20,7 +20,9 @@ import mygoogleserviceapi.shared.model.ApplicationUser;
 import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -77,6 +79,11 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
+    public Contact getContact(Long contactId) {
+        return contactRepository.get(contactId);
+    }
+
+    @Override
     public Contact getContactByUser(String jwt, Long contactId) {
         if (contactListService.contactBelongsToUser(jwt, contactId)) {
             return contactRepository.get(contactId);
@@ -125,6 +132,19 @@ public class ContactServiceImpl implements ContactService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    public List<Contact> getContactListByIdsByUser(String jwt, List<Long> ids) {
+        List<Contact> contacts = new ArrayList<>();
+
+        for (Long id : ids) {
+            if (contactListService.contactBelongsToUser(jwt, id)) {
+                contacts.add(getContact(id));
+            }
+        }
+
+        return contacts;
     }
 
     private void deleteAllContactEmails(Contact contact) {

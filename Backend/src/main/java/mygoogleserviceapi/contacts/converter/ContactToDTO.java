@@ -20,7 +20,9 @@ public class ContactToDTO implements Converter<Contact, ContactDTO> {
     public ContactDTO convert(Contact source) {
         ContactDTO dto = new ContactDTO();
         dto.setId(source.getId());
-        dto.setContactOwnerId(source.getContactList().getOwner().getId());
+        if (source.getContactList() != null) {
+            dto.setContactOwnerId(source.getContactList().getOwner().getId());
+        }
         dto.setFirstName(source.getFirstName());
         dto.setLastName(source.getLastName());
         dto.setFullName(source.getFullName());
@@ -63,6 +65,5 @@ public class ContactToDTO implements Converter<Contact, ContactDTO> {
         Collections.sort(list);
         return list;
     }
-
 
 }

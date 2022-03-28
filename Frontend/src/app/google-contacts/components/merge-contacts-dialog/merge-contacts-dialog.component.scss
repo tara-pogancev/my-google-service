@@ -1,0 +1,9 @@
+@import "../../../../breakpoints.scss";
+
+.dialog-container {
+  min-width: 450px;
+
+  @include media("<=687px") {
+    min-width: 200px;
+  }
+}

@@ -1,11 +1,12 @@
-import { AbsoluteModuleStrategy } from '@angular/compiler-cli/src/ngtsc/imports';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ProfileRefreshService } from 'src/app/shared/components/edit-profile-page/profile-refresh.service';
 import { User } from 'src/app/shared/model/user-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user-service';
 import { SearchContactsService } from './search-contacts.service';
+import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 
 @Component({
   selector: 'contacts-header',
@@ -23,10 +24,11 @@ export class ContactsHeaderComponent implements OnInit {
     private authService: AuthService,
     private searchContactsService: SearchContactsService,
     public router: Router,
-    private profileRefreshService: ProfileRefreshService
+    private profileRefreshService: ProfileRefreshService,
+    private dialog: MatDialog
   ) {
-    this.searchContactsService.doResetSearchValue$.subscribe(() => {
-      this.searchValue = '';
+    this.searchContactsService.doResetSearchValue$.subscribe((text) => {
+      this.searchValue = text;
     });
 
     this.profileRefreshService.doRefreshName$.subscribe(() => {
@@ -63,7 +65,16 @@ export class ContactsHeaderComponent implements OnInit {
     this.searchContactsService.announceSearch(this.searchValue.trim());
   }
 
+  resetSearch() {
+    this.searchValue = '';
+    this.searchContactsService.announceSearch(this.searchValue.trim());
+  }
+
   toggleSidebar() {
     this.doToggleSidebar.emit(null);
+  }
+
+  openSearchDialog() {
+    const dialogRef = this.dialog.open(SearchDialogComponent);
   }
 }

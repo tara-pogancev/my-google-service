@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Contact } from '../../model/contact';
-import { ContactService } from '../../services/contact.service';
 import { SearchContactsService } from '../contacts-header/search-contacts.service';
 
 @Component({
@@ -11,7 +8,7 @@ import { SearchContactsService } from '../contacts-header/search-contacts.servic
 })
 export class ContactPersonPageComponent implements OnInit {
   constructor(private searchContactsService: SearchContactsService) {
-    this.searchContactsService.announceSearchReset();
+    this.searchContactsService.announceSearchReset("");
   }
 
   ngOnInit(): void {}

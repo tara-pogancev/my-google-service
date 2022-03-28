@@ -1,4 +1,3 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,7 +29,7 @@ export class EditPersonComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router
   ) {
-    this.searchContactsService.announceSearchReset();
+    this.searchContactsService.announceSearchReset("");
   }
 
   ngOnInit(): void {

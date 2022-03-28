@@ -23,6 +23,8 @@ public interface ContactListService {
 
     Boolean contactBelongsToUser(String jwt, Long contactId);
 
+    Boolean contactListBelongsToUser(String jwt, List<Long> contactIds);
+
     Boolean deleteContactList(String jwt, List<Long> idList);
 
     String saveContactPicture(MultipartFile file, Long contactId, String jwt);

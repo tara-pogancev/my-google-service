@@ -4,6 +4,7 @@
 @import "bulma/css/bulma.css";
 @import "animate.css";
 @import "~font-awesome/css/font-awesome.css";
+@import "./breakpoints.scss";
 
 html,
 body {
@@ -43,6 +44,15 @@ $custom-typography: mat.define-typography-config(
   font-size: 22px;
 }
 
+.google-bold {
+  font-family: "Quicksand";
+  font-weight: 600;
+}
+
+.size-up-font {
+  font-size: 16px;
+}
+
 /* Layout */
 .centered-content {
   position: absolute;
@@ -58,6 +68,10 @@ $custom-typography: mat.define-typography-config(
 
 .stretch-height {
   height: 100%;
+}
+
+.stretch-min-height {
+  min-height: 100%;
 }
 
 /* Max width */

@@ -32,7 +32,7 @@ export class TrashPageComponent implements OnInit {
     searchContactsService.doSearch$.subscribe((text) => {
       this.searchContacts(text);
     });
-    this.searchContactsService.announceSearchReset();
+    this.searchContactsService.announceSearchReset('');
   }
 
   ngOnInit(): void {
@@ -122,7 +122,6 @@ export class TrashPageComponent implements OnInit {
   }
 
   recoverSelected() {
-    //TODO recover
     this.binService
       .recoverBinContactList(this.selectedContacts)
       .subscribe((data) => {
@@ -135,14 +134,13 @@ export class TrashPageComponent implements OnInit {
   }
 
   deleteAllForever() {
-    //TODO delete
     if (
       confirm(
         'Are you sure you want to delete all contacts in bin forever?\nThis action cannot be undone.'
       )
     ) {
       this.binService.deleteAllContactsInBin().subscribe((data) => {
-        this.refreshContacts();        
+        this.refreshContacts();
         this.selectNone();
         this.snackbar.open('Contacts deleted', 'Close', {
           duration: 3000,

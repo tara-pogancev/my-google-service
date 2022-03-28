@@ -122,8 +122,11 @@
         </div>
       </div>
 
-      <div *ngIf="registrationSuccess">
-        <div @fade2>
+      <div *ngIf="registrationSuccess" class="stretch-height">
+        <div
+          @fade2
+          class="stretch-height is-flex is-flex-direction-column is-justify-content-space-around"
+        >
           <div
             class="is-flex is-flex-direction-column is-align-items-flex-start"
           >
@@ -151,7 +154,7 @@
     </div>
 
     <div
-      class="column is-flex is-flex-direction-column is-align-items-center is-justify-content-space-around pl-5 ml-5"
+      class="column is-flex is-flex-direction-column is-align-items-center is-justify-content-space-around pl-5 ml-5 image-column"
     >
       <div
         class="is-flex is-flex-direction-column is-align-items-center align-text-center"

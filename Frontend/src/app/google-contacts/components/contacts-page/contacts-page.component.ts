@@ -1,41 +1,57 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { ContactsSidebarComponent } from '../contacts-sidebar/contacts-sidebar.component';
+import {
+  AfterViewInit,
+  Component,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
   selector: 'contacts-page',
   templateUrl: './contacts-page.component.html',
   styleUrls: ['./contacts-page.component.scss'],
 })
-export class ContactsPageComponent implements OnInit {
-  myControl = new FormControl();
-  options: string[] = ['One', 'Two', 'Three'];
-  filteredOptions: Observable<string[]> | undefined;
-  events: string[] = [];
-  opened: boolean = true;
+export class ContactsPageComponent implements OnInit, AfterViewInit {
+  innerWidth: any;
+  @ViewChild(MatDrawer) sidenav!: MatDrawer;
 
   constructor() {}
-
-  ngOnInit() {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map((value) => this._filter(value))
-    );
+  ngAfterViewInit(): void {
+    this.setupSidenav();
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter((option) =>
-      option.toLowerCase().includes(filterValue)
-    );
+  ngOnInit() {
+    this.innerWidth = window.innerWidth;
   }
 
   search(searchString: string) {
     alert(searchString);
   }
 
-  toggleSidebar() {}
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    var oldWidth = this.innerWidth;
+    this.innerWidth = window.innerWidth;
+
+    if (oldWidth > 768 && this.innerWidth <= 768) {
+      this.setupSidenav();
+    } else if (oldWidth < 768 && this.innerWidth >= 768) {
+      this.setupSidenav();
+    }
+  }
+
+  setupSidenav() {
+    if (this.innerWidth > 768) {
+      this.sidenav.mode = 'side';
+      this.sidenav.opened = true;
+    } else {
+      this.sidenav.mode = 'over';
+      this.sidenav.opened = false;
+    }
+  }
+
+  toggleSidenav() {
+    this.sidenav.toggle();
+  }
 }

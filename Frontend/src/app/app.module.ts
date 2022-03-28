@@ -42,6 +42,9 @@ import { UploadContactPictureDialogComponent } from './google-contacts/component
 import { DeleteAccountDialogComponent } from './shared/components/edit-profile-page/delete-account-dialog/delete-account-dialog.component';
 import { ViewPersonComponent } from './google-contacts/components/contact-person-page/view-person/view-person.component';
 import { EditPersonComponent } from './google-contacts/components/contact-person-page/edit-person/edit-person.component';
+import { MergeCardComponent } from './google-contacts/components/suggestions-page/merge-card/merge-card.component';
+import { BodyComponent } from './google-contacts/components/contacts-page/body/body.component';
+import { SearchDialogComponent } from './google-contacts/components/contacts-header/search-dialog/search-dialog.component';
 
 class MyErrorHandler implements ErrorHandler {
   handleError(error: any): void {
@@ -84,6 +87,9 @@ class MyErrorHandler implements ErrorHandler {
     DeleteAccountDialogComponent,
     ViewPersonComponent,
     EditPersonComponent,
+    MergeCardComponent,
+    BodyComponent,
+    SearchDialogComponent,
   ],
   imports: [
     BrowserModule,

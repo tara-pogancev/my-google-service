@@ -6,9 +6,6 @@ import { ViewPersonComponent } from './google-contacts/components/contact-person
 import { ContactsPageComponent } from './google-contacts/components/contacts-page/contacts-page.component';
 import { ContactsTableComponent } from './google-contacts/components/contacts-table/contacts-table.component';
 import { CreateNewPageComponent } from './google-contacts/components/create-new-page/create-new-page.component';
-import { ExportPageComponent } from './google-contacts/components/export-page/export-page.component';
-import { ExportSelectedPageComponent } from './google-contacts/components/export-selected-page/export-selected-page.component';
-import { ImportPageComponent } from './google-contacts/components/import-page/import-page.component';
 import { SuggestionsPageComponent } from './google-contacts/components/suggestions-page/suggestions-page.component';
 import { TrashPageComponent } from './google-contacts/components/trash-page/trash-page.component';
 import { PhotosPageComponent } from './google-photos/photos-page/photos-page.component';
@@ -55,21 +52,6 @@ const routes: Routes = [
       {
         path: 'trash',
         component: TrashPageComponent,
-      },
-      {
-        //TODO remove later
-        path: 'import',
-        component: ImportPageComponent,
-      },
-      {
-        //TODO remove later
-        path: 'export-selected',
-        component: ExportSelectedPageComponent,
-      },
-      {
-        //TODO remove later
-        path: 'export',
-        component: ExportPageComponent,
       },
       {
         path: 'person',

@@ -35,7 +35,7 @@
         *ngIf="searchValue"
         matSuffix
         mat-icon-button
-        (click)="searchValue = ''"
+        (click)="resetSearch()"
         class="mx-3"
       >
         <mat-icon>close</mat-icon>
@@ -71,7 +71,9 @@
     </button>
     <mat-menu #selectMenu="matMenu" xPosition="before" class="p-3 mt-2">
       <div class="columns">
-        <div class="column">
+        <div
+          class="column is-flex is-flex-direction-column is-align-items-center"
+        >
           <button mat-button class="p-2" (click)="redirectEditProfile()">
             <div class="is-flex is-flex-direction-column is-align-items-center">
               <profile-picture
@@ -83,7 +85,9 @@
             </div>
           </button>
         </div>
-        <div class="column">
+        <div
+          class="column is-flex is-flex-direction-column is-align-items-center"
+        >
           <button mat-button class="p-2" (click)="redirectContacts()">
             <div class="is-flex is-flex-direction-column is-align-items-center">
               <img src="../../../assets/Google_Contacts.png" width="36px" />
@@ -91,7 +95,9 @@
             </div>
           </button>
         </div>
-        <div class="column">
+        <div
+          class="column is-flex is-flex-direction-column is-align-items-center"
+        >
           <button mat-button class="p-2" (click)="redirectPhotos()">
             <div class="is-flex is-flex-direction-column is-align-items-center">
               <img src="../../../assets/Google_Photos.png" width="36px" />
@@ -120,5 +126,15 @@
         <a href="https://github.com/tara-pogancev/my-google-service">GitHub</a>.
       </div>
     </mat-menu>
+    <button
+      mat-icon-button
+      class="example-icon search-icon"
+      (click)="openSearchDialog()"
+      [disabled]="
+        !(router.url == '/contacts' || router.url == '/contacts/trash')
+      "
+    >
+      <mat-icon>search</mat-icon>
+    </button>
   </div>
 </mat-toolbar>

@@ -1,0 +1,39 @@
+@import "../../../../../breakpoints.scss";
+
+.merge-card-container {
+  margin: 10px 20px;
+  padding: 0px;
+}
+
+.contacts-container {
+  padding: 24px;
+  border-bottom: 0.8px solid lightgray;
+}
+
+.button-container {
+  padding: 24px;
+}
+
+.contact-preview {
+  width: 50%;
+  margin: 5px 0px;
+  padding: 5px;
+
+  @include media("<=tablet") {
+    width: 100%;
+  }
+}
+
+.contact-preview p {
+  margin-bottom: 0px;
+  color: gray;
+}
+
+.contact-preview .google-bold {
+  margin-bottom: 4px;
+  color: black;
+}
+
+contact-profile-picture {
+  min-width: 40px !important;
+}

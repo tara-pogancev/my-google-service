@@ -13,7 +13,7 @@
       <a href="https://github.com/tara-pogancev/my-google-service">GitHub</a>.
     </div>
   </mat-menu>
-  My Google Service
+  <p class="header-title">My Google Service</p>
   <div
     class="is-flex is-flex-direction-row-reverse is-align-content-flex-end stretch-width"
   >
@@ -43,7 +43,9 @@
     </button>
     <mat-menu #selectMenu="matMenu" xPosition="before" class="p-3 mt-2">
       <div class="columns">
-        <div class="column">
+        <div
+          class="column is-flex is-flex-direction-column is-align-items-center"
+        >
           <button mat-button class="p-2" (click)="redirectEditProfile()">
             <div class="is-flex is-flex-direction-column is-align-items-center">
               <profile-picture
@@ -55,7 +57,9 @@
             </div>
           </button>
         </div>
-        <div class="column">
+        <div
+          class="column is-flex is-flex-direction-column is-align-items-center"
+        >
           <button mat-button class="p-2" (click)="redirectContacts()">
             <div class="is-flex is-flex-direction-column is-align-items-center">
               <img src="../../../assets/Google_Contacts.png" width="36px" />
@@ -63,7 +67,9 @@
             </div>
           </button>
         </div>
-        <div class="column">
+        <div
+          class="column is-flex is-flex-direction-column is-align-items-center"
+        >
           <button mat-button class="p-2" (click)="redirectPhotos()">
             <div class="is-flex is-flex-direction-column is-align-items-center">
               <img src="../../../assets/Google_Photos.png" width="36px" />

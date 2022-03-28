@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
-import { textChangeRangeIsUnchanged } from 'typescript';
 import { Contact } from '../../model/contact';
 import { ContactEmail } from '../../model/contact-email';
 import { ContactPhoneNumber } from '../../model/contact-phone-number';
@@ -27,7 +25,7 @@ export class CreateNewPageComponent implements OnInit {
     private contactService: ContactService,
     private contactPictureService: ContactPictureService
   ) {
-    this.searchContactsService.announceSearchReset();
+    this.searchContactsService.announceSearchReset('');
   }
 
   ngOnInit(): void {

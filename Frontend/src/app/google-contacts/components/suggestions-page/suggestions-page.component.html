@@ -1,8 +1,74 @@
 <div
   class="is-flex is-flex-direction-column is-align-items-center stretch-height"
+  *ngIf="initEmpty"
 >
   <div class="auto-margin">
     <img src="./assets/No_Suggestions.png" width="330px" />
     <h1 class="mt-5 pt-5">Good work. No new suggestions.</h1>
+  </div>
+</div>
+
+<div class="columns stretch-min-height" *ngIf="!initEmpty">
+  <div class="suggestions-sidebar column is-1">
+    <div class="is-flex is-align-items-center p-2 mt-5 mr-3">
+      <img
+        src="./assets/Google_red_book.png"
+        width="60px"
+        height="60px"
+        class="mr-4"
+      />
+      <div>
+        <p class="google-bold">Easy ways to fix up your contacts</p>
+        <p>Get help merging duplicates, adding useful details and more</p>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div
+      class="is-flex is-align-items-center p-2 pr-3 light-blue"
+      [ngClass]="{ 'light-blue': suggestions.length != 0 }"
+    >
+      <mat-icon class="mr-4 icon-left">library_books</mat-icon>
+      <div>
+        <p class="google-bold">Merge duplicates</p>
+        <p *ngIf="suggestions.length == 0">No one with duplicate listings</p>
+        <p *ngIf="suggestions.length > 1 && suggestions.length < 2">
+          1 person with duplicate listings
+        </p>
+        <p *ngIf="suggestions.length > 1">
+          {{ suggestions.length }} persons with duplicate listings
+        </p>
+      </div>
+      <mat-icon class="mr-4 icon-right" *ngIf="suggestions.length == 0"
+        >check</mat-icon
+      >
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+  <div
+    class="column is-flex is-flex-direction-row is-justify-content-center stretch-width content-panel"
+  >
+    <div
+      class="card-container is-flex is-flex-direction-column is-center-items-center"
+    >
+      <div class="is-flex is-justify-content-space-between">
+        <p class="google-bold">Merge duplicates ({{ suggestions.length }})</p>
+        <button
+          mat-flat-button
+          color="primary"
+          [disabled]="suggestions.length == 0"
+          (click)="mergeAll()"
+        >
+          Merge all
+        </button>
+      </div>
+      <mat-divider></mat-divider>
+      <p *ngIf="suggestions.length == 0">No more contacts to merge.</p>
+      <merge-card
+        @fade1
+        [contacts]="suggestion.contacts"
+        *ngFor="let suggestion of suggestions"
+        (doRemoveSuggestion)="removeSuggestion($event)"
+      ></merge-card>
+    </div>
   </div>
 </div>

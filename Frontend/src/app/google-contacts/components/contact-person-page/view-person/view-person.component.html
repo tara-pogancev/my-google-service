@@ -18,14 +18,14 @@
         ></contact-profile-picture>
       </div>
       <div
-        class="is-flex is-flex-direction-column is-justify-content-space-around ml-5 pl-4"
+        class="is-flex is-flex-direction-column is-justify-content-space-around"
       >
         <div
           class="is-flex is-flex-direction-row is-align-items-center contact-name"
         >
           <mat-icon
             class="mr-2"
-            matTooltip="Verified My Google Service user."
+            matTooltip="Verified My Google Service user"
             *ngIf="contact.appUserEmail != null"
             >check_circle</mat-icon
           >
@@ -47,7 +47,13 @@
         <button mat-icon-button (click)="deleteContact()">
           <mat-icon matTooltip="Delete">delete</mat-icon>
         </button>
-        <button mat-flat-button color="primary" type="submit" class="ml-5" (click)="redirectEditProfile()">
+        <button
+          mat-flat-button
+          color="primary"
+          type="submit"
+          class="ml-5"
+          (click)="redirectEditProfile()"
+        >
           Edit
         </button>
       </span>

@@ -1,0 +1,15 @@
+@import "../../../../breakpoints.scss";
+
+.dialog-container {
+  min-width: 500px;
+
+  @include media("<=687px") {
+    min-width: 200px;
+  }
+}
+
+.file-label-text {
+  @include media("<=687px") {
+    display: none !important;
+  }
+}

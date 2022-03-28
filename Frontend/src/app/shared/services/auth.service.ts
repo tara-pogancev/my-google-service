@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { server } from 'src/app/app-global';
 import { ActiveUser } from '../model/active-user';
 import { AuthenticationRequest } from '../model/authentication-request';
-import { UserService } from './user-service';
 
 @Injectable({
   providedIn: 'root',

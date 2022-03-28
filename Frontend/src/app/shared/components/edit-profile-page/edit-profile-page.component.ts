@@ -1,5 +1,4 @@
-import { isDtsPath } from '@angular/compiler-cli/src/ngtsc/util/src/typescript';
-import { Component, Inject, OnInit, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   MatDialog,
@@ -42,7 +41,7 @@ export class EditProfilePageComponent implements OnInit {
   constructor(
     private userService: UserService,
     private authService: AuthService,
-    private _snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,
     private profilePictureService: ProfilePictureService,
     private dialog: MatDialog,
     private profileRefreshService: ProfileRefreshService
@@ -125,7 +124,7 @@ export class EditProfilePageComponent implements OnInit {
           this.profileRefreshService.announceRefreshImage();
           this.checkForProfilePicture();
 
-          this._snackBar.open('Your profile picture has been set.', 'Close', {
+          this.snackBar.open('Your profile picture has been set.', 'Close', {
             duration: 3000,
           });
         },
@@ -145,7 +144,7 @@ export class EditProfilePageComponent implements OnInit {
         this.profileRefreshService.announceRefreshImage();
         this.checkForProfilePicture();
 
-        this._snackBar.open('Your profile picture has been removed.', 'Close', {
+        this.snackBar.open('Your profile picture has been removed.', 'Close', {
           duration: 3000,
         });
       });
@@ -162,7 +161,7 @@ export class EditProfilePageComponent implements OnInit {
         this.user.lastName = dto.lastName;
         this.profileRefreshService.announceRefreshName();
 
-        this._snackBar.open('Your name has been changed.', 'Close', {
+        this.snackBar.open('Your name has been changed.', 'Close', {
           duration: 3000,
         });
       });
@@ -213,7 +212,7 @@ export class EditProfilePageComponent implements OnInit {
     this.userService
       .changeDefaultApplication(this.defaultApplication.value)
       .subscribe((data) => {
-        this._snackBar.open(
+        this.snackBar.open(
           'Your default application has been changed.',
           'Close',
           {
