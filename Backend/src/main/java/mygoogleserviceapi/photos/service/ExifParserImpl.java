@@ -13,6 +13,11 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.nio.file.attribute.FileTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -115,6 +120,26 @@ public class ExifParserImpl implements ExifParser {
                     Collections.singletonMap(StandardTag.ORIENTATION, rotationValueMapper.get(rot)));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public LocalDateTime getCreationDate(File image) {
+        try {
+            String date = exifTool.getImageMeta(image, Collections.singletonList(StandardTag.CREATE_DATE)).get(StandardTag.CREATE_DATE);
+            if (date != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy:MM:dd HH:mm:ss");
+                return LocalDateTime.parse(date, formatter);
+            } else {
+                BasicFileAttributes attr = Files.readAttributes(image.toPath(), BasicFileAttributes.class);
+                FileTime fileTime = attr.creationTime();
+                date = fileTime.toString();
+                date = date.split("\\.")[0];
+                return LocalDateTime.parse(date);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return LocalDateTime.now();
         }
     }
 

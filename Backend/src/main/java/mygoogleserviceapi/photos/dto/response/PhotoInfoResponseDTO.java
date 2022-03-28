@@ -3,6 +3,8 @@ package mygoogleserviceapi.photos.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @AllArgsConstructor
 public class PhotoInfoResponseDTO {
@@ -10,4 +12,5 @@ public class PhotoInfoResponseDTO {
     private final String filename;
     private final Double latitude;
     private final Double longtitude;
+    private final LocalDateTime creationDate;
 }

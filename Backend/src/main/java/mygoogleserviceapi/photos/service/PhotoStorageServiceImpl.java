@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 
 @Service
@@ -90,6 +91,12 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
         File photoFile = getPhotoFile(photo.getFileName(), photo.getApplicationUser().getEmail());
         exifParser.setLat(photoFile, metadata.getLatitude());
         exifParser.setLong(photoFile, metadata.getLongitude());
+    }
+
+    @Override
+    public LocalDateTime getCreationDate(String fileName, String email) {
+        File file2 = getPhotoFile(fileName, email);
+        return exifParser.getCreationDate(file2);
     }
 
     @Override

@@ -6,6 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.time.LocalDateTime;
 
 public interface PhotoStorageService {
 
@@ -22,4 +23,6 @@ public interface PhotoStorageService {
     void deleteAllPhotos(String email);
 
     void setMetadata(Photo photo, PhotoMetadata metadata);
+
+    LocalDateTime getCreationDate(String fileName, String email);
 }

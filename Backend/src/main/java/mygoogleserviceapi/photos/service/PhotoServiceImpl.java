@@ -20,7 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -52,19 +53,20 @@ public class PhotoServiceImpl implements PhotoService {
         }
         Photo photo = photoRepository.getPhotoForUser(email, file.getOriginalFilename());
         if (photo == null) {
-            photo = new Photo(file.getOriginalFilename(), user);
+            LocalDateTime creationDate = photoStorageService.getCreationDate(file.getOriginalFilename(), email);
+            photo = new Photo(file.getOriginalFilename(), user, creationDate);
         }
         return photoRepository.save(photo);
     }
 
     @Override
-    public Set<Photo> getPhotosForUser(Long userId, Integer page) {
+    public List<Photo> getPhotosForUser(Long userId, Integer page) {
         if (!authorizationService.isEmailInJWT(userId)) {
             throw new NotAllowedException();
         }
         int pageNum = (page == null || page <= 0) ? 0 : page;
         Pageable pageRequest = PageRequest.of(pageNum, PAGE_SIZE);
-        return photoRepository.getPhotosForUserId(userId, pageRequest).toSet();
+        return photoRepository.getPhotosForUserId(userId, pageRequest).toList();
     }
 
     @Override

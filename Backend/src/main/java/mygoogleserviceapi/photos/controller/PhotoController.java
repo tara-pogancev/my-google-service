@@ -28,7 +28,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -55,10 +54,10 @@ public class PhotoController {
     @GetMapping("/users/{id}")
     public ResponseEntity<List<PhotoInfoResponseDTO>> getPhotos(@PathVariable Long id, @RequestParam(required = false) Integer page) {
         List<PhotoInfoResponseDTO> responseDTOS = new ArrayList<>();
-        Set<Photo> photos = photoService.getPhotosForUser(id, page);
+        List<Photo> photos = photoService.getPhotosForUser(id, page);
         for (Photo photo : photos) {
             PhotoMetadata metadata = photoService.getMetadata(photo);
-            responseDTOS.add(new PhotoInfoResponseDTO(photo.getId(), photo.getFileName(), metadata.getLatitude(), metadata.getLongitude()));
+            responseDTOS.add(new PhotoInfoResponseDTO(photo.getId(), photo.getFileName(), metadata.getLatitude(), metadata.getLongitude(), photo.getCreationDate()));
             photoService.getMetadata(photo);
         }
         return ResponseEntity.ok(responseDTOS);

@@ -5,13 +5,13 @@ import mygoogleserviceapi.photos.model.PhotoMetadata;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Set;
+import java.util.List;
 
 public interface PhotoService {
 
     Photo savePhoto(MultipartFile file, String email);
 
-    Set<Photo> getPhotosForUser(Long userId, Integer page);
+    List<Photo> getPhotosForUser(Long userId, Integer page);
 
     public Resource getPhotoFile(String filename);
 
