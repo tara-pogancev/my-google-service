@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
-    @Query("SELECT p FROM Photo p WHERE p.applicationUser.id = :userId")
+    @Query("SELECT p FROM Photo p WHERE p.applicationUser.id = :userId ORDER BY p.creationDate DESC")
     Slice<Photo> getPhotosForUserId(@Param("userId") Long userId, Pageable pageable);
 
     @Query("SELECT p FROM Photo p WHERE p.applicationUser.email = :email and p.fileName = :fileName")

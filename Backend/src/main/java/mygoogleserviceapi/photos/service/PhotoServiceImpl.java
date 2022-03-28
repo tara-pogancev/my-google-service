@@ -2,7 +2,9 @@ package mygoogleserviceapi.photos.service;
 
 import lombok.AllArgsConstructor;
 import mygoogleserviceapi.photos.model.Photo;
+import mygoogleserviceapi.photos.model.PhotoMetadata;
 import mygoogleserviceapi.photos.repository.PhotoRepository;
+import mygoogleserviceapi.photos.service.interfaces.ExifParser;
 import mygoogleserviceapi.photos.service.interfaces.PhotoService;
 import mygoogleserviceapi.photos.service.interfaces.PhotoStorageService;
 import mygoogleserviceapi.photos.validator.PhotoValidator;
@@ -17,7 +19,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Set;
+import java.io.File;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -27,6 +31,7 @@ public class PhotoServiceImpl implements PhotoService {
     private final ApplicationUserService userService;
     private final PhotoValidator photoValidator;
     private final AuthorizationService authorizationService;
+    private final ExifParser exifParser;
 
     private final int PAGE_SIZE = 10;
 
@@ -48,19 +53,20 @@ public class PhotoServiceImpl implements PhotoService {
         }
         Photo photo = photoRepository.getPhotoForUser(email, file.getOriginalFilename());
         if (photo == null) {
-            photo = new Photo(file.getOriginalFilename(), user);
+            LocalDateTime creationDate = photoStorageService.getCreationDate(file.getOriginalFilename(), email);
+            photo = new Photo(file.getOriginalFilename(), user, creationDate);
         }
         return photoRepository.save(photo);
     }
 
     @Override
-    public Set<Photo> getPhotosForUser(Long userId, Integer page) {
+    public List<Photo> getPhotosForUser(Long userId, Integer page) {
         if (!authorizationService.isEmailInJWT(userId)) {
             throw new NotAllowedException();
         }
         int pageNum = (page == null || page <= 0) ? 0 : page;
         Pageable pageRequest = PageRequest.of(pageNum, PAGE_SIZE);
-        return photoRepository.getPhotosForUserId(userId, pageRequest).toSet();
+        return photoRepository.getPhotosForUserId(userId, pageRequest).toList();
     }
 
     @Override
@@ -81,6 +87,26 @@ public class PhotoServiceImpl implements PhotoService {
     @Override
     public void deleteAllPhotos(String email) {
         this.photoStorageService.deleteAllPhotos(email);
+    }
+
+    @Override
+    public PhotoMetadata getMetadata(Photo photo) {
+        return photoStorageService.getMetadata(photo);
+    }
+
+    @Override
+    public void rotatePhoto(String filename) {
+        String email = authorizationService.getUsername();
+        Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
+        File photoFile = photoStorageService.getPhotoFile(filename, email);
+        exifParser.rotate(photoFile);
+    }
+
+    @Override
+    public void updateMetadata(String filename, PhotoMetadata metadata) {
+        String email = authorizationService.getUsername();
+        Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
+        photoStorageService.setMetadata(photo, metadata);
     }
 
     private Photo getPhotoForUserOrThrowNotFound(String email, String fileName) {
