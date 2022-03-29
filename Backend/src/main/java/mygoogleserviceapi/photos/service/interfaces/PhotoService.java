@@ -24,4 +24,6 @@ public interface PhotoService {
     void rotatePhoto(String filename);
 
     void updateMetadata(String filename, PhotoMetadata metadata);
+
+    void favoritePhoto(String filename, boolean favorite);
 }
