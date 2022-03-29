@@ -2,6 +2,7 @@ package mygoogleserviceapi.photos.controller;
 
 import lombok.RequiredArgsConstructor;
 import mygoogleserviceapi.photos.dto.request.PhotoMetadataRequestDTO;
+import mygoogleserviceapi.photos.dto.request.UpdateFavoritePhotoRequestDTO;
 import mygoogleserviceapi.photos.dto.request.UserInfoRequestDTO;
 import mygoogleserviceapi.photos.dto.response.AddPhotoResponseDTO;
 import mygoogleserviceapi.photos.dto.response.PhotoInfoResponseDTO;
@@ -57,7 +58,12 @@ public class PhotoController {
         List<Photo> photos = photoService.getPhotosForUser(id, page);
         for (Photo photo : photos) {
             PhotoMetadata metadata = photoService.getMetadata(photo);
-            responseDTOS.add(new PhotoInfoResponseDTO(photo.getId(), photo.getFileName(), metadata.getLatitude(), metadata.getLongitude(), photo.getCreationDate()));
+            responseDTOS.add(new PhotoInfoResponseDTO(photo.getId(),
+                    photo.getFileName(),
+                    metadata.getLatitude(),
+                    metadata.getLongitude(),
+                    photo.getCreationDate(),
+                    photo.isFavorite()));
             photoService.getMetadata(photo);
         }
         return ResponseEntity.ok(responseDTOS);
@@ -75,6 +81,12 @@ public class PhotoController {
     @PutMapping("/{filename}/rotate")
     public ResponseEntity<HttpStatus> rotatePhoto(@PathVariable String filename) {
         photoService.rotatePhoto(filename);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{filename}/favorite")
+    public ResponseEntity<HttpStatus> favoritePhoto(@PathVariable String filename, @RequestBody @Valid UpdateFavoritePhotoRequestDTO updateFavoritePhotoRequestDTO) {
+        photoService.favoritePhoto(filename, updateFavoritePhotoRequestDTO.getFavorite());
         return ResponseEntity.noContent().build();
     }
 
