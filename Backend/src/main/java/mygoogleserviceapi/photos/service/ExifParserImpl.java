@@ -49,6 +49,8 @@ public class ExifParserImpl implements ExifParser {
         if (System.getProperty("exiftool.path") == null && System.getenv("EXIFTOOL_PATH") != null) {
             System.setProperty("exiftool.path", System.getenv("EXIFTOOL_PATH"));
         }
+        if (System.getProperty("exiftool.path") == null)
+            return;
         try {
             exifTool = new ExifToolBuilder().enableStayOpen().build();
         } catch (UnsupportedFeatureException ex) {
