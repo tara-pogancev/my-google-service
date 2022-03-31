@@ -109,6 +109,14 @@ public class PhotoServiceImpl implements PhotoService {
         photoStorageService.setMetadata(photo, metadata);
     }
 
+    @Override
+    public void favoritePhoto(String filename, boolean favorite) {
+        String email = authorizationService.getUsername();
+        Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
+        photo.setFavorite(favorite);
+        photoRepository.save(photo);
+    }
+
     private Photo getPhotoForUserOrThrowNotFound(String email, String fileName) {
         Photo photo = photoRepository.getPhotoForUser(email, fileName);
         if (photo == null)

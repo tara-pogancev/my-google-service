@@ -44,8 +44,9 @@ public class ExifParserImpl implements ExifParser {
 
     @PostConstruct
     public void init() {
+
         // ExifTool path must be defined as a system property (`exiftool.path`),
-        if (System.getProperty("exiftool.path") == null) {
+        if (System.getProperty("exiftool.path") == null && System.getenv("EXIFTOOL_PATH") != null) {
             System.setProperty("exiftool.path", System.getenv("EXIFTOOL_PATH"));
         }
         try {
