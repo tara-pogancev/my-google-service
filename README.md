@@ -42,6 +42,8 @@ Password: 123
 ## Screenshots
 
 ![myGoogleService](Screenshots/img1.jpg)
+![myGoogleService](Screenshots/img2.jpg)
+![myGoogleService](Screenshots/img3.jpg)
 
 
 
