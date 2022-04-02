@@ -14,14 +14,14 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 public class Photo extends DatabaseEntity {
-
     public Photo() {
     }
 
-    public Photo(String fileName, ApplicationUser applicationUser, LocalDateTime creationDate) {
+    public Photo(String fileName, ApplicationUser applicationUser, LocalDateTime creationDate, long size) {
         this.fileName = fileName;
         this.applicationUser = applicationUser;
         this.creationDate = creationDate;
+        this.size = size;
     }
 
     @Column(name = "fileName", nullable = false)
@@ -37,4 +37,7 @@ public class Photo extends DatabaseEntity {
     @Column(name = "favorite")
     @Setter
     private boolean favorite = false;
+
+    @Column(name = "size")
+    private long size;
 }

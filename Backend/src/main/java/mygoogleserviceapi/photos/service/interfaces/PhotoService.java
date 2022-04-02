@@ -26,4 +26,8 @@ public interface PhotoService {
     void updateMetadata(String filename, PhotoMetadata metadata);
 
     void favoritePhoto(String filename, boolean favorite);
+
+    Long getUsedStorage(Long userId);
+
+    Long getStorageCapacity();
 }
