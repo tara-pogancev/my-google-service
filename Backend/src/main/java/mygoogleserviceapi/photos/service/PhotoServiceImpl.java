@@ -9,7 +9,6 @@ import mygoogleserviceapi.photos.service.interfaces.PhotoService;
 import mygoogleserviceapi.photos.service.interfaces.PhotoStorageService;
 import mygoogleserviceapi.photos.validator.PhotoValidator;
 import mygoogleserviceapi.shared.exception.EntityNotFoundException;
-import mygoogleserviceapi.shared.exception.NotAllowedException;
 import mygoogleserviceapi.shared.model.ApplicationUser;
 import mygoogleserviceapi.shared.service.interfaces.ApplicationUserService;
 import mygoogleserviceapi.shared.service.interfaces.AuthorizationService;
@@ -33,19 +32,20 @@ public class PhotoServiceImpl implements PhotoService {
     private final AuthorizationService authorizationService;
     private final ExifParser exifParser;
 
-    private final int PAGE_SIZE = 10;
+    private static final int PAGE_SIZE = 10;
+    private static final long STORAGE_CAPACITY = 1_048_576L;
 
     @Override
     public Photo savePhoto(MultipartFile file, String email) {
-        if (!authorizationService.isEmailInJWT(email)) {
-            throw new NotAllowedException();
-        }
+        authorizationService.isUserAllowedToAccessResource(email);
         if (!photoValidator.isValid(file)) {
             return null;
         }
         ApplicationUser user = userService.findByEmail(email);
         if (user == null)
             throw new EntityNotFoundException(ApplicationUser.class.getSimpleName());
+        if (addingExceedsStorageCapacity(user.getId(), file))
+            return null;
         try {
             photoStorageService.savePhoto(file, email);
         } catch (RuntimeException e) {
@@ -54,16 +54,15 @@ public class PhotoServiceImpl implements PhotoService {
         Photo photo = photoRepository.getPhotoForUser(email, file.getOriginalFilename());
         if (photo == null) {
             LocalDateTime creationDate = photoStorageService.getCreationDate(file.getOriginalFilename(), email);
-            photo = new Photo(file.getOriginalFilename(), user, creationDate);
+            photo = new Photo(file.getOriginalFilename(), user, creationDate, file.getSize());
         }
         return photoRepository.save(photo);
     }
 
+
     @Override
     public List<Photo> getPhotosForUser(Long userId, Integer page) {
-        if (!authorizationService.isEmailInJWT(userId)) {
-            throw new NotAllowedException();
-        }
+        authorizationService.isUserAllowedToAccessResource(userId);
         int pageNum = (page == null || page <= 0) ? 0 : page;
         Pageable pageRequest = PageRequest.of(pageNum, PAGE_SIZE);
         return photoRepository.getPhotosForUserId(userId, pageRequest).toList();
@@ -116,6 +115,26 @@ public class PhotoServiceImpl implements PhotoService {
         photo.setFavorite(favorite);
         photoRepository.save(photo);
     }
+
+    @Override
+    public Long getUsedStorage(Long userId) {
+        authorizationService.isUserAllowedToAccessResource(userId);
+        Long res = photoRepository.getUsedStorageForUserID(userId);
+        if (res == null)
+            return 0L;
+        return res;
+    }
+
+    @Override
+    public Long getStorageCapacity() {
+        return STORAGE_CAPACITY;
+    }
+
+
+    private boolean addingExceedsStorageCapacity(Long userid, MultipartFile photo) {
+        return getUsedStorage(userid) + photo.getSize() > getStorageCapacity();
+    }
+
 
     private Photo getPhotoForUserOrThrowNotFound(String email, String fileName) {
         Photo photo = photoRepository.getPhotoForUser(email, fileName);

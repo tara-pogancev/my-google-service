@@ -7,5 +7,7 @@ public interface AuthorizationService {
 
     boolean isEmailInJWT(Long userId);
 
+    void isUserAllowedToAccessResource(String userEmail);
 
+    void isUserAllowedToAccessResource(Long userId);
 }

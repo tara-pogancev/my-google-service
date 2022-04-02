@@ -14,4 +14,5 @@ public class PhotoInfoResponseDTO {
     private final Double longtitude;
     private final LocalDateTime creationDate;
     private final boolean favorite;
+    private final long size;
 }

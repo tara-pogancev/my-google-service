@@ -15,4 +15,8 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
     @Query("SELECT p FROM Photo p WHERE p.applicationUser.email = :email and p.fileName = :fileName")
     Photo getPhotoForUser(@Param("email") String email,
                           @Param("fileName") String fileName);
+
+    @Query("SELECT SUM(p.size) FROM Photo p WHERE p.applicationUser.id = :userId")
+    Long getUsedStorageForUserID(@Param("userId") Long userId);
+
 }

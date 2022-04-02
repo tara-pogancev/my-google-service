@@ -6,6 +6,7 @@ import mygoogleserviceapi.photos.dto.request.UpdateFavoritePhotoRequestDTO;
 import mygoogleserviceapi.photos.dto.request.UserInfoRequestDTO;
 import mygoogleserviceapi.photos.dto.response.AddPhotoResponseDTO;
 import mygoogleserviceapi.photos.dto.response.PhotoInfoResponseDTO;
+import mygoogleserviceapi.photos.dto.response.PhotoStorageInfoResponseDTO;
 import mygoogleserviceapi.photos.model.Photo;
 import mygoogleserviceapi.photos.model.PhotoMetadata;
 import mygoogleserviceapi.photos.service.interfaces.PhotoService;
@@ -63,10 +64,19 @@ public class PhotoController {
                     metadata.getLatitude(),
                     metadata.getLongitude(),
                     photo.getCreationDate(),
-                    photo.isFavorite()));
+                    photo.isFavorite(),
+                    photo.getSize()));
             photoService.getMetadata(photo);
         }
         return ResponseEntity.ok(responseDTOS);
+    }
+
+    @GetMapping("/users/{id}/storage")
+    public ResponseEntity<PhotoStorageInfoResponseDTO> getStorage(@PathVariable Long id) {
+        Long usedStorage = photoService.getUsedStorage(id);
+        Long storageCapacity = photoService.getStorageCapacity();
+        PhotoStorageInfoResponseDTO responseDTO = new PhotoStorageInfoResponseDTO(storageCapacity, usedStorage);
+        return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping("/{filename}")
