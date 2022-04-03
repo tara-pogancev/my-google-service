@@ -18,8 +18,10 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Optional;
 
 @Service
 public class ExifParserImpl implements ExifParser {
@@ -44,18 +46,39 @@ public class ExifParserImpl implements ExifParser {
 
     @PostConstruct
     public void init() {
+        Optional<String> pathOptional = getExifToolPath();
+        if (!pathOptional.isPresent()) {
+            return;
+        }
+        String path = pathOptional.get();
         // ExifTool path must be defined as a system property (`exiftool.path`),
+        /*
         if (System.getProperty("exiftool.path") == null && System.getenv("exiftool") != null) {
             System.setProperty("exiftool.path", System.getenv("exiftool"));
         }
         if (System.getProperty("exiftool.path") == null)
             return;
+         */
         try {
-            exifTool = new ExifToolBuilder().enableStayOpen().build();
+            exifTool = new ExifToolBuilder().withPath(path).enableStayOpen().build();
         } catch (UnsupportedFeatureException ex) {
             // Fallback to simple exiftool instance.
-            exifTool = new ExifToolBuilder().build();
+            exifTool = new ExifToolBuilder().withPath(path).build();
         }
+    }
+
+    private Optional<String> getExifToolPath() {
+        String[] paths = System.getenv("PATH").split(File.pathSeparator);
+        for (String path : paths) {
+            File dir = new File(path);
+            if (!dir.isDirectory())
+                continue;
+            Optional<String> fullPath = Arrays.stream(dir.list((dir1, name) -> name.startsWith("exiftool"))).findFirst();
+            if (fullPath.isPresent()) {
+                return fullPath;
+            }
+        }
+        return Optional.empty();
     }
 
     @Override
