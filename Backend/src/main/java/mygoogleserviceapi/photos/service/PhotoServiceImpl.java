@@ -19,8 +19,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -114,6 +117,19 @@ public class PhotoServiceImpl implements PhotoService {
         Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
         photo.setFavorite(favorite);
         photoRepository.save(photo);
+    }
+
+    @Override
+    public List<File> getPhotoFilesForExport(Long userId, List<Long> fileIds) {
+        Set<Photo> photos = photoRepository.getPhotosForExport(userId, fileIds);
+        return photos.stream().map(photo -> {
+            try {
+                return getPhotoFile(photo.getFileName()).getFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }).collect(Collectors.toList());
     }
 
     @Override

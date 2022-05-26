@@ -5,6 +5,7 @@ import mygoogleserviceapi.photos.model.PhotoMetadata;
 import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 public interface PhotoService {
@@ -26,6 +27,8 @@ public interface PhotoService {
     void updateMetadata(String filename, PhotoMetadata metadata);
 
     void favoritePhoto(String filename, boolean favorite);
+
+    List<File> getPhotoFilesForExport(Long userId, List<Long> fileIds);
 
     Long getUsedStorage(Long userId);
 
