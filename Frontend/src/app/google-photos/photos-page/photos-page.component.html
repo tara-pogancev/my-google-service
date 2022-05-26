@@ -1,1 +1,12 @@
-Exists
+<photos-header></photos-header>
+
+<mat-drawer-container class="body-container">
+  <mat-drawer #drawer mode="side" opened="true">
+    <photos-sidebar></photos-sidebar>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div class="stretch-height">
+      <body></body>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
