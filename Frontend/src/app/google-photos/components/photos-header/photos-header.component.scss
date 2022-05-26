@@ -1,0 +1,119 @@
+.logo {
+  display: flex;
+  align-items: center;
+  :hover {
+    cursor: pointer;
+  }
+}
+
+
+.google-title {
+  margin-left: 10px;
+  margin-bottom: 2px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.search ,.search-focus {
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: #f1f3f4;
+  border-width:1px;
+  border-style:solid;
+  border-color:transparent;
+  border-radius: 10px;
+  text-align: center;
+  padding: 0 0 0 10px;
+  width: 600px;
+}
+.search-focus {
+  background-color: white;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.19);
+  z-index: 10000;
+}
+
+.search-input {
+  border: 0px;
+  height: 46px;
+  margin: 0;
+  flex-grow: 1;
+
+  font-size: 16px;
+
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-weight: 500;
+
+  background-color: transparent;
+  resize: none;
+  outline: none;
+
+  //width: 100%;
+}
+
+.search-input::placeholder {
+  color: #B0B5BA;
+}
+
+.search:focus {
+  background-color: white;
+}
+
+.search-icon {
+
+  font-size: 26px;
+  color: #5F6368;
+  margin: 10px 10px 10px 10px;
+  :hover {
+    cursor: default;
+  }
+}
+.upload-button {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+}
+
+
+.upload-button-text {
+  font-family: "Google Sans",Roboto,Arial,sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  margin-left: 5px;
+  margin-top: 4px;
+  margin-right: 10px;
+}
+
+.reset-button {
+  margin-bottom: 5px;
+}
+
+.mat-toolbar {
+  background-color: #f8f8f800;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+hr {
+  color: lightgray;
+  width: 100%;
+}
+
+.menu-buttons {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+
+
+.profileMenu {
+  min-width: 200px !important;
+}
+
+.profile-picture-menu {
+  margin: 0;
+  height: 36px !important;
+}
+

@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap");
+
+.component-container {
+  margin-top: 30px;
+}
+
+.button-title {
+  font-family: "Quicksand";
+  font-weight: 600;
+  font-size: 15px;
+  margin: 0;
+}
+
+.menu-item {
+  font-size: 15px;
+}
+
+
+.mat-divider {
+  margin: 10px 0;
+}
+
+
+.mat-menu-item {
+  border-radius: 0 999px 999px 0;
+  color: #5f6368;
+}
+
+.storage-button {
+  min-height: 120px;
+}
+
+.progress-bar {
+  width: 100%;
+  min-height: 300px;
+}
+
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  min-height: 30px;
+}
+
+.mat-menu-item-toggle {
+  background-color: #e8f0fe;
+  color: #4282db !important;
+
+  &:hover {
+    background-color: #e8f0fe;
+    color: #4282db !important;
+  }
+}

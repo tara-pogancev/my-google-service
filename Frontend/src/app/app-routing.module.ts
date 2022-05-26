@@ -8,6 +8,7 @@ import { ContactsTableComponent } from './google-contacts/components/contacts-ta
 import { CreateNewPageComponent } from './google-contacts/components/create-new-page/create-new-page.component';
 import { SuggestionsPageComponent } from './google-contacts/components/suggestions-page/suggestions-page.component';
 import { TrashPageComponent } from './google-contacts/components/trash-page/trash-page.component';
+import { PhotosListComponent } from './google-photos/components/photos-list/photos-list.component';
 import { PhotosPageComponent } from './google-photos/photos-page/photos-page.component';
 import { ConnectionRefusedErrorComponent } from './shared/components/connection-refused-error/connection-refused-error.component';
 import { EditProfilePageComponent } from './shared/components/edit-profile-page/edit-profile-page.component';
@@ -74,6 +75,12 @@ const routes: Routes = [
     path: 'photos',
     component: PhotosPageComponent,
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        component: PhotosListComponent
+      }
+    ]
   },
 
   { path: '', component: ServiceSelectionComponent, canActivate: [AuthGuard] },

@@ -11,6 +11,7 @@ import mygoogleserviceapi.photos.model.Photo;
 import mygoogleserviceapi.photos.model.PhotoMetadata;
 import mygoogleserviceapi.photos.service.interfaces.PhotoService;
 import mygoogleserviceapi.shared.converter.DataConverter;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,8 +29,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @RestController
 @RequiredArgsConstructor
@@ -113,5 +121,46 @@ public class PhotoController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping(value = "/users/{id}/export")
+    public ResponseEntity<byte[]> exportZip() throws IOException {
 
+        //setting headers
+//        response.setContentType("application/zip");
+//        response.setStatus(HttpServletResponse.SC_OK);
+//        response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
+
+        //creating byteArray stream, make it bufforable and passing this buffor to ZipOutputStream
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
+        ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
+
+        //simple file list, just for tests
+        ArrayList<File> files = new ArrayList<>(2);
+        files.add(new File("README.md"));
+
+        //packing files
+        for (File file : files) {
+            //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
+            zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
+            FileInputStream fileInputStream = new FileInputStream(file);
+
+            IOUtils.copy(fileInputStream, zipOutputStream);
+
+            fileInputStream.close();
+            zipOutputStream.closeEntry();
+        }
+
+        if (zipOutputStream != null) {
+            zipOutputStream.finish();
+            zipOutputStream.flush();
+            IOUtils.closeQuietly(zipOutputStream);
+        }
+        IOUtils.closeQuietly(bufferedOutputStream);
+        IOUtils.closeQuietly(byteArrayOutputStream);
+        return ResponseEntity.ok().contentType(MediaType.parseMediaType("application/zip"))
+                .header("Content-Disposition", "attachment; filename=\"test.zip\"")
+                .body(byteArrayOutputStream.toByteArray());
+
+
+    }
 }
