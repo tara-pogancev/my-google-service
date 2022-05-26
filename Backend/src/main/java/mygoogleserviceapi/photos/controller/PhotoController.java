@@ -122,23 +122,13 @@ public class PhotoController {
     }
 
     @GetMapping(value = "/users/{id}/export")
-    public ResponseEntity<byte[]> exportZip() throws IOException {
-
-        //setting headers
-//        response.setContentType("application/zip");
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        response.addHeader("Content-Disposition", "attachment; filename=\"test.zip\"");
-
-        //creating byteArray stream, make it bufforable and passing this buffor to ZipOutputStream
+    public ResponseEntity<byte[]> exportZip(@PathVariable Long id, @RequestParam(required = false) List<Long> fileIds) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
         ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
 
-        //simple file list, just for tests
-        ArrayList<File> files = new ArrayList<>(2);
-        files.add(new File("README.md"));
+        List<File> files = photoService.getPhotoFilesForExport(id, fileIds);
 
-        //packing files
         for (File file : files) {
             //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
             zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
@@ -160,7 +150,5 @@ public class PhotoController {
         return ResponseEntity.ok().contentType(MediaType.parseMediaType("application/zip"))
                 .header("Content-Disposition", "attachment; filename=\"test.zip\"")
                 .body(byteArrayOutputStream.toByteArray());
-
-
     }
 }
