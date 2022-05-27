@@ -1,0 +1,11 @@
+
+<div class="group-container">
+<div class="date">
+  {{date | date:getDateFormat()}}
+</div>
+<div class="card-container">
+  <div *ngFor="let imgUrl of imgUrls" class="card-item">
+    <photos-card [imgUrl]="imgUrl"></photos-card>
+  </div>
+</div>
+</div>
