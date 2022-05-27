@@ -1,0 +1,30 @@
+.card-container {
+  position: relative;
+  max-height: 220px;
+  min-height: 220px;
+}
+
+.icon {
+  left: 6px;
+  top: 6px;
+  color: rgba($color: white, $alpha: 0.5);
+  z-index: 5000;
+  position: absolute;
+  cursor: pointer;
+}
+
+.image, .image-selected {
+  position:relative;
+  z-index:-1;
+  height: 220px;
+}
+
+.image-selected {
+  transform-origin: center;
+  animation: scale 200ms ease-in-out forwards;
+}
+@keyframes scale {
+  to {
+    transform: scale(0.8);
+  }
+}

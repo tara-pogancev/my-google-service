@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class PhotosListComponent implements OnInit {
 
   constructor() { }
+  imgUrls = ['https://picsum.photos/200/300', 'https://picsum.photos/200/500']
+  date = new Date()
 
   ngOnInit(): void {
   }

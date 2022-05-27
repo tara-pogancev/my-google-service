@@ -48,6 +48,8 @@ import { SearchDialogComponent } from './google-contacts/components/contacts-hea
 import { PhotosSidebarComponent } from './google-photos/components/photos-sidebar/photos-sidebar.component';
 import { PhotosHeaderComponent } from './google-photos/components/photos-header/photos-header.component';
 import { PhotosListComponent } from './google-photos/components/photos-list/photos-list.component';
+import { PhotosCardComponent } from './google-photos/components/photos-card/photos-card.component';
+import { PhotosCardGroupComponent } from './google-photos/components/photos-card-group/photos-card-group.component';
 
 class MyErrorHandler implements ErrorHandler {
   handleError(error: any): void {
@@ -96,6 +98,8 @@ class MyErrorHandler implements ErrorHandler {
     PhotosSidebarComponent,
     PhotosHeaderComponent,
     PhotosListComponent,
+    PhotosCardComponent,
+    PhotosCardGroupComponent,
   ],
   imports: [
     BrowserModule,

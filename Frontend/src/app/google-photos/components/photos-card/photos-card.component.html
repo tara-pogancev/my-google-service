@@ -1,0 +1,28 @@
+<div
+  class="card-container"
+  (mouseover)="mouseOver()"
+  (mouseout)="mouseOut()"
+  [ngStyle]="{
+    background:
+      hover && !selected
+        ? 'linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .04), rgba(0, 0, 0, .01), rgba(0, 0, 0, 0))'
+        : 'rgba(232, 240, 254, 1)'
+  }"
+>
+  <mat-icon
+    class="icon"
+    [ngStyle]="{
+      visibility: hover || selected ? 'visible' : 'hidden',
+      color: selected ? '#1A73E8' : 'white'
+    }"
+    (click)="iconClicked()"
+    (mouseover)="mouseOver()"
+    (mouseout)="mouseOut()"
+    >check_circle</mat-icon
+  >
+  <img [src]="imgUrl" [ngClass]="selected ? 'image-selected' : 'image'"
+  [ngStyle]="{
+    'z-index': selected ? '3000' : '1'
+  }"
+  />
+</div>
