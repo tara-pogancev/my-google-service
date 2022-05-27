@@ -5,6 +5,7 @@ import mygoogleserviceapi.photos.model.PhotoMetadata;
 import mygoogleserviceapi.photos.service.interfaces.ExifParser;
 import mygoogleserviceapi.photos.service.interfaces.PhotoStorageService;
 import mygoogleserviceapi.shared.config.FileStorageProperties;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -12,7 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,6 +29,7 @@ import java.util.Comparator;
 public class PhotoStorageServiceImpl implements PhotoStorageService {
     private final Path fileStorageLocation;
     private static final String PHOTOS_DIRECTORY = "photos";
+    private static final String THUMBNAIL_DIRECTORY = "thumbnail";
 
     @Autowired
     private final ExifParser exifParser;
@@ -64,6 +69,28 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
     }
 
     @Override
+    public void savePhotoThumbnail(MultipartFile file, String email) {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        try {
+            if (fileName.contains("..")) {
+                throw new RuntimeException("Filename contains invalid path sequence " + fileName);
+            }
+            Files.createDirectories(Paths.get(this.fileStorageLocation + File.separator + PHOTOS_DIRECTORY + File.separator + email + File.separator + THUMBNAIL_DIRECTORY));
+            Path targetLocation = this.fileStorageLocation.resolve(PHOTOS_DIRECTORY + File.separator + email + File.separator + THUMBNAIL_DIRECTORY + File.separator + fileName);
+
+
+            BufferedImage newImage = ImageIO.read(file.getInputStream());
+            BufferedImage resizedImg = Scalr.resize(newImage, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_HEIGHT, 420, 220, Scalr.OP_ANTIALIAS);
+            String format = file.getContentType().equals("image/png") ? "PNG" : "JPG";
+            ImageIO.write(resizedImg, format, targetLocation.toFile());
+
+        } catch (Exception ex) {
+            throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
+        }
+    }
+
+    @Override
     public Resource getPhoto(String fileName, String email) {
         try {
             Path filePath = getPhotoPath(fileName, email);
@@ -79,29 +106,53 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
     }
 
     @Override
-    public PhotoMetadata getMetadata(Photo photo) {
-        File photoFile = getPhotoFile(photo.getFileName(), photo.getApplicationUser().getEmail());
+    public Resource getPhotoThumbnail(String fileName, String email) {
+        try {
+            Path filePath = getThumbnailPath(fileName, email);
+            Resource resource = new UrlResource(filePath.toUri());
+            if (resource.exists()) {
+                return resource;
+            } else {
+                return null;
+            }
+        } catch (MalformedURLException ex) {
+            return null;
+        }
+    }
+
+    @Override
+    public PhotoMetadata getMetadata(Photo photo) throws IOException {
+        File photoFile = getPhoto(photo.getFileName(), photo.getApplicationUser().getEmail()).getFile();
         Double latitude = exifParser.getLat(photoFile);
         Double longitude = exifParser.getLong(photoFile);
         return new PhotoMetadata(latitude, longitude);
     }
 
     @Override
-    public void setMetadata(Photo photo, PhotoMetadata metadata) {
-        File photoFile = getPhotoFile(photo.getFileName(), photo.getApplicationUser().getEmail());
+    public void setMetadata(Photo photo, PhotoMetadata metadata) throws IOException {
+        File photoFile = getPhoto(photo.getFileName(), photo.getApplicationUser().getEmail()).getFile();
         exifParser.setLat(photoFile, metadata.getLatitude());
         exifParser.setLong(photoFile, metadata.getLongitude());
     }
 
     @Override
-    public LocalDateTime getCreationDate(String fileName, String email) {
-        File file2 = getPhotoFile(fileName, email);
+    public LocalDateTime getCreationDate(String fileName, String email) throws IOException {
+        File file2 = getPhoto(fileName, email).getFile();
         return exifParser.getCreationDate(file2);
     }
 
     @Override
     public void deletePhoto(String fileName, String email) {
         Path filePath = getPhotoPath(fileName, email);
+        try {
+            Files.delete(filePath);
+        } catch (Exception ignored) {
+        }
+    }
+
+    @Override
+    public void deleteThumbnail(String fileName, String email) {
+        Path filePath = getThumbnailPath(fileName, email);
         try {
             Files.delete(filePath);
         } catch (Exception ignored) {
@@ -121,23 +172,12 @@ public class PhotoStorageServiceImpl implements PhotoStorageService {
         }
     }
 
-    @Override
-    public File getPhotoFile(String fileName, String email) {
-        try {
-            Path filePath = getPhotoPath(fileName, email);
-            File file = filePath.toFile();
-            if (file.exists()) {
-                return file;
-            } else {
-                return null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     private Path getPhotoPath(String fileName, String email) {
         return this.fileStorageLocation.resolve(PHOTOS_DIRECTORY + File.separator + email + File.separator + fileName).normalize();
+    }
+
+    private Path getThumbnailPath(String fileName, String email) {
+        return this.fileStorageLocation.resolve(PHOTOS_DIRECTORY + File.separator + email + File.separator + THUMBNAIL_DIRECTORY + File.separator + fileName).normalize();
     }
 }

@@ -48,7 +48,7 @@ public class PhotoController {
 
     @PostMapping()
     public ResponseEntity<List<AddPhotoResponseDTO>> addPhoto(@RequestPart("files") MultipartFile[] files,
-                                                              @RequestPart("info") @Valid UserInfoRequestDTO userInfoRequestDTO) {
+                                                              @RequestPart("info") @Valid UserInfoRequestDTO userInfoRequestDTO) throws IOException {
         List<AddPhotoResponseDTO> photos = new ArrayList<>();
         for (MultipartFile file : files) {
             Photo photo = photoService.savePhoto(file, userInfoRequestDTO.getEmail());
@@ -62,7 +62,7 @@ public class PhotoController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<List<PhotoInfoResponseDTO>> getPhotos(@PathVariable Long id, @RequestParam(required = false) Integer page) {
+    public ResponseEntity<List<PhotoInfoResponseDTO>> getPhotos(@PathVariable Long id, @RequestParam(required = false) Integer page) throws IOException {
         List<PhotoInfoResponseDTO> responseDTOS = new ArrayList<>();
         List<Photo> photos = photoService.getPhotosForUser(id, page);
         for (Photo photo : photos) {
@@ -96,8 +96,17 @@ public class PhotoController {
                 .body(resource);
     }
 
+    @GetMapping("/{filename}/thumbnail")
+    public ResponseEntity<Resource> getPhotoThumbnail(@PathVariable String filename) {
+        Resource resource = photoService.getPhotoThumbnailFile(filename);
+        String contentType = "application/octet-stream";
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(resource);
+    }
+
     @PutMapping("/{filename}/rotate")
-    public ResponseEntity<HttpStatus> rotatePhoto(@PathVariable String filename) {
+    public ResponseEntity<HttpStatus> rotatePhoto(@PathVariable String filename) throws IOException {
         photoService.rotatePhoto(filename);
         return ResponseEntity.noContent().build();
     }
@@ -109,7 +118,7 @@ public class PhotoController {
     }
 
     @PutMapping("/{filename}/metadata")
-    public ResponseEntity<HttpStatus> updateMetadata(@PathVariable String filename, @RequestBody @Valid PhotoMetadataRequestDTO metadataRequestDTO) {
+    public ResponseEntity<HttpStatus> updateMetadata(@PathVariable String filename, @RequestBody @Valid PhotoMetadataRequestDTO metadataRequestDTO) throws IOException {
         PhotoMetadata metadata = converter.convert(metadataRequestDTO, PhotoMetadata.class);
         photoService.updateMetadata(filename, metadata);
         return ResponseEntity.noContent().build();
@@ -130,7 +139,6 @@ public class PhotoController {
         List<File> files = photoService.getPhotoFilesForExport(id, fileIds);
 
         for (File file : files) {
-            //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
             zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
             FileInputStream fileInputStream = new FileInputStream(file);
 
@@ -148,7 +156,7 @@ public class PhotoController {
         IOUtils.closeQuietly(bufferedOutputStream);
         IOUtils.closeQuietly(byteArrayOutputStream);
         return ResponseEntity.ok().contentType(MediaType.parseMediaType("application/zip"))
-                .header("Content-Disposition", "attachment; filename=\"test.zip\"")
+                .header("Content-Disposition", "attachment; filename=\"export.zip\"")
                 .body(byteArrayOutputStream.toByteArray());
     }
 }
