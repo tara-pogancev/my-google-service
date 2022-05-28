@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PhotosCardComponent implements OnInit {
 
-  @Input() imgUrl!: string
+  @Input() imgUrl!: any
   selected: boolean = false
   hover: boolean = false
   constructor() { }
@@ -24,6 +24,14 @@ export class PhotosCardComponent implements OnInit {
 
   iconClicked() {
     this.selected = !this.selected
+  }
+
+  getBackground() {
+    if (this.selected)
+      return 'rgba(232, 240, 254, 1)'
+    if (this.hover)
+      return  'linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .04), rgba(0, 0, 0, .01), rgba(0, 0, 0, 0))'
+    return ''
   }
 
 }
