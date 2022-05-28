@@ -66,15 +66,14 @@ public class PhotoController {
         List<PhotoInfoResponseDTO> responseDTOS = new ArrayList<>();
         List<Photo> photos = photoService.getPhotosForUser(id, page);
         for (Photo photo : photos) {
-            PhotoMetadata metadata = photoService.getMetadata(photo);
+//            PhotoMetadata metadata = photoService.getMetadata(photo);
             responseDTOS.add(new PhotoInfoResponseDTO(photo.getId(),
                     photo.getFileName(),
-                    metadata.getLatitude(),
-                    metadata.getLongitude(),
+                    photo.getLatitude(),
+                    photo.getLongitude(),
                     photo.getCreationDate(),
                     photo.isFavorite(),
                     photo.getSize()));
-            photoService.getMetadata(photo);
         }
         return ResponseEntity.ok(responseDTOS);
     }

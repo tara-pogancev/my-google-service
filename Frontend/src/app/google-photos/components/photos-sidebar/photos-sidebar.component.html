@@ -81,8 +81,8 @@
     <p class="button-title">Storage</p>
   </div>
     <div class="progress-bar">
-      <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-      <div style="position: absolute; padding: 0px; color: black;"> 100% </div>
+      <mat-progress-bar mode="determinate" [color]="progressColor" [value]="storageValue"></mat-progress-bar>
+      <div style="position: absolute; padding: 0px" class="progress-bar-text">{{(currentStorage / 1048576) | number: '1.0-1'}} MB of {{(maxStorage / 1048576) | number: '1.0-1'}} MB used </div>
     </div>
   </button>
 

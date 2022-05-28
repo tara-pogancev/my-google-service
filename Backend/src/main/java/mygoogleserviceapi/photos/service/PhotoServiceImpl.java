@@ -35,8 +35,8 @@ public class PhotoServiceImpl implements PhotoService {
     private final AuthorizationService authorizationService;
     private final ExifParser exifParser;
 
-    private static final int PAGE_SIZE = 10;
-    private static final long STORAGE_CAPACITY = 1_048_576L;
+    private static final int PAGE_SIZE = 20;
+    private static final long STORAGE_CAPACITY = 104_857_600L;
 
     @Override
     public Photo savePhoto(MultipartFile file, String email) throws IOException {
@@ -119,6 +119,9 @@ public class PhotoServiceImpl implements PhotoService {
     public void updateMetadata(String filename, PhotoMetadata metadata) throws IOException {
         String email = authorizationService.getUsername();
         Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
+        photo.setLatitude(metadata.getLatitude());
+        photo.setLongitude(metadata.getLongitude());
+        photoRepository.save(photo);
         photoStorageService.setMetadata(photo, metadata);
     }
 
