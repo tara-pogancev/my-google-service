@@ -19,7 +19,7 @@ public class SuggestionsController {
     private final SuggestionsService suggestionsService;
 
     @GetMapping
-    public ResponseEntity<?> mergeContacts(@RequestHeader(name = "Authorization") String jwt) {
+    public ResponseEntity<?> getSuggestions(@RequestHeader(name = "Authorization") String jwt) {
         List<Suggestion> suggestions = suggestionsService.getSuggestions(jwt);
         return ResponseEntity.ok(suggestionsService.convertListToDTO(suggestions));
     }

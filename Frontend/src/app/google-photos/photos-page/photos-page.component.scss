@@ -1,8 +1,27 @@
-.file-input {
-  width: 200px;
-  height: 50px;
-  border: 1px solid #ccc;
-  display: inline-block;
-  padding: 6px 12px;
-  cursor: pointer;
+@import "/src/breakpoints.scss";
+
+.mat-drawer {
+  width: 280px;
+  border: none;
+}
+
+.body-container {
+  height: calc(100vh - 64px);
+  background-color: white !important;
+}
+
+.mat-drawer-content {
+  padding: 15px;
+}
+
+.mobile-nav {
+  @include media(">1024px") {
+    display: none !important;
+  }
+}
+
+.computer-nav {
+  @include media("<=1024px") {
+    display: none !important;
+  }
 }

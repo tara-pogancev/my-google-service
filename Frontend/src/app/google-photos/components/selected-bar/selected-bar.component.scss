@@ -1,0 +1,21 @@
+.toolbar {
+  display: flex;
+  position: fixed;
+  top: 0;
+  z-index: 10000;
+}
+
+
+.button-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 20px;
+}
+
+.save-button, .delete-button, .favorite-button, .location-button {
+  color: #196DDC;
+  transform: scale(1.1);
+  margin: 5px;
+}
+

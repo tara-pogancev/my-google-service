@@ -19,8 +19,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -32,11 +35,11 @@ public class PhotoServiceImpl implements PhotoService {
     private final AuthorizationService authorizationService;
     private final ExifParser exifParser;
 
-    private static final int PAGE_SIZE = 10;
-    private static final long STORAGE_CAPACITY = 1_048_576L;
+    private static final int PAGE_SIZE = 200;
+    private static final long STORAGE_CAPACITY = 104_857_600L;
 
     @Override
-    public Photo savePhoto(MultipartFile file, String email) {
+    public Photo savePhoto(MultipartFile file, String email) throws IOException {
         authorizationService.isUserAllowedToAccessResource(email);
         if (!photoValidator.isValid(file)) {
             return null;
@@ -48,6 +51,7 @@ public class PhotoServiceImpl implements PhotoService {
             return null;
         try {
             photoStorageService.savePhoto(file, email);
+            photoStorageService.savePhotoThumbnail(file, email);
         } catch (RuntimeException e) {
             return null;
         }
@@ -56,6 +60,9 @@ public class PhotoServiceImpl implements PhotoService {
             LocalDateTime creationDate = photoStorageService.getCreationDate(file.getOriginalFilename(), email);
             photo = new Photo(file.getOriginalFilename(), user, creationDate, file.getSize());
         }
+        PhotoMetadata metadata = getMetadata(photo);
+        photo.setLatitude(metadata.getLatitude());
+        photo.setLongitude(metadata.getLongitude());
         return photoRepository.save(photo);
     }
 
@@ -76,10 +83,18 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
+    public Resource getPhotoThumbnailFile(String filename) {
+        String email = authorizationService.getUsername();
+        Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
+        return photoStorageService.getPhotoThumbnail(filename, email);
+    }
+
+    @Override
     public void deletePhoto(String filename) {
         String email = authorizationService.getUsername();
         Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
         photoStorageService.deletePhoto(filename, email);
+        photoStorageService.deleteThumbnail(filename, email);
         photoRepository.deleteById(photo.getId());
     }
 
@@ -89,22 +104,27 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public PhotoMetadata getMetadata(Photo photo) {
+    public PhotoMetadata getMetadata(Photo photo) throws IOException {
         return photoStorageService.getMetadata(photo);
     }
 
     @Override
-    public void rotatePhoto(String filename) {
+    public void rotatePhoto(String filename) throws IOException {
         String email = authorizationService.getUsername();
         Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
-        File photoFile = photoStorageService.getPhotoFile(filename, email);
+        File photoFile = photoStorageService.getPhoto(filename, email).getFile();
         exifParser.rotate(photoFile);
+        File photoThumbnailFile = photoStorageService.getPhotoThumbnail(filename, email).getFile();
+        exifParser.rotate(photoThumbnailFile);
     }
 
     @Override
-    public void updateMetadata(String filename, PhotoMetadata metadata) {
+    public void updateMetadata(String filename, PhotoMetadata metadata) throws IOException {
         String email = authorizationService.getUsername();
         Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
+        photo.setLatitude(metadata.getLatitude());
+        photo.setLongitude(metadata.getLongitude());
+        photoRepository.save(photo);
         photoStorageService.setMetadata(photo, metadata);
     }
 
@@ -114,6 +134,19 @@ public class PhotoServiceImpl implements PhotoService {
         Photo photo = getPhotoForUserOrThrowNotFound(email, filename);
         photo.setFavorite(favorite);
         photoRepository.save(photo);
+    }
+
+    @Override
+    public List<File> getPhotoFilesForExport(Long userId, List<String> fileNames) {
+        Set<Photo> photos = photoRepository.getPhotosForExport(userId, fileNames);
+        return photos.stream().map(photo -> {
+            try {
+                return getPhotoFile(photo.getFileName()).getFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }).collect(Collectors.toList());
     }
 
     @Override

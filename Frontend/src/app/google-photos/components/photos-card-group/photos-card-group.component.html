@@ -1,0 +1,25 @@
+<div class="group-container" (mouseover)="mouseOver()" (mouseout)="mouseOut()">
+  <div class="group-header">
+  <mat-icon
+  [ngClass]="hover ? 'icon-hover' : 'icon'"
+    [ngStyle]="{
+      visibility: photos.length > 1 && hover || selected ? 'visible' : 'hidden',
+      color: selected ? '#1A73E8' : '#757575'
+    }"
+    (click)="iconClicked()"
+    >check_circle</mat-icon
+  >
+  <div class="date">
+    {{ date | date: getDateFormat() }}
+  </div>
+</div>
+  <div class="card-container">
+    <div *ngFor="let photo of photos" class="card-item">
+      <photos-card
+        [photo]="photo"
+        [selectionChanged]="selectionChanged"
+        (selectPhotoEvent)="photoSelected($event)"
+      ></photos-card>
+    </div>
+  </div>
+</div>

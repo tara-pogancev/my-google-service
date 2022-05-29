@@ -1,0 +1,91 @@
+<div class="pr-5 component-container">
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 1 }"
+
+  >
+    <mat-icon color="red">photo</mat-icon>
+    <p class="button-title">Photos</p>
+    <span class="stretch-width"></span>
+  </button>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 2 }"
+
+  >
+    <mat-icon>star</mat-icon>
+    <p class="button-title">Favorites</p>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 3 }"
+    (click)="navigateAccount()"
+
+  >
+    <mat-icon>edit</mat-icon>
+    <p class="button-title">My account</p>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 4 }"
+
+  >
+    <mat-icon>upload</mat-icon>
+    <p class="button-title">Import</p>
+  </button>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 5 }"
+
+  >
+    <mat-icon>cloud_download</mat-icon>
+    <p class="button-title">Export</p>
+  </button>
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 6 }"
+
+  >
+    <mat-icon>delete_outline</mat-icon>
+    <p class="button-title">Bin</p>
+  </button>
+
+
+  <mat-divider></mat-divider>
+
+  <button
+    mat-menu-item
+    class="is-flex is-flex-direction-column px-5 menu-item storage-button"
+    [ngClass]="{ 'mat-menu-item-toggle': tab == 7 }"
+
+  >
+  <div class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center">
+    <mat-icon>cloud</mat-icon>
+    <p class="button-title">Storage</p>
+  </div>
+    <div class="progress-bar">
+      <mat-progress-bar mode="determinate" [color]="progressColor" [value]="storageValue"></mat-progress-bar>
+      <div style="position: absolute; padding: 0px" class="progress-bar-text">{{(currentStorage / 1048576) | number: '1.0-1'}} MB of {{(maxStorage / 1048576) | number: '1.0-1'}} MB used </div>
+    </div>
+  </button>
+
+
+
+</div>

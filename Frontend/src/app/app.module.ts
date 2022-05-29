@@ -45,6 +45,12 @@ import { EditPersonComponent } from './google-contacts/components/contact-person
 import { MergeCardComponent } from './google-contacts/components/suggestions-page/merge-card/merge-card.component';
 import { BodyComponent } from './google-contacts/components/contacts-page/body/body.component';
 import { SearchDialogComponent } from './google-contacts/components/contacts-header/search-dialog/search-dialog.component';
+import { PhotosSidebarComponent } from './google-photos/components/photos-sidebar/photos-sidebar.component';
+import { PhotosHeaderComponent } from './google-photos/components/photos-header/photos-header.component';
+import { PhotosListComponent } from './google-photos/components/photos-list/photos-list.component';
+import { PhotosCardComponent } from './google-photos/components/photos-card/photos-card.component';
+import { PhotosCardGroupComponent } from './google-photos/components/photos-card-group/photos-card-group.component';
+import { SelectedBarComponent } from './google-photos/components/selected-bar/selected-bar.component';
 
 class MyErrorHandler implements ErrorHandler {
   handleError(error: any): void {
@@ -90,6 +96,12 @@ class MyErrorHandler implements ErrorHandler {
     MergeCardComponent,
     BodyComponent,
     SearchDialogComponent,
+    PhotosSidebarComponent,
+    PhotosHeaderComponent,
+    PhotosListComponent,
+    PhotosCardComponent,
+    PhotosCardGroupComponent,
+    SelectedBarComponent,
   ],
   imports: [
     BrowserModule,
