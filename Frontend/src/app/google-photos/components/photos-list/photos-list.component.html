@@ -1,4 +1,9 @@
 <div class="photos-container">
-
-<photos-card-group *ngFor="let photoGroup of photoGroups" [imgUrls]="getImgUrlsFromPhotoGroup(photoGroup)" [date]="photoGroup[0].creationDate" class="photo-group-container"></photos-card-group>
+  <photos-card-group
+    *ngFor="let photoGroup of photoGroups"
+    [photos]="photoGroup"
+    [date]="photoGroup[0].creationDate"
+    class="photo-group-container"
+    (selectPhotoEvent)="photoSelected($event)"
+  ></photos-card-group>
 </div>

@@ -31,7 +31,7 @@ public interface PhotoService {
 
     void favoritePhoto(String filename, boolean favorite);
 
-    List<File> getPhotoFilesForExport(Long userId, List<Long> fileIds);
+    List<File> getPhotoFilesForExport(Long userId, List<String> fileNames);
 
     Long getUsedStorage(Long userId);
 

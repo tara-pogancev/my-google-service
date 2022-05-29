@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { server } from 'src/app/app-global';
 import { CreateUser } from 'src/app/shared/model/create-user';
@@ -73,10 +73,17 @@ export class PhotoService {
     });
   }
 
-  getExport(userId: number) {
+  getExport(userId: number, fileNames:string[] = []) {
     const headers = this.authService.getHeaders();
+    let params = new HttpParams();
+    if (fileNames.length > 0) {
+      fileNames.forEach(i => (params = params.append('fileNames', i)))
+    }
+
     return this._http.get(`${server}photos/users/${userId}/export`, {
-      headers: headers
+      headers: headers,
+      responseType: 'arraybuffer',
+      params: params
     });
   }
 

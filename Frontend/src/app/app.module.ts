@@ -50,6 +50,7 @@ import { PhotosHeaderComponent } from './google-photos/components/photos-header/
 import { PhotosListComponent } from './google-photos/components/photos-list/photos-list.component';
 import { PhotosCardComponent } from './google-photos/components/photos-card/photos-card.component';
 import { PhotosCardGroupComponent } from './google-photos/components/photos-card-group/photos-card-group.component';
+import { SelectedBarComponent } from './google-photos/components/selected-bar/selected-bar.component';
 
 class MyErrorHandler implements ErrorHandler {
   handleError(error: any): void {
@@ -100,6 +101,7 @@ class MyErrorHandler implements ErrorHandler {
     PhotosListComponent,
     PhotosCardComponent,
     PhotosCardGroupComponent,
+    SelectedBarComponent,
   ],
   imports: [
     BrowserModule,

@@ -35,7 +35,7 @@ public class PhotoServiceImpl implements PhotoService {
     private final AuthorizationService authorizationService;
     private final ExifParser exifParser;
 
-    private static final int PAGE_SIZE = 20;
+    private static final int PAGE_SIZE = 200;
     private static final long STORAGE_CAPACITY = 104_857_600L;
 
     @Override
@@ -60,6 +60,9 @@ public class PhotoServiceImpl implements PhotoService {
             LocalDateTime creationDate = photoStorageService.getCreationDate(file.getOriginalFilename(), email);
             photo = new Photo(file.getOriginalFilename(), user, creationDate, file.getSize());
         }
+        PhotoMetadata metadata = getMetadata(photo);
+        photo.setLatitude(metadata.getLatitude());
+        photo.setLongitude(metadata.getLongitude());
         return photoRepository.save(photo);
     }
 
@@ -134,8 +137,8 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     @Override
-    public List<File> getPhotoFilesForExport(Long userId, List<Long> fileIds) {
-        Set<Photo> photos = photoRepository.getPhotosForExport(userId, fileIds);
+    public List<File> getPhotoFilesForExport(Long userId, List<String> fileNames) {
+        Set<Photo> photos = photoRepository.getPhotosForExport(userId, fileNames);
         return photos.stream().map(photo -> {
             try {
                 return getPhotoFile(photo.getFileName()).getFile();

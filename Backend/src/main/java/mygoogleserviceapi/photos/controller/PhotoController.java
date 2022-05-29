@@ -62,11 +62,10 @@ public class PhotoController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<List<PhotoInfoResponseDTO>> getPhotos(@PathVariable Long id, @RequestParam(required = false) Integer page) throws IOException {
+    public ResponseEntity<List<PhotoInfoResponseDTO>> getPhotos(@PathVariable Long id, @RequestParam(required = false) Integer page) {
         List<PhotoInfoResponseDTO> responseDTOS = new ArrayList<>();
         List<Photo> photos = photoService.getPhotosForUser(id, page);
         for (Photo photo : photos) {
-//            PhotoMetadata metadata = photoService.getMetadata(photo);
             responseDTOS.add(new PhotoInfoResponseDTO(photo.getId(),
                     photo.getFileName(),
                     photo.getLatitude(),
@@ -130,12 +129,12 @@ public class PhotoController {
     }
 
     @GetMapping(value = "/users/{id}/export")
-    public ResponseEntity<byte[]> exportZip(@PathVariable Long id, @RequestParam(required = false) List<Long> fileIds) throws IOException {
+    public ResponseEntity<byte[]> exportZip(@PathVariable Long id, @RequestParam(required = false) List<String> fileNames) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(byteArrayOutputStream);
         ZipOutputStream zipOutputStream = new ZipOutputStream(bufferedOutputStream);
 
-        List<File> files = photoService.getPhotoFilesForExport(id, fileIds);
+        List<File> files = photoService.getPhotoFilesForExport(id, fileNames);
 
         for (File file : files) {
             zipOutputStream.putNextEntry(new ZipEntry(file.getName()));

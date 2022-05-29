@@ -22,9 +22,9 @@ public interface PhotoRepository extends JpaRepository<Photo, Long> {
     @Query("SELECT SUM(p.size) FROM Photo p WHERE p.applicationUser.id = :userId")
     Long getUsedStorageForUserID(@Param("userId") Long userId);
 
-    @Query("SELECT p from Photo p WHERE p.applicationUser.id = :userId AND ((:fileIds) IS NULL OR p.id IN (:fileIds))")
+    @Query("SELECT p from Photo p WHERE p.applicationUser.id = :userId AND ((:fileNames) IS NULL OR p.fileName IN (:fileNames))")
     Set<Photo> getPhotosForExport(
             @Param("userId") Long userId,
-            @Param("fileIds") List<Long> fileIds);
+            @Param("fileNames") List<String> fileNames);
 
 }
