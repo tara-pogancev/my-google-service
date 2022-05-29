@@ -4,10 +4,8 @@
   (mouseout)="mouseOut()"
   [ngStyle]="{
     background: getBackground()
-
   }"
 >
-
   <mat-icon
     class="icon"
     [ngStyle]="{
@@ -19,9 +17,20 @@
     (mouseout)="mouseOut()"
     >check_circle</mat-icon
   >
-  <img [src]="imgUrl" [ngClass]="selected ? 'image-selected' : 'image'"
-  [ngStyle]="{
-    'z-index': selected ? '3000' : '-1'
-  }"
-  />
+  <div
+    class="img-container"
+    [ngClass]="selected ? 'image-selected' : 'image'"
+    [ngStyle]="{
+      'z-index': selected ? '3000' : '-1'
+    }"
+  >
+    <img [src]="photo.imgUrl" class="image" />
+    <mat-icon
+      class="star-icon"
+      [ngStyle]="{
+        visibility: photo.favorite ? 'visible' : 'hidden'
+      }"
+      >star</mat-icon
+    >
+  </div>
 </div>

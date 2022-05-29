@@ -1,0 +1,21 @@
+<mat-toolbar class="toolbar" [ngStyle]="{visibility: selected.length === 0 ? 'hidden' : 'visible'}">
+  <button mat-icon-button (click)="unselect()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <span>{{selected.length}} selected</span>
+  <div class="button-container">
+    <button mat-icon-button (click)="deletePhotos()">
+    <mat-icon class="delete-button">delete</mat-icon>
+  </button>
+  <button mat-icon-button (click)="export()">
+    <mat-icon class="save-button">save_alt</mat-icon>
+  </button>
+  <button mat-icon-button (click)="favorite()">
+    <mat-icon class="favorite-button">star</mat-icon>
+  </button>
+  <button mat-icon-button>
+    <mat-icon class="location-button">location_on</mat-icon>
+  </button>
+  </div>
+
+</mat-toolbar>

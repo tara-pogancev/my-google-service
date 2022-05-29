@@ -22,8 +22,8 @@ public class Photo extends DatabaseEntity {
         this.applicationUser = applicationUser;
         this.creationDate = creationDate;
         this.size = size;
-        this.latitude = 0D;
-        this.longitude = 0D;
+        this.latitude = null;
+        this.longitude = null;
     }
 
     @Column(name = "fileName", nullable = false)

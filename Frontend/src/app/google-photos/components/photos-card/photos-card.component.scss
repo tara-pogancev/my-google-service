@@ -19,6 +19,21 @@
   height: 220px;
 }
 
+.img-container {
+  position: relative;
+}
+
+
+.star-icon {
+  left: 6px;
+  bottom: 6px;
+  color: white;
+  z-index: 5000;
+  position: absolute;
+}
+
+
+
 .image-selected {
   transform-origin: center;
   animation: scale 200ms ease-in-out forwards;
