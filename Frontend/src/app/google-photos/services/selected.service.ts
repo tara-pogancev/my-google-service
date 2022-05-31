@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { Photo } from '../model/Photo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectedService {
-  private storageValue: BehaviorSubject<Array<string>> = new BehaviorSubject<string[]>([]);
+  private storageValue: BehaviorSubject<Array<Photo>> = new BehaviorSubject<Photo[]>([]);
   currentValue = this.storageValue.asObservable();
 
   private actionValue: BehaviorSubject<string> = new BehaviorSubject<string>("");
@@ -13,7 +14,7 @@ export class SelectedService {
 
   constructor() { }
 
-  changeValue(selected: string[]) {
+  changeValue(selected: Photo[]) {
     this.storageValue.next(selected)
   }
 

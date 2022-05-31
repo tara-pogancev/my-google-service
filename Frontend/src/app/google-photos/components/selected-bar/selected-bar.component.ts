@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
+import { Photo } from '../../model/Photo';
 import { SelectedService } from '../../services/selected.service';
 
 @Component({
@@ -8,7 +10,7 @@ import { SelectedService } from '../../services/selected.service';
 })
 export class SelectedBarComponent implements OnInit {
 
-  selected!: string[]
+  selected!: Photo[]
   constructor(private selectedService: SelectedService) { }
 
   ngOnInit(): void {
@@ -27,8 +29,26 @@ export class SelectedBarComponent implements OnInit {
     this.selectedService.changeAction("FAVORITE")
   }
 
+  unfavorite() {
+    this.selectedService.changeAction("UNFAVORITE")
+  }
+
   export() {
     this.selectedService.changeAction("EXPORT")
+  }
+
+
+
+  isEverySelectedFavorite() {
+    return this.selected.every(photo => photo.favorite)
+  }
+
+
+
+  getFavoriteIcon() {
+    if (this.isEverySelectedFavorite())
+      return 'star_border'
+    return 'star'
   }
 
 

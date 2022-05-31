@@ -10,8 +10,8 @@
   <button mat-icon-button (click)="export()">
     <mat-icon class="save-button">save_alt</mat-icon>
   </button>
-  <button mat-icon-button (click)="favorite()">
-    <mat-icon class="favorite-button">star</mat-icon>
+  <button mat-icon-button (click)="isEverySelectedFavorite() ? unfavorite() : favorite()">
+    <mat-icon class="favorite-button">{{getFavoriteIcon()}}</mat-icon>
   </button>
   <button mat-icon-button>
     <mat-icon class="location-button">location_on</mat-icon>
