@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { PhotoService } from '../../services/photo.service';
+import { SelectedService } from '../../services/selected.service';
 import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
@@ -20,7 +21,9 @@ export class PhotosSidebarComponent implements OnInit {
   constructor(private router: Router,
      private photoService: PhotoService,
       private authService: AuthService,
-      private sidebarService: SidebarService) { }
+      private sidebarService: SidebarService,
+      private selectedService: SelectedService,
+      private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.progressColor = 'primary'
@@ -46,11 +49,21 @@ export class PhotosSidebarComponent implements OnInit {
   favorites() {
     this.tab = 2
     this.sidebarService.changeValue("FAVORITES")
+    if (this.router.url.includes('favorites'))
+      return
+    this.selectedService.changeAction('UNSELECT')
+    this.router.navigate(['/photos/favorites/']);
   }
 
   photos() {
     this.tab = 1
     this.sidebarService.changeValue("")
+    if (!this.router.url.includes('favorites'))
+      return
+    this.selectedService.changeAction('UNSELECT')
+    this.router.navigate(['/photos/']);
   }
+
+
 
 }

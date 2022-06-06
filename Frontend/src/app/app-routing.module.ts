@@ -79,6 +79,10 @@ const routes: Routes = [
       {
         path: '',
         component: PhotosListComponent
+      },
+      {
+        path: 'favorites',
+        component: PhotosListComponent
       }
     ]
   },

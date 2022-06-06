@@ -17,7 +17,6 @@ export class PhotosCardComponent implements OnInit, OnChanges {
   constructor(private selectedService: SelectedService) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log(changes)
   }
 
 

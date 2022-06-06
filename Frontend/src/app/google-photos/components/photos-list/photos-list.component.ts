@@ -1,7 +1,7 @@
 import { templateSourceUrl } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { forkJoin, observable } from 'rxjs';
 import { groupBy } from 'rxjs/operators';
@@ -25,7 +25,8 @@ export class PhotosListComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private selectedService: SelectedService,
     private router: Router,
-    private sidebarService: SidebarService) { }
+    private sidebarService: SidebarService,
+    private route: ActivatedRoute) { }
   userId!: number
   favorites: boolean = false
   photos: Photo[] = []
@@ -33,15 +34,14 @@ export class PhotosListComponent implements OnInit {
   selected: Photo[] = []
 
   ngOnInit(): void {
-
     this.userId = this.authService.getCurrentUser().id
     this.selectedService.currentAction.subscribe(action => this.executeAction(action))
-    this.sidebarService.currentValue.subscribe(value => {
-      this.favorites = value === 'FAVORITES' ? true : false
-      this.showPhotos()
-    })
-
-
+    if (this.route.snapshot.url.length > 0) {
+      this.favorites = true
+    }
+    // this.sidebarService.currentValue.subscribe(value => {
+    //   this.favorites = value === 'FAVORITES' ? true : false
+    // })
     this.getPhotos();
   }
 
@@ -100,6 +100,7 @@ export class PhotosListComponent implements OnInit {
         favoriteObs.push(this.photoService.favoritePhoto(photo.filename, {favorite: true}))
       }
       forkJoin(favoriteObs).subscribe(data => {
+        this.selectedService.changeAction('UNSELECT')
         this.reloadComponent()
       })
     }
@@ -109,6 +110,7 @@ export class PhotosListComponent implements OnInit {
         unfavoriteObs.push(this.photoService.favoritePhoto(photo.filename, {favorite: false}))
       }
       forkJoin(unfavoriteObs).subscribe(data => {
+        this.selectedService.changeAction('UNSELECT')
         this.reloadComponent()
       })
     }
@@ -133,11 +135,6 @@ export class PhotosListComponent implements OnInit {
     }
     this.selectedService.changeValue(this.selected)
   }
-
-  showPhotos() {
-    this.getPhotos()
-  }
-
 
 
 
