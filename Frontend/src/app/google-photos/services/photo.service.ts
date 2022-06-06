@@ -13,10 +13,13 @@ export class PhotoService {
 
   constructor(private _http: HttpClient, private authService: AuthService) {}
 
-  getAllPhotos(userId: number) {
+  getAllPhotos(userId: number, favorites: boolean = false) {
+    let params = new HttpParams();
+    params = params.append('favorites', favorites)
     const headers = this.authService.getHeaders();
     return this._http.get(`${server}photos/users/${userId}`, {
-      headers: headers
+      headers: headers,
+      params: params
     });
   }
   rotatePhoto(filename: string) {

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { PhotoService } from '../../services/photo.service';
+import { SelectedService } from '../../services/selected.service';
+import { SidebarService } from '../../services/sidebar.service';
 
 @Component({
   selector: 'photos-sidebar',
@@ -16,7 +18,12 @@ export class PhotosSidebarComponent implements OnInit {
   storageValue!: number
   userId!: number
   progressColor!: string
-  constructor(private router: Router, private photoService: PhotoService, private authService: AuthService) { }
+  constructor(private router: Router,
+     private photoService: PhotoService,
+      private authService: AuthService,
+      private sidebarService: SidebarService,
+      private selectedService: SelectedService,
+      private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.progressColor = 'primary'
@@ -37,5 +44,26 @@ export class PhotosSidebarComponent implements OnInit {
     this.storageValue = (this.currentStorage / this.maxStorage) * 100
     this.progressColor = this.storageValue > 90 ? 'warn' : 'primary'
   }
+
+
+  favorites() {
+    this.tab = 2
+    this.sidebarService.changeValue("FAVORITES")
+    if (this.router.url.includes('favorites'))
+      return
+    this.selectedService.changeAction('UNSELECT')
+    this.router.navigate(['/photos/favorites/']);
+  }
+
+  photos() {
+    this.tab = 1
+    this.sidebarService.changeValue("")
+    if (!this.router.url.includes('favorites'))
+      return
+    this.selectedService.changeAction('UNSELECT')
+    this.router.navigate(['/photos/']);
+  }
+
+
 
 }

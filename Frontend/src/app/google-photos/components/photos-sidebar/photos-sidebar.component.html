@@ -3,7 +3,7 @@
     mat-menu-item
     class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
     [ngClass]="{ 'mat-menu-item-toggle': tab == 1 }"
-
+    (click)="photos()"
   >
     <mat-icon color="red">photo</mat-icon>
     <p class="button-title">Photos</p>
@@ -14,7 +14,7 @@
     mat-menu-item
     class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
     [ngClass]="{ 'mat-menu-item-toggle': tab == 2 }"
-
+    (click)="favorites()"
   >
     <mat-icon>star</mat-icon>
     <p class="button-title">Favorites</p>
@@ -33,9 +33,9 @@
     <p class="button-title">My account</p>
   </button>
 
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
 
-  <button
+  <!-- <button
     mat-menu-item
     class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
     [ngClass]="{ 'mat-menu-item-toggle': tab == 4 }"
@@ -43,7 +43,7 @@
   >
     <mat-icon>upload</mat-icon>
     <p class="button-title">Import</p>
-  </button>
+  </button> -->
 
   <button
     mat-menu-item
@@ -52,11 +52,11 @@
 
   >
     <mat-icon>cloud_download</mat-icon>
-    <p class="button-title">Export</p>
+    <p class="button-title">Export All</p>
   </button>
 
   <mat-divider></mat-divider>
-
+<!--
   <button
     mat-menu-item
     class="is-flex is-flex-direction-row is-justify-content-between is-align-items-center px-5 menu-item"
@@ -65,10 +65,10 @@
   >
     <mat-icon>delete_outline</mat-icon>
     <p class="button-title">Bin</p>
-  </button>
+  </button> -->
 
 
-  <mat-divider></mat-divider>
+  <!-- <mat-divider></mat-divider> -->
 
   <button
     mat-menu-item

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
 import { forEachChild } from 'typescript';
 import { PhotoSelectDTO } from '../../DTO/PhotoSelectDTO';
 import { Photo } from '../../model/Photo';
@@ -18,6 +19,7 @@ export class PhotosCardGroupComponent implements OnInit {
 
   selectionChanged: EventEmitter<boolean> = new EventEmitter();
   @Input() selected: boolean = false
+  selectedChildren: Photo[] = []
   hover: boolean = false
   constructor(private selectedService : SelectedService) { }
 
@@ -40,10 +42,22 @@ export class PhotosCardGroupComponent implements OnInit {
   }
   iconClicked() {
     this.selected = !this.selected
+    if (this.selected)
+      this.selectedChildren = [...this.photos]
+    else
+      this.selectedChildren = []
     this.selectionChanged.emit(this.selected)
   }
 
   photoSelected(photoSelectDTO: PhotoSelectDTO) {
+    if (photoSelectDTO.selected)
+      this.selectedChildren = [...this.selectedChildren, photoSelectDTO.photo]
+    else
+      this.selectedChildren = this.selectedChildren.filter(el => el.id !== photoSelectDTO.photo.id)
+    if (this.selectedChildren.length === this.photos.length)
+      this.selected = true
+    if (this.selectedChildren.length === 0)
+      this.selected = false
     this.selectPhotoEvent.emit(photoSelectDTO)
   }
 
