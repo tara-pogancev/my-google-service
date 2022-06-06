@@ -15,6 +15,7 @@ export class PhotoService {
 
   getAllPhotos(userId: number, favorites: boolean = false) {
     let params = new HttpParams();
+
     params = params.append('favorites', favorites)
     const headers = this.authService.getHeaders();
     return this._http.get(`${server}photos/users/${userId}`, {
@@ -35,17 +36,23 @@ export class PhotoService {
     });
   }
   favoritePhoto(filename: string, favoritePhotoDTO: FavoritePhotoDTO) {
+
     const headers = this.authService.getHeaders();
     return this._http.put(`${server}photos/${filename}/favorite`, favoritePhotoDTO, {
       headers: headers
     });
   }
   postPhoto(formData: FormData) {
-    return this._http.post(`${server}photos`, formData)
+    const headers = this.authService.getHeadersMultipart()
+    console.log(headers)
+    return this._http.post(`${server}photos`, formData, {
+      headers: headers
+    })
   }
 
   getPhoto(filename: string) {
     const headers = this.authService.getHeaders();
+
     return this._http.get(`${server}photos/${filename}`, {
       headers: headers
     });

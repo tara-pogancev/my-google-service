@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/model/user-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user-service';
+import { PhotoService } from '../../services/photo.service';
 
 @Component({
   selector: 'photos-header',
@@ -14,7 +15,7 @@ export class PhotosHeaderComponent implements OnInit {
   searchBarFocus = false
   searchValue: string = ""
   constructor(private authService: AuthService,
-     private userService: UserService) { }
+     private userService: UserService, private photoService: PhotoService) { }
 
   ngOnInit(): void {
     this.initUser()
@@ -52,6 +53,45 @@ export class PhotosHeaderComponent implements OnInit {
   signOut() {
     this.authService.logout();
   }
+
+  fileSelectionChanged(event: Event)
+{
+    let selectedFiles:string[]  = [];
+
+    const element = event.currentTarget as HTMLInputElement;
+    if (!element || !element.files)
+      return
+
+    let selFiles = element.files;
+    let fileList: FileList = element.files;
+    if (fileList) {
+      for (let itm in fileList)
+      {
+        let item: File = fileList[itm];
+        if ((itm.match(/\d+/g) != null) && (!selectedFiles.includes(item['name'])))
+            selectedFiles.push(item['name']);
+      }
+    }
+    let formData = new FormData();
+    formData.append('info', new Blob([JSON.stringify({email: this.authService.getCurrentUser().email})], {type: "application/json"}))
+    if (selectedFiles.length)
+    {
+      for (let i=0 ; i < selectedFiles.length ; i++)
+      {
+        console.log(selFiles[i])
+        formData.append('files', selFiles[i],
+           selFiles[i].name);
+      }
+    }
+    console.log(formData.getAll('files'))
+    // console.log(selFiles)
+    this.photoService.postPhoto(formData).subscribe((data:any) => {
+      console.log('a')
+      console.log(data)
+    }, (err: Error) => {
+       console.log(err)
+    })
+}
 
 
   resetSearch() {
