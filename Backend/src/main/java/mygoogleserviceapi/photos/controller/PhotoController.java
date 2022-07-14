@@ -47,6 +47,7 @@ public class PhotoController {
     private final DataConverter converter;
     private final PhotoService photoService;
 
+
     @PostMapping()
     public ResponseEntity<List<AddPhotoResponseDTO>> addPhoto(@RequestPart("files") MultipartFile[] files,
                                                               @RequestPart("info") @Valid UserInfoRequestDTO userInfoRequestDTO) throws IOException {

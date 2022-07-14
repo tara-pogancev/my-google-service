@@ -29,6 +29,7 @@ export class PhotoService {
       headers: headers
     });
   }
+
   updatePhotoMetadata(filename: string, updatePhotoMetadataDTO: UpdatePhotoMetadataDTO) {
     const headers = this.authService.getHeaders();
     return this._http.put(`${server}photos/${filename}/metadata`, updatePhotoMetadataDTO, {
