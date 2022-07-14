@@ -14,18 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 public class Photo extends DatabaseEntity {
-    public Photo() {
-    }
-
-    public Photo(String fileName, ApplicationUser applicationUser, LocalDateTime creationDate, long size) {
-        this.fileName = fileName;
-        this.applicationUser = applicationUser;
-        this.creationDate = creationDate;
-        this.size = size;
-        this.latitude = null;
-        this.longitude = null;
-    }
-
+    
     @Column(name = "fileName", nullable = false)
     private String fileName;
 
@@ -56,4 +45,16 @@ public class Photo extends DatabaseEntity {
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
+    public Photo() {
+    }
+
+    public Photo(String fileName, ApplicationUser applicationUser, LocalDateTime creationDate, long size) {
+        this.fileName = fileName;
+        this.applicationUser = applicationUser;
+        this.creationDate = creationDate;
+        this.size = size;
+        this.latitude = null;
+        this.longitude = null;
+    }
+
 }
