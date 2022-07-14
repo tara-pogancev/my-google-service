@@ -11,6 +11,7 @@ import mygoogleserviceapi.photos.model.Photo;
 import mygoogleserviceapi.photos.model.PhotoMetadata;
 import mygoogleserviceapi.photos.service.interfaces.PhotoService;
 import mygoogleserviceapi.shared.converter.DataConverter;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
@@ -46,6 +47,7 @@ public class PhotoController {
     private final DataConverter converter;
     private final PhotoService photoService;
 
+
     @PostMapping()
     public ResponseEntity<List<AddPhotoResponseDTO>> addPhoto(@RequestPart("files") MultipartFile[] files,
                                                               @RequestPart("info") @Valid UserInfoRequestDTO userInfoRequestDTO) throws IOException {
@@ -62,9 +64,10 @@ public class PhotoController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<List<PhotoInfoResponseDTO>> getPhotos(@PathVariable Long id, @RequestParam(required = false) Integer page) {
+    public ResponseEntity<List<PhotoInfoResponseDTO>> getPhotos(@PathVariable Long id, @RequestParam(required = false) Integer page, @RequestParam(required = false) Boolean favorites) {
         List<PhotoInfoResponseDTO> responseDTOS = new ArrayList<>();
-        List<Photo> photos = photoService.getPhotosForUser(id, page);
+        boolean favoritesOnly = BooleanUtils.toBoolean(favorites);
+        List<Photo> photos = photoService.getPhotosForUser(id, page, favoritesOnly);
         for (Photo photo : photos) {
             responseDTOS.add(new PhotoInfoResponseDTO(photo.getId(),
                     photo.getFileName(),

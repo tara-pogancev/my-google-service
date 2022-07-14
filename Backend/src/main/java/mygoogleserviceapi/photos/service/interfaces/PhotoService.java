@@ -13,7 +13,7 @@ public interface PhotoService {
 
     Photo savePhoto(MultipartFile file, String email) throws IOException;
 
-    List<Photo> getPhotosForUser(Long userId, Integer page);
+    List<Photo> getPhotosForUser(Long userId, Integer page, boolean favorites);
 
     public Resource getPhotoFile(String filename);
 
