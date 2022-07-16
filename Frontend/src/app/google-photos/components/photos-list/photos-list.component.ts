@@ -125,6 +125,16 @@ export class PhotosListComponent implements OnInit {
         this.selectedService.changeAction('UNSELECT')
       })
     }
+    else if (action === "ROTATE") {
+      let rotateObs = []
+      for (const photo of this.selected) {
+        rotateObs.push(this.photoService.rotatePhoto(photo.filename))
+      }
+      forkJoin(rotateObs).subscribe(data => {
+        this.selectedService.changeAction('UNSELECT')
+        this.reloadComponent()
+      })
+    }
   }
 
   photoSelected(photoSelectDTO: PhotoSelectDTO) {

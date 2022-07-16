@@ -13,8 +13,8 @@
   <button mat-icon-button (click)="isEverySelectedFavorite() ? unfavorite() : favorite()">
     <mat-icon class="favorite-button">{{getFavoriteIcon()}}</mat-icon>
   </button>
-  <button mat-icon-button>
-    <mat-icon class="location-button">location_on</mat-icon>
+  <button mat-icon-button (click)="rotate()">
+    <mat-icon class="location-button">rotate_right</mat-icon>
   </button>
   </div>
 
