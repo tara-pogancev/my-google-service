@@ -37,6 +37,10 @@ export class SelectedBarComponent implements OnInit {
     this.selectedService.changeAction("EXPORT")
   }
 
+  rotate() {
+    this.selectedService.changeAction("ROTATE")
+  }
+
 
 
   isEverySelectedFavorite() {
