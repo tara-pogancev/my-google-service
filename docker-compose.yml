@@ -1,0 +1,48 @@
+version: "3.9"
+services:
+  my-google-service:
+    container_name: my-google-service
+    build: ./Backend
+    networks:
+      - my-google-service_database_net
+      - backend_net
+    ports:
+      - "8080:8080"
+    restart: on-failure:3 
+    environment:
+      MY_GOOGLE_SERVICE_DB_NAME: my-google-service
+      MY_GOOGLE_SERVICE_DB_PORT: 5432
+      MY_GOOGLE_SERVICE_DB_HOST: my-google-service-postgres
+      PASS: admin
+    depends_on:
+     -  my-google-service-postgres
+
+  my-google-service-frontend:
+    container_name: my-google-service-frontend
+    build: ./Frontend
+    networks:
+      - backend_net
+    ports:
+      - "4200:80"
+    restart: on-failure:3 
+
+  my-google-service-postgres:
+    container_name: my-google-service-postgres
+    image: postgres:14.1-alpine
+    networks:
+      - my-google-service_database_net
+    restart: always
+    environment:
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: admin
+        POSTGRES_DB: my-google-service
+    ports:
+      - '5432:5432'
+
+networks:
+  backend_net:
+    name: backend_net
+    driver: bridge
+  my-google-service_database_net:
+    name: my-google-service_database_net
+    driver: bridge
