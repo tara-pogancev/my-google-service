@@ -7,15 +7,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
-    @Query("SELECT p FROM Photo p WHERE p.applicationUser.id = :userId AND (:favorites IS FALSE OR p.favorite IS TRUE) AND UPPER(p.fileName) LIKE CONCAT('%',UPPER(:searchValue),'%') ORDER BY p.creationDate DESC")
+    @Query("SELECT p FROM Photo p WHERE p.applicationUser.id = :userId" +
+            " AND (:favorites IS FALSE OR p.favorite IS TRUE)" +
+            " AND (cast(:beforeDate as date) IS NULL OR p.creationDate <= :beforeDate)" +
+            " AND (cast(:afterDate as date) IS NULL OR p.creationDate >= :afterDate)" +
+            " AND UPPER(p.fileName) LIKE CONCAT('%',UPPER(:searchValue),'%')" +
+            " ORDER BY p.creationDate DESC")
     Slice<Photo> getPhotosForUserId(@Param("userId") Long userId,
                                     @Param("favorites") boolean favorites,
                                     @Param("searchValue") String searchValue,
+                                    @Param("beforeDate") LocalDateTime beforeDate,
+                                    @Param("afterDate") LocalDateTime afterDate,
                                     Pageable pageable);
 
     @Query("SELECT p FROM Photo p WHERE p.applicationUser.email = :email and p.fileName = :fileName")

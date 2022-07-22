@@ -90,6 +90,10 @@ export class PhotosListComponent implements OnInit {
   }
 
   private updatePhotoGroups() {
+    if (this.photos.length === 0) {
+      this.photoGroups = []
+      return
+    }
     this.photoGroups = Object.values(this.photos.reduce(function (r, a) {
       let idx = a.creationDate.toISOString().slice(0, 10);
       r[idx] = r[idx] || [];

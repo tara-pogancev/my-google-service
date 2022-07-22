@@ -20,7 +20,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -68,12 +71,25 @@ public class PhotoServiceImpl implements PhotoService {
 
 
     @Override
-    public List<Photo> getPhotosForUser(Long userId, Integer page, boolean favorites, String searchValue, String beforeDate, String afterDate) {
+    public List<Photo> getPhotosForUser(Long userId, Integer page, boolean favorites, String searchValue, String beforeDateString, String afterDateString) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         authorizationService.isUserAllowedToAccessResource(userId);
         int pageNum = (page == null || page <= 0) ? 0 : page;
         Pageable pageRequest = PageRequest.of(pageNum, PAGE_SIZE);
         String searchValueNonNull = searchValue == null ? "" : searchValue;
-        return photoRepository.getPhotosForUserId(userId, favorites, searchValueNonNull, pageRequest).toList();
+        LocalDateTime beforeDate;
+        LocalDateTime afterDate;
+        try {
+            afterDate = LocalDate.parse(afterDateString, formatter).atStartOfDay();
+        } catch (DateTimeParseException e) {
+            afterDate = null;
+        }
+        try {
+            beforeDate = LocalDate.parse(beforeDateString, formatter).atStartOfDay();
+        } catch (DateTimeParseException e) {
+            beforeDate = null;
+        }
+        return photoRepository.getPhotosForUserId(userId, favorites, searchValueNonNull, beforeDate, afterDate, pageRequest).toList();
     }
 
     @Override
