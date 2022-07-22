@@ -13,10 +13,13 @@ export class PhotoService {
 
   constructor(private _http: HttpClient, private authService: AuthService) {}
 
-  getAllPhotos(userId: number, favorites: boolean = false) {
+  getAllPhotos(userId: number, favorites: boolean = false, searchValue: string, beforeDate: string, afterDate: string) {
     let params = new HttpParams();
 
     params = params.append('favorites', favorites)
+    params = params.append('searchValue', searchValue)
+    params = params.append('beforeDate', beforeDate)
+    params = params.append('afterDate', afterDate)
     const headers = this.authService.getHeaders();
     return this._http.get(`${server}photos/users/${userId}`, {
       headers: headers,
