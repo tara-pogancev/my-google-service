@@ -127,7 +127,7 @@
               <button mat-flat-button disabled>Forgot password?</button>
             </div>
 
-            <button mat-flat-button color="primary" type="submit">Next</button>
+            <button mat-flat-button color="primary" (keydown.enter)="login()" type="submit">Next</button>
           </div>
         </form>
 
