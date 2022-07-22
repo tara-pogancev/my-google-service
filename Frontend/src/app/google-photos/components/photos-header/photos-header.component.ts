@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { User } from 'src/app/shared/model/user-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user-service';
+import { SearchParametersDTO } from '../../DTO/SearchParametersDTO';
 import { PhotoService } from '../../services/photo.service';
+import { SearchParametersService } from '../../services/search-parameters.service';
+import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'photos-header',
@@ -14,8 +18,13 @@ export class PhotosHeaderComponent implements OnInit {
 
   searchBarFocus = false
   searchValue: string = ""
+  beforeDate!: Date | null
+  afterDate!: Date | null
   constructor(private authService: AuthService,
-     private userService: UserService, private photoService: PhotoService) { }
+     private userService: UserService,
+      private photoService: PhotoService,
+      private uploadService: UploadService,
+      private searchParametersService: SearchParametersService) { }
 
   ngOnInit(): void {
     this.initUser()
@@ -35,7 +44,13 @@ export class PhotosHeaderComponent implements OnInit {
   }
 
   search() {
-
+    let searchParameters: SearchParametersDTO = {
+      searchValue: this.searchValue,
+      afterDate: this.afterDate ? moment(this.afterDate, 'YYYY-MM-DD').format('DD-MM-YYYY') : '',
+      beforeDate: this.beforeDate ? moment(this.beforeDate, 'YYYY-MM-DD').format('DD-MM-YYYY') : '',
+      action: 'SEARCH'
+    }
+    this.searchParametersService.changeValue(searchParameters)
   }
 
   redirectContacts() {
@@ -78,16 +93,12 @@ export class PhotosHeaderComponent implements OnInit {
     {
       for (let i=0 ; i < selectedFiles.length ; i++)
       {
-        console.log(selFiles[i])
         formData.append('files', selFiles[i],
            selFiles[i].name);
       }
     }
-    console.log(formData.getAll('files'))
-    // console.log(selFiles)
     this.photoService.postPhoto(formData).subscribe((data:any) => {
-      console.log('a')
-      console.log(data)
+      this.uploadService.changeValue('UPLOAD')
     }, (err: Error) => {
        console.log(err)
     })
@@ -96,6 +107,15 @@ export class PhotosHeaderComponent implements OnInit {
 
   resetSearch() {
     this.searchValue = ""
+    this.afterDate = null
+    this.beforeDate = null
+    let searchParameters: SearchParametersDTO = {
+      searchValue: this.searchValue,
+      afterDate: this.afterDate ? moment(this.afterDate, 'YYYY-MM-DD').format('DD-MM-YYYY') : '',
+      beforeDate: this.beforeDate ? moment(this.beforeDate, 'YYYY-MM-DD').format('DD-MM-YYYY') : '',
+      action: 'SEARCH'
+    }
+    this.searchParametersService.changeValue(searchParameters)
   }
 
 }

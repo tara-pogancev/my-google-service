@@ -126,6 +126,31 @@ hr {
 }
 
 
+.filter-button {
+  margin: 5px;
+}
+
+.filter-menu {
+  min-width: 230px;
+  display: flex;
+  flex-direction: column;
+  padding: 0px 20px;
+
+}
+
+.filter-text {
+  font-weight: 600;
+}
+
+.filter-item {
+  display: flex;
+  align-items: baseline;
+}
+
+.filter-date {
+  margin-left: auto;
+}
+
 
 .profileMenu {
   min-width: 200px !important;

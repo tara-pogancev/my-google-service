@@ -8,9 +8,9 @@
     <p class="google-title">Photos</p>
   </div>
 
-  <form (submit)="search()">
+  <form (keydown.enter)="search()">
     <div [ngClass]="searchBarFocus ? 'search-focus' : 'search'">
-      <mat-icon class="search-icon">search</mat-icon>
+      <mat-icon class="search-icon" (click)="search()">search</mat-icon>
       <input
         (focus)="searchBarFocus = true"
         (blur)="searchBarFocus = false"
@@ -20,17 +20,30 @@
         name="searchTerm"
         placeholder="Search your photos"
       />
-      <button *ngIf="searchValue" mat-icon-button (click)="resetSearch()">
+      <button
+        type="button"
+        *ngIf="searchValue || beforeDate || afterDate"
+        mat-icon-button
+        (click)="resetSearch()"
+      >
         <mat-icon>close</mat-icon>
       </button>
     </div>
   </form>
+  <button mat-icon-button [matMenuTriggerFor]="filter" class="filter-button">
+    <mat-icon>filter_list</mat-icon>
+  </button>
 
-  <div class="menu-buttons" >
+  <div class="menu-buttons">
     <div class="upload-button">
-    <input type="file" class="image-upload" (change)="fileSelectionChanged($event)" multiple/>
-    <i class="fa fa-upload"aria-hidden="true"></i>
-    <div class="upload-button-text">Upload</div>
+      <input
+        type="file"
+        class="image-upload"
+        (change)="fileSelectionChanged($event)"
+        multiple
+      />
+      <i class="fa fa-upload" aria-hidden="true"></i>
+      <div class="upload-button-text">Upload</div>
     </div>
     <!-- <input type="image" src="assets/upload.svg"/> -->
     <button
@@ -112,6 +125,19 @@
       <br /><br />
       For more information, please visit our
       <a href="https://github.com/tara-pogancev/my-google-service">GitHub</a>.
+    </div>
+  </mat-menu>
+  <mat-menu #filter="matMenu" xPosition="after" class="py-3 mt-2">
+    <div class="filter-menu">
+      <h3 class="filter-text">Filter</h3>
+      <div class="filter-item">
+        <p>Before:</p>
+        <input type="date" class="filter-date" [(ngModel)]="beforeDate" (click)="$event.stopPropagation()" />
+      </div>
+      <div class="filter-item">
+        <p>After:</p>
+        <input type="date" class="filter-date"[(ngModel)]="afterDate" (click)="$event.stopPropagation()" />
+      </div>
     </div>
   </mat-menu>
 </mat-toolbar>
