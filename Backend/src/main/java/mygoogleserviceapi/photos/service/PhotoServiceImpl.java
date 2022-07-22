@@ -68,11 +68,12 @@ public class PhotoServiceImpl implements PhotoService {
 
 
     @Override
-    public List<Photo> getPhotosForUser(Long userId, Integer page, boolean favorites) {
+    public List<Photo> getPhotosForUser(Long userId, Integer page, boolean favorites, String searchValue, String beforeDate, String afterDate) {
         authorizationService.isUserAllowedToAccessResource(userId);
         int pageNum = (page == null || page <= 0) ? 0 : page;
         Pageable pageRequest = PageRequest.of(pageNum, PAGE_SIZE);
-        return photoRepository.getPhotosForUserId(userId, favorites, pageRequest).toList();
+        String searchValueNonNull = searchValue == null ? "" : searchValue;
+        return photoRepository.getPhotosForUserId(userId, favorites, searchValueNonNull, pageRequest).toList();
     }
 
     @Override

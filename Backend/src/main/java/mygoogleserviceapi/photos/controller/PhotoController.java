@@ -64,10 +64,15 @@ public class PhotoController {
     }
 
     @GetMapping("/users/{id}")
-    public ResponseEntity<List<PhotoInfoResponseDTO>> getPhotos(@PathVariable Long id, @RequestParam(required = false) Integer page, @RequestParam(required = false) Boolean favorites) {
+    public ResponseEntity<List<PhotoInfoResponseDTO>> getPhotos(@PathVariable Long id,
+                                                                @RequestParam(required = false) Integer page,
+                                                                @RequestParam(required = false) String searchValue,
+                                                                @RequestParam(required = false) String beforeDate,
+                                                                @RequestParam(required = false) String afterDate,
+                                                                @RequestParam(required = false) Boolean favorites) {
         List<PhotoInfoResponseDTO> responseDTOS = new ArrayList<>();
         boolean favoritesOnly = BooleanUtils.toBoolean(favorites);
-        List<Photo> photos = photoService.getPhotosForUser(id, page, favoritesOnly);
+        List<Photo> photos = photoService.getPhotosForUser(id, page, favoritesOnly, searchValue, beforeDate, afterDate);
         for (Photo photo : photos) {
             responseDTOS.add(new PhotoInfoResponseDTO(photo.getId(),
                     photo.getFileName(),

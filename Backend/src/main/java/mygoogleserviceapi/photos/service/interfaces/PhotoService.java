@@ -13,11 +13,11 @@ public interface PhotoService {
 
     Photo savePhoto(MultipartFile file, String email) throws IOException;
 
-    List<Photo> getPhotosForUser(Long userId, Integer page, boolean favorites);
+    List<Photo> getPhotosForUser(Long userId, Integer page, boolean favorites, String searchValue, String beforeDate, String afterDate);
 
-    public Resource getPhotoFile(String filename);
+    Resource getPhotoFile(String filename);
 
-    public Resource getPhotoThumbnailFile(String filename);
+    Resource getPhotoThumbnailFile(String filename);
 
     void deletePhoto(String filename);
 

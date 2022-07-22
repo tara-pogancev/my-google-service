@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/model/user-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user-service';
+import { SearchParametersDTO } from '../../DTO/SearchParametersDTO';
 import { PhotoService } from '../../services/photo.service';
+import { SearchParametersService } from '../../services/search-parameters.service';
 import { UploadService } from '../../services/upload.service';
 
 @Component({
@@ -18,7 +20,8 @@ export class PhotosHeaderComponent implements OnInit {
   constructor(private authService: AuthService,
      private userService: UserService,
       private photoService: PhotoService,
-      private uploadService: UploadService) { }
+      private uploadService: UploadService,
+      private searchParametersService: SearchParametersService) { }
 
   ngOnInit(): void {
     this.initUser()
@@ -38,7 +41,14 @@ export class PhotosHeaderComponent implements OnInit {
   }
 
   search() {
-
+    let searchParameters: SearchParametersDTO = {
+      searchValue: this.searchValue,
+      afterDate: '',
+      beforeDate: '',
+      action: 'SEARCH'
+    }
+    console.log(searchParameters)
+    this.searchParametersService.changeValue(searchParameters)
   }
 
   redirectContacts() {

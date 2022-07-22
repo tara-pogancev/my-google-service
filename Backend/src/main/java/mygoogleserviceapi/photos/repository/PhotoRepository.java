@@ -12,8 +12,11 @@ import java.util.Set;
 
 public interface PhotoRepository extends JpaRepository<Photo, Long> {
 
-    @Query("SELECT p FROM Photo p WHERE p.applicationUser.id = :userId AND (:favorites IS FALSE OR p.favorite IS TRUE) ORDER BY p.creationDate DESC")
-    Slice<Photo> getPhotosForUserId(@Param("userId") Long userId, @Param("favorites") boolean favorites, Pageable pageable);
+    @Query("SELECT p FROM Photo p WHERE p.applicationUser.id = :userId AND (:favorites IS FALSE OR p.favorite IS TRUE) AND UPPER(p.fileName) LIKE CONCAT('%',UPPER(:searchValue),'%') ORDER BY p.creationDate DESC")
+    Slice<Photo> getPhotosForUserId(@Param("userId") Long userId,
+                                    @Param("favorites") boolean favorites,
+                                    @Param("searchValue") String searchValue,
+                                    Pageable pageable);
 
     @Query("SELECT p FROM Photo p WHERE p.applicationUser.email = :email and p.fileName = :fileName")
     Photo getPhotoForUser(@Param("email") String email,
