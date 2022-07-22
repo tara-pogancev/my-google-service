@@ -3,6 +3,7 @@ import { User } from 'src/app/shared/model/user-model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user-service';
 import { PhotoService } from '../../services/photo.service';
+import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'photos-header',
@@ -15,7 +16,9 @@ export class PhotosHeaderComponent implements OnInit {
   searchBarFocus = false
   searchValue: string = ""
   constructor(private authService: AuthService,
-     private userService: UserService, private photoService: PhotoService) { }
+     private userService: UserService,
+      private photoService: PhotoService,
+      private uploadService: UploadService) { }
 
   ngOnInit(): void {
     this.initUser()
@@ -78,16 +81,12 @@ export class PhotosHeaderComponent implements OnInit {
     {
       for (let i=0 ; i < selectedFiles.length ; i++)
       {
-        console.log(selFiles[i])
         formData.append('files', selFiles[i],
            selFiles[i].name);
       }
     }
-    console.log(formData.getAll('files'))
-    // console.log(selFiles)
     this.photoService.postPhoto(formData).subscribe((data:any) => {
-      console.log('a')
-      console.log(data)
+      this.uploadService.changeValue('UPLOAD')
     }, (err: Error) => {
        console.log(err)
     })

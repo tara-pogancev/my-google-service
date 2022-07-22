@@ -12,6 +12,7 @@ import { Photo } from '../../model/Photo';
 import { PhotoService } from '../../services/photo.service';
 import { SelectedService } from '../../services/selected.service';
 import { SidebarService } from '../../services/sidebar.service';
+import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'photos-list',
@@ -26,6 +27,7 @@ export class PhotosListComponent implements OnInit {
     private selectedService: SelectedService,
     private router: Router,
     private sidebarService: SidebarService,
+    private uploadService: UploadService,
     private route: ActivatedRoute) { }
   userId!: number
   favorites: boolean = false
@@ -36,12 +38,15 @@ export class PhotosListComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.authService.getCurrentUser().id
     this.selectedService.currentAction.subscribe(action => this.executeAction(action))
+    this.uploadService.currentValue.subscribe(action => {
+      if (action === "UPLOAD") {
+        this.uploadService.changeValue('')
+        this.reloadComponent()
+      }
+    } )
     if (this.route.snapshot.url.length > 0) {
       this.favorites = true
     }
-    // this.sidebarService.currentValue.subscribe(value => {
-    //   this.favorites = value === 'FAVORITES' ? true : false
-    // })
     this.getPhotos();
   }
 
